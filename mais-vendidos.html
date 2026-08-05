@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mais Vendidos — 1PaiNerd Studios</title><meta name="description" content="Ranking dos produtos geek, gamer e tech mais vendidos do Brasil, atualizado da fonte oficial — com links diretos.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080c16;--card:rgba(255,255,255,.045);--ink:#edf1fb;--sub:#8d99b5;
+--acc:#ff8a3d;--acc2:#ffab6b;--cy:#3fd6ff;--line:rgba(120,160,255,.16);--r:14px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',-apple-system,'Segoe UI',Roboto,sans-serif;
+font-size:17px;line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif;font-weight:600;line-height:1.2;letter-spacing:-.02em}
+a{color:var(--cy)}
+img{max-width:100%}
+.gridbg{position:fixed;inset:0;z-index:-2;pointer-events:none;
+background-image:linear-gradient(rgba(120,160,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(120,160,255,.05) 1px,transparent 1px);
+background-size:44px 44px;mask-image:radial-gradient(ellipse 85% 60% at 50% 12%,#000 30%,transparent 78%)}
+.aur{position:fixed;z-index:-1;pointer-events:none;border-radius:50%;filter:blur(90px);opacity:.25}
+.aur.a1{width:52vw;height:52vw;background:#173a72;top:-20vw;left:-12vw}
+.aur.a2{width:38vw;height:38vw;background:#5a2a10;bottom:-14vw;right:-10vw}
+.wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+/* nav */
+nav{position:sticky;top:0;z-index:50;background:rgba(8,12,22,.8);backdrop-filter:blur(12px);
+-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.navin{max-width:1060px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;gap:26px}
+.brand{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.05rem;color:var(--ink);
+text-decoration:none;margin-right:auto;letter-spacing:-.01em}
+.brand em{font-style:normal;color:var(--acc)}
+.brand small{font-weight:500;color:var(--sub);letter-spacing:.02em}
+nav a.nl{font-size:.92rem;font-weight:600;color:var(--sub);text-decoration:none;padding:4px 0;
+border-bottom:2px solid transparent;transition:.2s}
+nav a.nl:hover{color:var(--ink)}
+nav a.nl.on{color:var(--ink);border-bottom-color:var(--acc);text-shadow:0 0 18px rgba(255,138,61,.6)}
+@media(max-width:720px){.navin{gap:16px;flex-wrap:wrap;padding:14px 18px}.brand{width:100%}}
+/* type */
+.kicker{font-size:.78rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--cy);margin-bottom:18px;
+display:flex;align-items:center;gap:10px}
+.kicker::before{content:"";width:26px;height:2px;background:linear-gradient(90deg,var(--cy),transparent)}
+h1{font-size:clamp(2.1rem,5vw,3.3rem);margin-bottom:20px}
+h2{font-size:clamp(1.4rem,3vw,1.9rem);margin-bottom:10px}
+.lead{color:var(--sub);font-size:1.12rem;max-width:56ch}
+section{padding:72px 0}
+/* buttons */
+.btn{display:inline-block;text-decoration:none;font-weight:700;font-size:.98rem;padding:14px 26px;
+border-radius:999px;transition:transform .2s,box-shadow .2s}
+.btn.p{background:linear-gradient(135deg,var(--acc),#ff6d2e);color:#160a02;box-shadow:0 0 24px rgba(255,138,61,.3)}
+.btn.p:hover{transform:translateY(-2px);box-shadow:0 0 38px rgba(255,138,61,.55)}
+.btn.s{background:var(--card);color:var(--ink);border:1.5px solid var(--line)}
+.btn.s:hover{border-color:var(--cy);transform:translateY(-2px);box-shadow:0 0 22px rgba(63,214,255,.2)}
+/* doors */
+.doors{display:grid;gap:18px;grid-template-columns:1fr}
+@media(min-width:760px){.doors{grid-template-columns:repeat(3,1fr)}}
+.door{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:30px 26px;
+text-decoration:none;color:var(--ink);transition:transform .25s,box-shadow .25s,border-color .25s;
+display:flex;flex-direction:column;gap:8px;backdrop-filter:blur(6px)}
+.door:hover{transform:translateY(-5px);border-color:rgba(63,214,255,.5);box-shadow:0 0 30px rgba(63,214,255,.12),0 20px 44px rgba(0,0,0,.4)}
+.door .em{font-size:1.7rem}
+.door h3{font-size:1.18rem}
+.door p{color:var(--sub);font-size:.94rem;flex:1}
+.door span{color:var(--cy);font-weight:700;font-size:.94rem}
+.tag{display:inline-block;font-size:.72rem;font-weight:700;color:var(--acc);background:rgba(255,138,61,.12);
+border:1px solid rgba(255,138,61,.3);border-radius:999px;padding:2px 12px;margin-left:8px;vertical-align:3px}
+/* media cards */
+.mgrid{display:grid;gap:22px;grid-template-columns:1fr}
+@media(min-width:700px){.mgrid{grid-template-columns:1fr 1fr}}
+.mcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;
+text-decoration:none;color:var(--ink);transition:transform .25s,box-shadow .25s,border-color .25s;display:block}
+.mcard:hover{transform:translateY(-5px);border-color:rgba(63,214,255,.5);box-shadow:0 0 34px rgba(63,214,255,.14),0 22px 48px rgba(0,0,0,.45)}
+.mcard img{width:100%;height:200px;object-fit:cover;display:block}
+.mcard .mt{padding:20px 24px}
+.mcard h3{font-size:1.15rem;margin-bottom:4px}
+.mcard p{color:var(--sub);font-size:.94rem}
+/* rows */
+.rows{display:flex;flex-direction:column}
+.row{display:flex;gap:20px;align-items:baseline;padding:26px 4px;border-bottom:1px solid var(--line);
+text-decoration:none;color:var(--ink);flex-wrap:wrap;transition:background .2s}
+.row:first-child{border-top:1px solid var(--line)}
+.row h3{font-size:1.15rem;min-width:240px}
+.row p{color:var(--sub);font-size:.96rem;flex:1;min-width:240px}
+.row span{color:var(--cy);font-weight:700;white-space:nowrap}
+a.row:hover h3{color:var(--acc);text-shadow:0 0 20px rgba(255,138,61,.5)}
+/* prova */
+.prova{display:flex;gap:44px;flex-wrap:wrap;padding:28px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.prova b{font-family:'Space Grotesk',sans-serif;font-size:1.5rem;display:block;line-height:1.2;color:var(--cy);
+text-shadow:0 0 22px rgba(63,214,255,.45)}
+.prova span{color:var(--sub);font-size:.88rem}
+/* passos */
+.passos{display:grid;gap:18px;grid-template-columns:1fr;counter-reset:p}
+@media(min-width:760px){.passos{grid-template-columns:repeat(3,1fr)}}
+.passo{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:26px;backdrop-filter:blur(6px)}
+.passo::before{counter-increment:p;content:"0" counter(p);display:block;font-family:'Space Grotesk',sans-serif;
+font-weight:700;font-size:1.3rem;color:var(--cy);margin-bottom:8px;text-shadow:0 0 18px rgba(63,214,255,.5)}
+.passo h3{font-size:1.05rem;margin-bottom:6px}
+.passo p{color:var(--sub);font-size:.92rem}
+/* hero */
+.hero{display:grid;gap:44px;align-items:center;grid-template-columns:1fr;padding:84px 0 64px}
+@media(min-width:860px){.hero{grid-template-columns:1.1fr .9fr}}
+.hero img{max-width:400px;width:100%;margin:0 auto;display:block;
+filter:drop-shadow(0 24px 48px rgba(63,214,255,.18))}
+.ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
+/* footer */
+footer{border-top:1px solid var(--line);padding:44px 24px;margin-top:40px;background:rgba(255,255,255,.02)}
+.footin{max-width:1060px;margin:0 auto;display:flex;gap:32px;flex-wrap:wrap;justify-content:space-between;
+color:var(--sub);font-size:.9rem}
+.footin a{color:var(--sub);text-decoration:none}
+.footin a:hover{color:var(--acc)}
+.footin b{color:var(--ink);font-family:'Space Grotesk',sans-serif}
+/* reveal */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+.rv.on{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}.rv{opacity:1;transform:none}}
+
+/* produtos */
+.disclosure{background:rgba(63,214,255,.06);border:1px solid rgba(63,214,255,.25);border-radius:var(--r);
+padding:16px 20px;color:var(--sub);font-size:.9rem;margin-bottom:40px}
+.disclosure b{color:var(--ink)}
+.pgrid{display:grid;gap:18px;grid-template-columns:1fr}
+@media(min-width:820px){.pgrid{grid-template-columns:1fr 1fr}}
+.pcard{display:flex;gap:18px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+padding:22px;transition:transform .25s,border-color .25s,box-shadow .25s;backdrop-filter:blur(6px)}
+.pcard:hover{transform:translateY(-4px);border-color:rgba(63,214,255,.45);box-shadow:0 0 26px rgba(63,214,255,.1)}
+.ptile{font-size:2rem;width:64px;height:64px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+background:rgba(63,214,255,.08);border:1px solid var(--line);border-radius:14px}
+.pinfo h3{font-size:1.05rem;margin-bottom:4px}
+.pinfo p{color:var(--sub);font-size:.88rem;line-height:1.6;margin-bottom:5px}
+.pinfo p b{color:var(--ink)}
+.pfaixa{font-family:'Space Grotesk',sans-serif;color:var(--acc)!important;font-weight:600}
+.pselo{font-size:.7rem;font-weight:700;color:var(--cy);background:rgba(63,214,255,.1);
+border:1px solid rgba(63,214,255,.3);border-radius:999px;padding:2px 10px;margin-left:8px}
+.palt{font-style:italic}
+.plinks{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.pbtn{font-size:.8rem;font-weight:700;text-decoration:none;color:var(--ink);background:rgba(255,255,255,.05);
+border:1px solid var(--line);border-radius:999px;padding:7px 16px;transition:.2s}
+.pbtn:hover{border-color:var(--acc);color:var(--acc);box-shadow:0 0 14px rgba(255,138,61,.25)}
+.catband{display:flex;align-items:center;gap:14px;margin:56px 0 22px}
+.catband h2{margin:0}
+.catband .cnum{font-family:'Space Grotesk',sans-serif;color:var(--sub);font-size:.85rem}
+.rk{font-family:'Space Grotesk',sans-serif;color:var(--acc);font-size:.85rem;margin-right:6px}
+
+/* ================= TEMA CLEAN CLARO (override) ================= */
+:root{--bg:#ffffff;--bg2:#f6f8fb;--panel:#ffffff;--card:#ffffff;
+--line:#e7ebf2;--ink:#101828;--sub:#5b6478;
+--acc:#ee6f2d;--acc2:#ff8a4b;--cy:#0899c6;--vi:#6d5ae0;--grn:#12805c;
+--glow:0 0 0 rgba(0,0,0,0)}
+body{background:var(--bg);color:var(--ink)}
+::selection{background:var(--cy);color:#fff}
+.gridbg{background-image:linear-gradient(rgba(16,40,80,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(16,40,80,.045) 1px,transparent 1px)}
+.aur{opacity:.5}.aur.a1{background:#dcebff}.aur.a2{background:#ffe9d9}
+nav{background:rgba(255,255,255,.85);border-bottom:1px solid var(--line)}
+nav a.nl.on{text-shadow:none}
+.eyebrow{color:var(--cy);background:rgba(8,153,198,.07);border-color:rgba(8,153,198,.25)}
+.btn.p{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;box-shadow:0 8px 22px rgba(238,111,45,.28)}
+.btn.p:hover{box-shadow:0 12px 30px rgba(238,111,45,.4)}
+.btn.s{background:#fff;border:1.5px solid var(--line);color:var(--ink)}
+.btn.s:hover{border-color:var(--cy);box-shadow:0 6px 18px rgba(8,153,198,.15)}
+.card,.door,.mcard,.passo,.pcard{background:#fff;border:1px solid var(--line);backdrop-filter:none;
+box-shadow:0 4px 16px rgba(20,40,80,.05)}
+.card:hover,.door:hover,.mcard:hover,.pcard:hover{border-color:rgba(8,153,198,.45);
+box-shadow:0 16px 40px rgba(20,40,80,.12)}
+.tag{color:var(--acc);background:rgba(238,111,45,.08);border:1px solid rgba(238,111,45,.28)}
+.row{border-color:var(--line)}
+a.row:hover h3{color:var(--acc);text-shadow:none}
+.prova{border-color:var(--line)}
+.prova b{color:var(--cy);text-shadow:none}
+.passo::before{color:var(--cy);text-shadow:none}
+.disclosure{background:rgba(8,153,198,.05);border-color:rgba(8,153,198,.22)}
+.ptile,.lbi{background:var(--bg2);border:1px solid var(--line)}
+.pselo{color:var(--cy);background:rgba(8,153,198,.08);border-color:rgba(8,153,198,.28)}
+.pbtn{background:#fff;border:1px solid var(--line);color:var(--ink)}
+.pbtn:hover{border-color:var(--acc);color:var(--acc);box-shadow:0 4px 14px rgba(238,111,45,.2)}
+.pfaixa{color:var(--acc)!important}
+.servnote{background:#fff;border-color:rgba(8,153,198,.35)}
+footer{background:var(--bg2);border-color:var(--line)}
+.lb{background:#fff;border:1px solid var(--line);backdrop-filter:none;box-shadow:0 4px 14px rgba(20,40,80,.05)}
+.lb:hover{border-color:rgba(8,153,198,.5);box-shadow:0 12px 30px rgba(20,40,80,.12)}
+.lb.hot{background:linear-gradient(135deg,rgba(238,111,45,.1),rgba(255,138,75,.06));border-color:rgba(238,111,45,.45)}
+@keyframes lbpulsa{50%{box-shadow:0 0 20px rgba(238,111,45,.28)}}
+.fb{background:rgba(255,255,255,.92);border:1px solid var(--line);box-shadow:0 8px 22px rgba(20,40,80,.12)}
+.fb b{color:var(--cy)}
+.catband .cnum{color:var(--sub)}
+.rk{color:var(--acc)}
+.orbitwrap img{filter:drop-shadow(0 18px 36px rgba(20,60,120,.18))}
+
+/* icones premium */
+.lbi{background:transparent!important;border:none!important}
+.lbi img{width:46px;height:46px;object-fit:contain;filter:drop-shadow(0 3px 8px rgba(20,40,80,.18))}
+.emi{width:54px;height:54px;object-fit:contain;display:block;margin-bottom:4px;filter:drop-shadow(0 3px 8px rgba(20,40,80,.18))}
+.rico{width:56px;height:56px;object-fit:contain;flex-shrink:0;align-self:center;filter:drop-shadow(0 3px 8px rgba(20,40,80,.15))}
+.catbanner{width:100%;border-radius:16px;display:block;margin:50px 0 -34px;box-shadow:0 10px 30px rgba(20,40,80,.12)}
+.pagehero{display:grid;gap:30px;align-items:center;grid-template-columns:1fr}
+@media(min-width:820px){.pagehero{grid-template-columns:1.2fr .8fr}}
+.pagehero img.cur{max-width:280px;width:70%;margin:0 auto;display:block;filter:drop-shadow(0 18px 36px rgba(20,60,120,.18))}
+.hticon{width:26px;height:26px;object-fit:contain;vertical-align:-4px;margin-right:6px}
+
+/* fotos de produto */
+.ptile{width:84px;height:84px;padding:6px;background:#fff}
+.ptile img{width:100%;height:100%;object-fit:contain}
+.rimg{width:64px;height:64px;object-fit:contain;flex-shrink:0;align-self:center;background:#fff;
+border:1px solid var(--line);border-radius:10px;padding:5px}
+</style>
+</head>
+<body>
+<div class="gridbg" aria-hidden="true"></div><div class="aur a1" aria-hidden="true"></div><div class="aur a2" aria-hidden="true"></div>
+<nav><div class="navin">
+  <a class="brand" href="index.html">1<em>Pai</em>Nerd <small>Studios</small></a>
+  <a class="nl" href="index.html">Início</a><a class="nl" href="jogos.html">Jogos & Família</a><a class="nl" href="achadinhos.html">Achadinhos</a><a class="nl on" href="mais-vendidos.html">Mais Vendidos</a><a class="nl" href="servicos.html">Serviços</a>
+</div></nav>
+<main>
+<div class="wrap">
+<section style="padding-bottom:20px">
+  <p class="kicker rv">Mais Vendidos · atualizado 03/08/2026</p>
+  <h1 class="rv" style="font-size:clamp(1.9rem,4.5vw,2.7rem)">O que o Brasil nerd está comprando</h1>
+  <p class="lead rv">Colhido direto do ranking oficial de mais vendidos da Amazon — sem achismo, é o que está saindo AGORA. Minha curadoria pessoal, com o "por quê" de cada item, fica nos <a href="achadinhos.html">Achadinhos</a>.</p>
+</section>
+<div class="disclosure rv"><b>Transparência:</b> links de afiliado Amazon — você não paga nada a mais e o site ganha uma comissão. Preços "visto por" são do momento da coleta e mudam a toda hora; clique pra ver o preço do dia.</div>
+<div class="catband rv"><h2><img class="hticon" src="assets/icons/gamepad.png" alt=""> Games & Consoles</h2><span class="cnum">20 itens · O que o Brasil gamer mais compra agora</span></div>
+<div class="rows"><a class="row rv" href="https://www.amazon.com.br/dp/B0H6KT2RWH?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/81o4MCqBv5L._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#1</span> Grand Theft Auto VI - PlayStation 5</h3>
+<p>visto por <b>R$ 449,90</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0FY6X2XXY?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/51zRVFcqMLL._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#2</span> Controle sem fio PlayStation DualSense – Branco</h3>
+<p>visto por <b>R$ 410,02</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B09JH4PD8Q?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/41y-G-g+dVL._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#3</span> Base De Carregamento Do Dualsense - PlayStation 5</h3>
+<p>visto por <b>R$ 171,45</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B07Y2G7VX5?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/71+kXnOiM2L._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#4</span> Havit Headphone Fone de Ouvido H2002d, Gamer, com Microfone</h3>
+<p>visto por <b>R$ 152,97</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0FPGF9J2J?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/71WCygaQDAL._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#5</span> PlayStation 5 Slim Digital 825GB – Pacote ASTRO BOT e Gran Turismo 7</h3>
+<p>visto por <b>R$ 4.399,00</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0H46QLPKD?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/71VioLwuWoL._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#6</span> Kit Marvel's Wolverine PlayStation 5 + Boneco Wolverine</h3>
+<p>visto por <b>R$ 399,90</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B07FN1MZBH?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/61kwdPH8+xL._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#7</span> Controle Dualshock 4 - PlayStation 4 - Preto</h3>
+<p>visto por <b>R$ 239,90</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0F6D7MQQB?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/61oPb9El-SL._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#8</span> Nintendo Switch 2 Console Nacional</h3>
+<p>visto por <b>R$ 3.951,00</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0C7GW9F88?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/51iXILIT27L._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#9</span> GameSir G7 SE Controle com Fio para PC e Xbox</h3>
+<p>visto por <b>R$ 279,99</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0GWCCBDRR?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<h3><span class="rk">#10</span> Marvel's Wolverine - PlayStation 5</h3>
+<p>visto por <b>R$ 399,00</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0H2KBN3K1?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/61-lT5Jq0FL._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#11</span> Red Dead Redemption - PlayStation 5</h3>
+<p>visto por <b>R$ 169,90</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B08T68T1T6?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/51AVGfhKbOL._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#12</span> Mouse Gamer Redragon Predator RGB M612</h3>
+<p>visto por <b>R$ 94,09</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B07TV9B7Z3?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/61XRKm0vZaL._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#13</span> Teclado Gamer HyperX Alloy Core RGB ABNT2</h3>
+<p>visto por <b>R$ 176,46</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0D739FJLG?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<h3><span class="rk">#14</span> Controle Wireless 8BitDo Ultimate 2C Bluetooth</h3>
+<p>visto por <b>R$ 208,27</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0GWGTH4LF?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<h3><span class="rk">#15</span> The Blood of Dawnwalker - Steelbook PlayStation 5</h3>
+<p>visto por <b>R$ 399,97</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0FR6PC1FB?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<h3><span class="rk">#16</span> Bundle Nintendo Switch OLED + Super Mario Bros. Wonder</h3>
+<p>visto por <b>R$ 2.298,00</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0F6DB3Y8P?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<h3><span class="rk">#17</span> Mario Kart World - Nintendo Switch 2</h3>
+<p>visto por <b>R$ 499,90</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0F3VTCZK8?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<h3><span class="rk">#18</span> Cartão Samsung microSD Express 256GB (Switch 2)</h3>
+<p>visto por <b>R$ 399,89</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0CQKKHT5J?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<h3><span class="rk">#19</span> Controle sem fio DualSense Midnight Black</h3>
+<p>visto por <b>R$ 429,00</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B07ZGFHZVZ?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<h3><span class="rk">#20</span> The Last Of Us Part II - PlayStation 4</h3>
+<p>visto por <b>R$ 159,89</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a></div><div class="catband rv"><h2><img class="hticon" src="assets/icons/pc.png" alt=""> Informática</h2><span class="cnum">14 itens · Setup, monitores e acessórios em alta</span></div>
+<div class="rows"><a class="row rv" href="https://www.amazon.com.br/dp/B0F2N7L7HQ?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/613o1RrqyAL._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#1</span> Mochila Masculina de Viagem para Notebook Romantic Crown</h3>
+<p>visto por <b>R$ 107,98</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B074L9L5KZ?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/51+TpH1VS8L._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#2</span> Mouse sem fio Logitech M170 Ambidestro Compacto</h3>
+<p>visto por <b>R$ 49,90</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0F1G2TL8P?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/51NVWRIcQ2L._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#3</span> Mouse Sem Fio Recarregável Bluetooth Óptico LED RGB</h3>
+<p>visto por <b>R$ 19,00</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0F3LTWYS5?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<h3><span class="rk">#4</span> Tablet Samsung Galaxy Tab S10 FE 128GB 8GB RAM</h3>
+<p>visto por <b>R$ 2.789,07</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0G4SLJNFF?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/51TU36U5C1L._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#5</span> Tablet Samsung Galaxy Tab A11+ 128GB 6GB RAM WiFi</h3>
+<p>visto por <b>R$ 1.529,00</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0CK2DP7FX?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/61yPxJ9xSbL._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#6</span> Headset Gamer Havit Fuxi-H3 White Black</h3>
+<p>visto por <b>R$ 143,90</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0765KZ264?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/61-TzEg09KL._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#7</span> Suporte Articulado de Mesa ELG F80N Pistão a Gás</h3>
+<p>visto por <b>R$ 159,00</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B098YHFT9S?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/51Go2vIg0ML._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#8</span> Impressora Multifuncional Epson Ecotank L3250</h3>
+<p>visto por <b>R$ 1.046,00</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0BQX6DVWY?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/91e-WNUpH0L._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#9</span> HD Externo Toshiba 1TB Canvio Basics</h3>
+<p>visto por <b>R$ 552,93</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0DGQLYST1?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<h3><span class="rk">#10</span> Headphone Havit H2002d Black Red Gamer</h3>
+<p>visto por <b>R$ 120,06</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0GMXN4H9M?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/51jTagQW4aL._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#11</span> Cabo Carregador Turbo USB-C Trançado Nylon 1m</h3>
+<p>visto por <b>R$ 21,99</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0DF2WSGF6?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/61oWoZ+68iL._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#12</span> Monitor Gamer LG 24MS500 24" IPS 100Hz Full HD</h3>
+<p>visto por <b>R$ 499,00</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0DWQNS8TN?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<h3><span class="rk">#13</span> Monitor Gamer Samsung Odyssey G5 32" QHD</h3>
+<p>visto por <b>R$ 1.079,10</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0GJ7H8WLW?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<h3><span class="rk">#14</span> Multifuncional Epson EcoTank L4360 frente e verso</h3>
+<p>visto por <b>R$ 1.452,00</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a></div><div class="catband rv"><h2><img class="hticon" src="assets/icons/gift.png" alt=""> Brinquedos & Família</h2><span class="cnum">8 itens · Os campeões da criançada (filtro nerd aplicado)</span></div>
+<div class="rows"><a class="row rv" href="https://www.amazon.com.br/dp/B00CTH0A1Q?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/71yJ6Tu7+zL._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#1</span> UNO Original</h3>
+<p>visto por <b>R$ 16,90</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B07LHC55HY?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/81QAJDzi7DL._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#2</span> Caiu Perdeu Pais & Filhos 54 peças</h3>
+<p>visto por <b>R$ 16,20</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0DFFTP71B?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/51Gz7G2XQ7L._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#3</span> Bicicleta de Equilíbrio Buba 4 Rodas</h3>
+<p>visto por <b>R$ 141,00</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0DGKY94HS?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/81BLH8BzGXL._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#4</span> Blocos de Montar Magnéticos Educativos</h3>
+<p>visto por <b>R$ 168,41</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0CQTNGCF9?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<h3><span class="rk">#5</span> Play-Doh Massinha Smoothies Coloridos</h3>
+<p>visto por <b>R$ 42,88</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B07PDGL5X4?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/51oiDX4s96L._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#6</span> Sleeves MeepleBR padrão 100un (proteção de cartas TCG)</h3>
+<p>visto por <b>R$ 19,99</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/6555127279?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<h3><span class="rk">#7</span> Mangá Jujutsu Kaisen 0</h3>
+<p>visto por <b>R$ 36,90</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0778T3SRK?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/61m1k3wVSWL._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#8</span> Lápis de Cor BIC Evolution 24 cores</h3>
+<p>visto por <b>R$ 16,50</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a></div><div class="catband rv"><h2><img class="hticon" src="assets/icons/plug.png" alt=""> Eletrônicos & Casa</h2><span class="cnum">10 itens · Gadgets que o país inteiro está levando</span></div>
+<div class="rows"><a class="row rv" href="https://www.amazon.com.br/dp/B09B8VGCR8?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/71xoR4A6q-L._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#1</span> Echo Dot com Alexa (geração mais recente)</h3>
+<p>visto por <b>R$ 459,00</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0CVCLGV1W?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/51bjAlTBzZL._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#2</span> Smartwatch Samsung Galaxy Fit3 1.6" Grafite</h3>
+<p>visto por <b>R$ 230,42</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0CRTYZG5C?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/51o-AcAQWgL._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#3</span> Fone Bluetooth Soundcore P30i (Anker)</h3>
+<p>visto por <b>R$ 196,90</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0D8V3QLDD?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/51rRxbJnGeL._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#4</span> Filtro de Linha iCLAMPER Energia 5 Tomadas (protege o setup!)</h3>
+<p>visto por <b>R$ 71,99</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0DVK166SV?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/614YeT6MRAL._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#5</span> Amazon Fire TV Stick HD com Controle por Voz</h3>
+<p>visto por <b>R$ 379,00</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0FH7LY3R4?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/71NIAAVDxML._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#6</span> Roku Streaming Stick HD 2025</h3>
+<p>visto por <b>R$ 232,22</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0DVMQVVDY?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/519bjoeFBTL._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#7</span> Fone TWS Philips TAT1109 Bluetooth</h3>
+<p>visto por <b>R$ 119,90</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0FJMHMCBZ?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/51BmQ8K9sML._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#8</span> Headphone Bluetooth Philips TAH2300 com Microfone</h3>
+<p>visto por <b>R$ 129,90</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0754KMGFN?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/71SnHLZ+XjL._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#9</span> Pilha recarregável AAA Elgin 4un (controles!)</h3>
+<p>visto por <b>R$ 22,25</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a>
+<a class="row rv" href="https://www.amazon.com.br/dp/B0FPYV6K68?tag=1painerd-20" target="_blank" rel="noopener sponsored">
+<img class="rimg" src="https://images-na.ssl-images-amazon.com/images/I/51kT5SgPhNL._AC_UL600_SR600,400_.jpg" loading="lazy" alt="">
+<h3><span class="rk">#10</span> Celular Samsung Galaxy A17 128GB (primeiro cel do filho)</h3>
+<p>visto por <b>R$ 949,00</b> — o preço do dia pode estar ainda melhor</p>
+<span>Ver na Amazon →</span></a></div>
+<section>
+  <div class="passo rv" style="max-width:640px">
+    <h3 style="font-size:1.3rem">🎁 Quer só o filé com desconto?</h3>
+    <p style="margin:10px 0 18px">A Guilda de Achadinhos Nerd vai avisar as melhores ofertas desses rankings no seu celular. Me segue no Instagram pra entrar no dia da abertura.</p>
+    <a class="btn p" href="https://www.instagram.com/1painerd" rel="noopener">Quero entrar na Guilda</a>
+  </div>
+</section>
+</div>
+</main>
+<footer><div class="footin">
+  <div><b>1PaiNerd Studios</b><br>Jogos, histórias e tecnologia,<br>feitos em família. Mauá/SP.</div>
+  <div><a href="jogos.html">Jogos & Família</a><br><a href="achadinhos.html">Achadinhos</a><br><a href="servicos.html">Serviços</a></div>
+  <div><a href="https://www.instagram.com/1painerd" rel="noopener">Instagram</a><br><a href="mailto:wfactory.design@gmail.com">E-mail</a><br>© 2026 Patrick Gouveia</div>
+</div></footer>
+<script>
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.1});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+</script>
+<script>
+/* GA4-ready: cole aqui o snippet do Google Analytics (gtag.js) com seu ID G-XXXXXXX.
+   Os eventos abaixo passam a funcionar sozinhos assim que o gtag existir. */
+document.addEventListener('click',function(e){
+  var a=e.target.closest('a'); if(!a||typeof gtag!=='function') return;
+  var h=a.href||'';
+  if(h.indexOf('tag=1painerd-20')>-1) gtag('event','clique_afiliado',{loja:'amazon',item:(a.innerText||'').slice(0,80)});
+  else if(a.classList.contains('lb')) gtag('event','clique_linkbio',{destino:(a.innerText||'').slice(0,40),origem:new URLSearchParams(location.search).get('de')||'direta'});
+  else if(h.indexOf('mailto:')===0||h.indexOf('wa.me')>-1) gtag('event','contato_servico');
+});
+</script>
+</body>
+</html>

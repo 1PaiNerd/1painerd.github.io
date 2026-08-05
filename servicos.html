@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Serviços de Tecnologia — 1PaiNerd Studios</title><meta name="description" content="Sites com prévia gratuita, apps, PCs gamer sob medida e conserto de eletrônicos em Mauá e ABC.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080c16;--card:rgba(255,255,255,.045);--ink:#edf1fb;--sub:#8d99b5;
+--acc:#ff8a3d;--acc2:#ffab6b;--cy:#3fd6ff;--line:rgba(120,160,255,.16);--r:14px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',-apple-system,'Segoe UI',Roboto,sans-serif;
+font-size:17px;line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif;font-weight:600;line-height:1.2;letter-spacing:-.02em}
+a{color:var(--cy)}
+img{max-width:100%}
+.gridbg{position:fixed;inset:0;z-index:-2;pointer-events:none;
+background-image:linear-gradient(rgba(120,160,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(120,160,255,.05) 1px,transparent 1px);
+background-size:44px 44px;mask-image:radial-gradient(ellipse 85% 60% at 50% 12%,#000 30%,transparent 78%)}
+.aur{position:fixed;z-index:-1;pointer-events:none;border-radius:50%;filter:blur(90px);opacity:.25}
+.aur.a1{width:52vw;height:52vw;background:#173a72;top:-20vw;left:-12vw}
+.aur.a2{width:38vw;height:38vw;background:#5a2a10;bottom:-14vw;right:-10vw}
+.wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+/* nav */
+nav{position:sticky;top:0;z-index:50;background:rgba(8,12,22,.8);backdrop-filter:blur(12px);
+-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.navin{max-width:1060px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;gap:26px}
+.brand{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.05rem;color:var(--ink);
+text-decoration:none;margin-right:auto;letter-spacing:-.01em}
+.brand em{font-style:normal;color:var(--acc)}
+.brand small{font-weight:500;color:var(--sub);letter-spacing:.02em}
+nav a.nl{font-size:.92rem;font-weight:600;color:var(--sub);text-decoration:none;padding:4px 0;
+border-bottom:2px solid transparent;transition:.2s}
+nav a.nl:hover{color:var(--ink)}
+nav a.nl.on{color:var(--ink);border-bottom-color:var(--acc);text-shadow:0 0 18px rgba(255,138,61,.6)}
+@media(max-width:720px){.navin{gap:16px;flex-wrap:wrap;padding:14px 18px}.brand{width:100%}}
+/* type */
+.kicker{font-size:.78rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--cy);margin-bottom:18px;
+display:flex;align-items:center;gap:10px}
+.kicker::before{content:"";width:26px;height:2px;background:linear-gradient(90deg,var(--cy),transparent)}
+h1{font-size:clamp(2.1rem,5vw,3.3rem);margin-bottom:20px}
+h2{font-size:clamp(1.4rem,3vw,1.9rem);margin-bottom:10px}
+.lead{color:var(--sub);font-size:1.12rem;max-width:56ch}
+section{padding:72px 0}
+/* buttons */
+.btn{display:inline-block;text-decoration:none;font-weight:700;font-size:.98rem;padding:14px 26px;
+border-radius:999px;transition:transform .2s,box-shadow .2s}
+.btn.p{background:linear-gradient(135deg,var(--acc),#ff6d2e);color:#160a02;box-shadow:0 0 24px rgba(255,138,61,.3)}
+.btn.p:hover{transform:translateY(-2px);box-shadow:0 0 38px rgba(255,138,61,.55)}
+.btn.s{background:var(--card);color:var(--ink);border:1.5px solid var(--line)}
+.btn.s:hover{border-color:var(--cy);transform:translateY(-2px);box-shadow:0 0 22px rgba(63,214,255,.2)}
+/* doors */
+.doors{display:grid;gap:18px;grid-template-columns:1fr}
+@media(min-width:760px){.doors{grid-template-columns:repeat(3,1fr)}}
+.door{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:30px 26px;
+text-decoration:none;color:var(--ink);transition:transform .25s,box-shadow .25s,border-color .25s;
+display:flex;flex-direction:column;gap:8px;backdrop-filter:blur(6px)}
+.door:hover{transform:translateY(-5px);border-color:rgba(63,214,255,.5);box-shadow:0 0 30px rgba(63,214,255,.12),0 20px 44px rgba(0,0,0,.4)}
+.door .em{font-size:1.7rem}
+.door h3{font-size:1.18rem}
+.door p{color:var(--sub);font-size:.94rem;flex:1}
+.door span{color:var(--cy);font-weight:700;font-size:.94rem}
+.tag{display:inline-block;font-size:.72rem;font-weight:700;color:var(--acc);background:rgba(255,138,61,.12);
+border:1px solid rgba(255,138,61,.3);border-radius:999px;padding:2px 12px;margin-left:8px;vertical-align:3px}
+/* media cards */
+.mgrid{display:grid;gap:22px;grid-template-columns:1fr}
+@media(min-width:700px){.mgrid{grid-template-columns:1fr 1fr}}
+.mcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;
+text-decoration:none;color:var(--ink);transition:transform .25s,box-shadow .25s,border-color .25s;display:block}
+.mcard:hover{transform:translateY(-5px);border-color:rgba(63,214,255,.5);box-shadow:0 0 34px rgba(63,214,255,.14),0 22px 48px rgba(0,0,0,.45)}
+.mcard img{width:100%;height:200px;object-fit:cover;display:block}
+.mcard .mt{padding:20px 24px}
+.mcard h3{font-size:1.15rem;margin-bottom:4px}
+.mcard p{color:var(--sub);font-size:.94rem}
+/* rows */
+.rows{display:flex;flex-direction:column}
+.row{display:flex;gap:20px;align-items:baseline;padding:26px 4px;border-bottom:1px solid var(--line);
+text-decoration:none;color:var(--ink);flex-wrap:wrap;transition:background .2s}
+.row:first-child{border-top:1px solid var(--line)}
+.row h3{font-size:1.15rem;min-width:240px}
+.row p{color:var(--sub);font-size:.96rem;flex:1;min-width:240px}
+.row span{color:var(--cy);font-weight:700;white-space:nowrap}
+a.row:hover h3{color:var(--acc);text-shadow:0 0 20px rgba(255,138,61,.5)}
+/* prova */
+.prova{display:flex;gap:44px;flex-wrap:wrap;padding:28px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.prova b{font-family:'Space Grotesk',sans-serif;font-size:1.5rem;display:block;line-height:1.2;color:var(--cy);
+text-shadow:0 0 22px rgba(63,214,255,.45)}
+.prova span{color:var(--sub);font-size:.88rem}
+/* passos */
+.passos{display:grid;gap:18px;grid-template-columns:1fr;counter-reset:p}
+@media(min-width:760px){.passos{grid-template-columns:repeat(3,1fr)}}
+.passo{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:26px;backdrop-filter:blur(6px)}
+.passo::before{counter-increment:p;content:"0" counter(p);display:block;font-family:'Space Grotesk',sans-serif;
+font-weight:700;font-size:1.3rem;color:var(--cy);margin-bottom:8px;text-shadow:0 0 18px rgba(63,214,255,.5)}
+.passo h3{font-size:1.05rem;margin-bottom:6px}
+.passo p{color:var(--sub);font-size:.92rem}
+/* hero */
+.hero{display:grid;gap:44px;align-items:center;grid-template-columns:1fr;padding:84px 0 64px}
+@media(min-width:860px){.hero{grid-template-columns:1.1fr .9fr}}
+.hero img{max-width:400px;width:100%;margin:0 auto;display:block;
+filter:drop-shadow(0 24px 48px rgba(63,214,255,.18))}
+.ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
+/* footer */
+footer{border-top:1px solid var(--line);padding:44px 24px;margin-top:40px;background:rgba(255,255,255,.02)}
+.footin{max-width:1060px;margin:0 auto;display:flex;gap:32px;flex-wrap:wrap;justify-content:space-between;
+color:var(--sub);font-size:.9rem}
+.footin a{color:var(--sub);text-decoration:none}
+.footin a:hover{color:var(--acc)}
+.footin b{color:var(--ink);font-family:'Space Grotesk',sans-serif}
+/* reveal */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+.rv.on{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}.rv{opacity:1;transform:none}}
+
+/* ================= TEMA CLEAN CLARO (override) ================= */
+:root{--bg:#ffffff;--bg2:#f6f8fb;--panel:#ffffff;--card:#ffffff;
+--line:#e7ebf2;--ink:#101828;--sub:#5b6478;
+--acc:#ee6f2d;--acc2:#ff8a4b;--cy:#0899c6;--vi:#6d5ae0;--grn:#12805c;
+--glow:0 0 0 rgba(0,0,0,0)}
+body{background:var(--bg);color:var(--ink)}
+::selection{background:var(--cy);color:#fff}
+.gridbg{background-image:linear-gradient(rgba(16,40,80,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(16,40,80,.045) 1px,transparent 1px)}
+.aur{opacity:.5}.aur.a1{background:#dcebff}.aur.a2{background:#ffe9d9}
+nav{background:rgba(255,255,255,.85);border-bottom:1px solid var(--line)}
+nav a.nl.on{text-shadow:none}
+.eyebrow{color:var(--cy);background:rgba(8,153,198,.07);border-color:rgba(8,153,198,.25)}
+.btn.p{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;box-shadow:0 8px 22px rgba(238,111,45,.28)}
+.btn.p:hover{box-shadow:0 12px 30px rgba(238,111,45,.4)}
+.btn.s{background:#fff;border:1.5px solid var(--line);color:var(--ink)}
+.btn.s:hover{border-color:var(--cy);box-shadow:0 6px 18px rgba(8,153,198,.15)}
+.card,.door,.mcard,.passo,.pcard{background:#fff;border:1px solid var(--line);backdrop-filter:none;
+box-shadow:0 4px 16px rgba(20,40,80,.05)}
+.card:hover,.door:hover,.mcard:hover,.pcard:hover{border-color:rgba(8,153,198,.45);
+box-shadow:0 16px 40px rgba(20,40,80,.12)}
+.tag{color:var(--acc);background:rgba(238,111,45,.08);border:1px solid rgba(238,111,45,.28)}
+.row{border-color:var(--line)}
+a.row:hover h3{color:var(--acc);text-shadow:none}
+.prova{border-color:var(--line)}
+.prova b{color:var(--cy);text-shadow:none}
+.passo::before{color:var(--cy);text-shadow:none}
+.disclosure{background:rgba(8,153,198,.05);border-color:rgba(8,153,198,.22)}
+.ptile,.lbi{background:var(--bg2);border:1px solid var(--line)}
+.pselo{color:var(--cy);background:rgba(8,153,198,.08);border-color:rgba(8,153,198,.28)}
+.pbtn{background:#fff;border:1px solid var(--line);color:var(--ink)}
+.pbtn:hover{border-color:var(--acc);color:var(--acc);box-shadow:0 4px 14px rgba(238,111,45,.2)}
+.pfaixa{color:var(--acc)!important}
+.servnote{background:#fff;border-color:rgba(8,153,198,.35)}
+footer{background:var(--bg2);border-color:var(--line)}
+.lb{background:#fff;border:1px solid var(--line);backdrop-filter:none;box-shadow:0 4px 14px rgba(20,40,80,.05)}
+.lb:hover{border-color:rgba(8,153,198,.5);box-shadow:0 12px 30px rgba(20,40,80,.12)}
+.lb.hot{background:linear-gradient(135deg,rgba(238,111,45,.1),rgba(255,138,75,.06));border-color:rgba(238,111,45,.45)}
+@keyframes lbpulsa{50%{box-shadow:0 0 20px rgba(238,111,45,.28)}}
+.fb{background:rgba(255,255,255,.92);border:1px solid var(--line);box-shadow:0 8px 22px rgba(20,40,80,.12)}
+.fb b{color:var(--cy)}
+.catband .cnum{color:var(--sub)}
+.rk{color:var(--acc)}
+.orbitwrap img{filter:drop-shadow(0 18px 36px rgba(20,60,120,.18))}
+
+/* icones premium */
+.lbi{background:transparent!important;border:none!important}
+.lbi img{width:46px;height:46px;object-fit:contain;filter:drop-shadow(0 3px 8px rgba(20,40,80,.18))}
+.emi{width:54px;height:54px;object-fit:contain;display:block;margin-bottom:4px;filter:drop-shadow(0 3px 8px rgba(20,40,80,.18))}
+.rico{width:56px;height:56px;object-fit:contain;flex-shrink:0;align-self:center;filter:drop-shadow(0 3px 8px rgba(20,40,80,.15))}
+.catbanner{width:100%;border-radius:16px;display:block;margin:50px 0 -34px;box-shadow:0 10px 30px rgba(20,40,80,.12)}
+.pagehero{display:grid;gap:30px;align-items:center;grid-template-columns:1fr}
+@media(min-width:820px){.pagehero{grid-template-columns:1.2fr .8fr}}
+.pagehero img.cur{max-width:280px;width:70%;margin:0 auto;display:block;filter:drop-shadow(0 18px 36px rgba(20,60,120,.18))}
+.hticon{width:26px;height:26px;object-fit:contain;vertical-align:-4px;margin-right:6px}
+</style>
+</head>
+<body>
+<div class="gridbg" aria-hidden="true"></div><div class="aur a1" aria-hidden="true"></div><div class="aur a2" aria-hidden="true"></div>
+<nav><div class="navin">
+  <a class="brand" href="index.html">1<em>Pai</em>Nerd <small>Studios</small></a>
+  <a class="nl" href="index.html">Início</a><a class="nl" href="jogos.html">Jogos & Família</a><a class="nl" href="achadinhos.html">Achadinhos</a><a class="nl on" href="servicos.html">Serviços</a>
+</div></nav>
+<main>
+<div class="wrap">
+<section style="padding-bottom:36px">
+  <p class="kicker rv">Serviços de Tecnologia</p>
+  <h1 class="rv" style="font-size:clamp(1.9rem,4.5vw,2.7rem)">Tecnologia com capricho de pai</h1>
+  <p class="lead rv">Atendo Mauá e região do ABC presencialmente — e, no digital, o Brasil inteiro. O mesmo capricho que coloco nos jogos, no seu projeto.</p>
+</section>
+
+<section style="padding-top:0">
+  <div class="rows">
+    <a class="row rv" href="mailto:wfactory.design@gmail.com"><img class="rico" src="assets/icons/web.png" alt=""><h3>Sites profissionais</h3><p>Para negócios locais — restaurantes, clínicas, buffets e serviços. Você vê o site pronto antes de pagar qualquer coisa.</p><span>Prévia grátis →</span></a>
+    <a class="row rv" href="mailto:wfactory.design@gmail.com"><img class="rico" src="assets/icons/app.png" alt=""><h3>Aplicativos & sistemas</h3><p>Apps sob medida para tirar a sua ideia ou o seu processo do papel.</p><span>Contar a ideia →</span></a>
+    <a class="row rv" href="#" data-todo="link-whatsapp-pnr"><img class="rico" src="assets/icons/pc.png" alt=""><h3>PCs gamer sob medida</h3><p>Peça por peça, no seu orçamento, sem pagar por marketing — e com upgrade planejado.</p><span>Pedir orçamento →</span></a>
+    <a class="row rv" href="#" data-todo="link-whatsapp-pnr"><img class="rico" src="assets/icons/repair.png" alt=""><h3>Conserto & manutenção</h3><p>Eletrônicos, videogames e computadores que "pararam do nada". Diagnóstico honesto.</p><span>Chamar agora →</span></a>
+  </div>
+</section>
+
+<section>
+  <h2 class="rv">Como funciona a prévia grátis</h2>
+  <div class="passos" style="margin-top:22px">
+    <div class="passo rv"><h3>Você me conta o negócio</h3><p>Uma conversa rápida por WhatsApp ou e-mail. Sem reunião de uma hora.</p></div>
+    <div class="passo rv"><h3>Eu monto o site de verdade</h3><p>Você recebe um link com o site pronto, com seus dados reais — não um rabisco.</p></div>
+    <div class="passo rv"><h3>Só fecha se amar</h3><p>Gostou, a gente publica e ajusta os detalhes. Não gostou, sem custo e sem mágoa.</p></div>
+  </div>
+  <div class="ctas rv" style="margin-top:30px">
+    <a class="btn p" href="mailto:wfactory.design@gmail.com">Pedir minha prévia grátis</a>
+    <a class="btn s" href="#" data-todo="link-whatsapp-pnr">Chamar no WhatsApp</a>
+  </div>
+</section>
+</div>
+</main>
+<footer><div class="footin">
+  <div><b>1PaiNerd Studios</b><br>Jogos, histórias e tecnologia,<br>feitos em família. Mauá/SP.</div>
+  <div><a href="jogos.html">Jogos & Família</a><br><a href="achadinhos.html">Achadinhos</a><br><a href="servicos.html">Serviços</a></div>
+  <div><a href="https://www.instagram.com/1painerd" rel="noopener">Instagram</a><br><a href="mailto:wfactory.design@gmail.com">E-mail</a><br>© 2026 Patrick Gouveia</div>
+</div></footer>
+<script>
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.1});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+</script>
+<script>
+/* GA4-ready: cole aqui o snippet do Google Analytics (gtag.js) com seu ID G-XXXXXXX.
+   Os eventos abaixo passam a funcionar sozinhos assim que o gtag existir. */
+document.addEventListener('click',function(e){
+  var a=e.target.closest('a'); if(!a||typeof gtag!=='function') return;
+  var h=a.href||'';
+  if(h.indexOf('tag=1painerd-20')>-1) gtag('event','clique_afiliado',{loja:'amazon',item:(a.innerText||'').slice(0,80)});
+  else if(a.classList.contains('lb')) gtag('event','clique_linkbio',{destino:(a.innerText||'').slice(0,40),origem:new URLSearchParams(location.search).get('de')||'direta'});
+  else if(h.indexOf('mailto:')===0||h.indexOf('wa.me')>-1) gtag('event','contato_servico');
+});
+</script>
+</body>
+</html>
