@@ -4,89 +4,126 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PetVida — Clínica veterinária, banho & tosa com amor de verdade</title>
 <meta name="description" content="Modelo demonstrativo de site para pet shops e clínicas veterinárias — WFactory">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{--teal:#0d9488;--tealD:#0f766e;--sand:#fefaf4;--ink:#1f3d3a;--soft:#5f8a85;--peach:#fb923c}
+:root{--teal:#0d9488;--tealD:#115e59;--mint:#ccfbf1;--bg:#f7fdfb;--ink:#0f2e2a;--soft:#5f8a85;--peach:#fb923c;--wa:#25d366}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Segoe UI',Arial,sans-serif;background:var(--sand);color:var(--ink);line-height:1.6}
-.demo-badge{position:fixed;top:0;left:0;right:0;z-index:99;background:var(--teal);color:#fff;text-align:center;font:700 12px/1.4 Arial;padding:6px 10px}
-.wrap{max-width:680px;margin:0 auto;padding:0 20px}
-header{padding:64px 0 10px;text-align:center}
-h1{font-size:40px;color:var(--tealD)}
-.tag{color:var(--soft)}
-.hero{margin:22px auto;border-radius:24px;color:#fff;padding:34px 26px;text-align:center;box-shadow:0 18px 44px rgba(13,148,136,.28);background:linear-gradient(150deg,rgba(15,118,110,.82),rgba(13,148,136,.5) 60%,rgba(10,80,74,.9)),url('https://images.pexels.com/photos/19145882/pexels-photo-19145882.jpeg?auto=compress&cs=tinysrgb&w=1400') center/cover;min-height:400px;display:flex;flex-direction:column;justify-content:center}
-.hero .emo{font-size:54px}
-.hero h2{font-size:24px;margin:8px 0 6px}
-.hero p{color:#c9f2ec;font-size:14px}
-.cta{display:inline-block;margin-top:16px;background:#25d366;color:#fff;font-weight:700;padding:14px 26px;border-radius:40px;text-decoration:none;box-shadow:0 8px 20px rgba(0,0,0,.2)}
-.alert24{margin-top:12px;background:rgba(255,255,255,.15);border-radius:12px;padding:10px;font-size:13px}
-.stats{display:flex;gap:10px;margin:24px 0}
-.stats div{flex:1;background:#fff;border-radius:16px;padding:14px 8px;text-align:center;box-shadow:0 4px 14px rgba(13,148,136,.1)}
-.stats b{display:block;font-size:22px;color:var(--teal)}
-.stats span{font-size:12px;color:var(--soft)}
-h3{font-size:23px;margin:36px 0 14px;color:var(--tealD)}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.card{background:#fff;border-radius:18px;padding:18px 14px;box-shadow:0 4px 14px rgba(13,148,136,.1)}
-.card .e{font-size:30px}
-.card h4{font-size:15px;margin:6px 0 2px}
-.card p{font-size:12px;color:var(--soft)}
-.card .pr{font-weight:800;color:var(--peach);font-size:14px;margin-top:6px}
-.plano{background:#fff;border:2px solid var(--peach);border-radius:18px;padding:18px;text-align:center;margin-top:14px}
-.plano b{color:var(--peach)}
-.rev{background:#fff;border-radius:18px;padding:16px;margin-bottom:10px;font-style:italic;box-shadow:0 4px 14px rgba(13,148,136,.1);font-size:14px}
-.rev b{display:block;font-size:12px;color:var(--teal);font-style:normal;margin-top:6px}
-.info{background:#fff;border-radius:18px;padding:18px;font-size:14px;box-shadow:0 4px 14px rgba(13,148,136,.1)}
-.info p{margin:6px 0}
-footer{text-align:center;padding:32px 0 90px;color:var(--soft);font-size:12px}
-.float-wa{position:fixed;bottom:18px;right:18px;background:#25d366;width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.3)}
-.gal{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}.gal img{width:100%;height:110px;object-fit:cover;border-radius:12px;display:block}
+body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+h1,h2,h3{font-family:Sora,Inter,sans-serif}
+.demo-badge{position:fixed;top:0;left:0;right:0;z-index:99;background:var(--tealD);color:#fff;text-align:center;font:700 12px/1.4 Inter;padding:6px 10px}
+.wrap{max-width:1000px;margin:0 auto;padding:0 20px}
+/* HERO full-bleed */
+.hero{position:relative;min-height:78vh;margin-top:30px;display:flex;align-items:flex-end;background:
+ linear-gradient(180deg,rgba(6,32,29,.25) 30%,rgba(6,32,29,.88)),
+ url('https://images.pexels.com/photos/19145882/pexels-photo-19145882.jpeg?auto=compress&cs=tinysrgb&w=1600') center/cover}
+.hero .in{width:100%;max-width:1000px;margin:0 auto;padding:34px 20px 42px;color:#fff}
+.pill{display:inline-block;background:rgba(255,255,255,.16);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.3);border-radius:30px;padding:6px 14px;font-size:12.5px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px}
+.hero h1{font-size:clamp(34px,6vw,56px);font-weight:800;line-height:1.08}
+.hero p{color:#d8f3ee;max-width:520px;margin-top:10px;font-size:clamp(14px,2.2vw,17px)}
+.cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 26px;border-radius:14px;font-weight:700;text-decoration:none;font-size:15.5px}
+.btn.g{background:var(--wa);color:#fff;box-shadow:0 10px 28px rgba(37,211,102,.4)}
+.btn.o{background:rgba(255,255,255,.14);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.35);color:#fff}
+/* faixa de provas */
+.strip{display:flex;justify-content:center;flex-wrap:wrap;background:#fff;box-shadow:0 10px 30px rgba(13,148,136,.08)}
+.strip div{padding:18px 28px;text-align:center;min-width:150px}
+.strip b{display:block;font-family:Sora;font-size:22px;color:var(--teal)}
+.strip span{font-size:12.5px;color:var(--soft)}
+section{padding:58px 0}
+.sec-k{color:var(--teal);font-size:12.5px;letter-spacing:3px;text-transform:uppercase;font-weight:700}
+h2{font-size:clamp(24px,4vw,32px);margin:6px 0 8px}
+.sub{color:var(--soft);max-width:600px}
+/* serviços com foto */
+.svcgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:26px}
+.scard{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 8px 26px rgba(13,148,136,.09);transition:transform .2s}
+.scard:hover{transform:translateY(-4px)}
+.scard img{width:100%;height:150px;object-fit:cover;display:block}
+.scard .bd{padding:16px 16px 18px}
+.scard h3{font-size:16.5px}
+.scard p{font-size:13px;color:var(--soft);margin:4px 0 8px}
+.scard .pr{font-weight:800;color:var(--peach);font-size:14.5px}
+/* plano */
+.plano{margin-top:26px;background:linear-gradient(135deg,var(--teal),var(--tealD));color:#fff;border-radius:24px;padding:32px 26px;display:flex;gap:20px;align-items:center;flex-wrap:wrap;box-shadow:0 16px 40px rgba(13,148,136,.3)}
+.plano .tx{flex:1;min-width:240px}
+.plano h3{font-size:22px}
+.plano p{color:#c9f2ec;font-size:14.5px;margin-top:6px}
+.plano .v{font-family:Sora;font-size:34px;font-weight:800}
+.plano .v small{font-size:14px;font-weight:400}
+.btn.w{background:#fff;color:var(--tealD)}
+/* depoimentos */
+.revgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:26px}
+.rev{background:#fff;border-radius:20px;padding:20px;box-shadow:0 8px 26px rgba(13,148,136,.09)}
+.rev .stars{color:#f59e0b;letter-spacing:2px;margin-bottom:8px}
+.rev p{font-size:14.5px;font-style:italic}
+.rev b{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--teal);margin-top:12px;font-style:normal}
+.rev b span{width:34px;height:34px;border-radius:50%;background:var(--mint);display:flex;align-items:center;justify-content:center;font-size:17px}
+/* emergência + info */
+.emerg{margin-top:26px;background:#fff;border:2px solid #fecaca;border-radius:20px;padding:18px 20px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.emerg .e{font-size:30px}
+.emerg b{color:#dc2626}
+.info{background:#fff;border-radius:20px;padding:22px;font-size:14.5px;box-shadow:0 8px 26px rgba(13,148,136,.09);margin-top:26px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+footer{text-align:center;padding:34px 20px 96px;color:var(--soft);font-size:12.5px}
+footer a{color:var(--ink)}
+.float-wa{position:fixed;bottom:18px;right:18px;background:var(--wa);width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:29px;text-decoration:none;box-shadow:0 10px 28px rgba(0,0,0,.3);z-index:50}
 </style>
 </head>
 <body>
 <div class="demo-badge">✨ DEMONSTRAÇÃO WFactory — o site do SEU pet shop pode ficar assim · a partir de R$ 350</div>
-<div class="wrap">
-<header>
-  <h1>🐾 PetVida</h1>
-  <p class="tag">Clínica veterinária · Banho & tosa · Pet shop — tudo num lugar só</p>
-</header>
 
-<div class="hero">
-  <h2>Agende o banho do seu pet pelo WhatsApp</h2>
-  <p>Busca e entrega em casa disponível. Seu pet vai limpinho, cheiroso e feliz — com foto de antes e depois no seu zap.</p>
-  <a class="cta" href="#" onclick="alert('No site real: WhatsApp da clínica com mensagem pronta de agendamento.');return false">📱 Agendar agora</a>
-  <div class="alert24">🚨 <b>Emergência veterinária?</b> Ligue (11) 4002-7373 — orientação imediata</div>
+<div class="hero"><div class="in">
+  <span class="pill">🐾 PetVida · clínica + banho & tosa + loja</span>
+  <h1>Cuidado de verdade,<br>do banho à vacina.</h1>
+  <p>Agende pelo WhatsApp em 30 segundos, com busca e entrega em casa — e receba a foto do seu pet limpinho antes mesmo de ele voltar.</p>
+  <div class="cta-row">
+    <a class="btn g" href="#" onclick="alert('No site real: WhatsApp da clínica com mensagem pronta de agendamento.');return false">💬 Agendar pelo WhatsApp</a>
+    <a class="btn o" href="#servicos">Ver serviços ↓</a>
+  </div>
+</div></div>
+
+<div class="strip">
+  <div><b>4,8★</b><span>950+ avaliações no Google</span></div>
+  <div><b>15 anos</b><span>cuidando dos pets do bairro</span></div>
+  <div><b>🚗 grátis*</b><span>leva-e-traz no banho</span></div>
+  <div><b>📸</b><span>foto do antes e depois no zap</span></div>
 </div>
 
-<div class="stats">
-  <div><b>4,8★</b><span>950+ avaliações</span></div>
-  <div><b>15</b><span>anos cuidando</span></div>
-  <div><b>🚗</b><span>leva-e-traz grátis*</span></div>
-</div>
-<h3>Clientes na hora do banho</h3>
-<div class="gal"><img src="https://images.pexels.com/photos/1436139/pexels-photo-1436139.jpeg?auto=compress&cs=tinysrgb&w=500" alt="" loading="lazy"><img src="https://images.pexels.com/photos/6131161/pexels-photo-6131161.jpeg?auto=compress&cs=tinysrgb&w=500" alt="" loading="lazy"><img src="https://images.pexels.com/photos/8343330/pexels-photo-8343330.jpeg?auto=compress&cs=tinysrgb&w=500" alt="" loading="lazy"></div>
+<section id="servicos"><div class="wrap">
+  <span class="sec-k">Nossos serviços</span>
+  <h2>Tudo que seu pet precisa, num lugar só</h2>
+  <p class="sub">Equipe apaixonada por bicho, produtos hipoalergênicos e uma clínica completa nos fundos da loja.</p>
+  <div class="svcgrid">
+    <div class="scard"><img src="https://images.pexels.com/photos/6131161/pexels-photo-6131161.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Banho" loading="lazy"><div class="bd"><h3>🛁 Banho & tosa</h3><p>Secagem carinhosa e perfume final — com foto no seu WhatsApp</p><div class="pr">a partir de R$ 49</div></div></div>
+    <div class="scard"><img src="https://images.pexels.com/photos/6130997/pexels-photo-6130997.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Tosa" loading="lazy"><div class="bd"><h3>✂️ Tosa da raça</h3><p>Groomers especializados em cada tipo de pelagem</p><div class="pr">a partir de R$ 69</div></div></div>
+    <div class="scard"><img src="https://images.pexels.com/photos/6235650/pexels-photo-6235650.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Consulta" loading="lazy"><div class="bd"><h3>🩺 Consulta veterinária</h3><p>Clínico geral e especialidades, com carinho e sem pressa</p><div class="pr">R$ 120</div></div></div>
+    <div class="scard"><img src="https://images.pexels.com/photos/7468978/pexels-photo-7468978.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Vacinas" loading="lazy"><div class="bd"><h3>💉 Vacinas em dia</h3><p>Carteirinha digital com lembrete automático no zap</p><div class="pr">a partir de R$ 89</div></div></div>
+  </div>
 
+  <div class="plano">
+    <div class="tx"><h3>💚 Plano PetVida</h3><p>Banho toda semana + 10% off na loja + prioridade na agenda. Seu pet sempre cheiroso, sem você precisar lembrar de marcar.</p></div>
+    <div style="text-align:center"><div class="v">R$ 159<small>/mês</small></div><a class="btn w" href="#" onclick="alert('No site real: WhatsApp com mensagem pronta de assinatura do plano.');return false">Assinar o plano</a></div>
+  </div>
+</div></section>
 
-<h3>Nossos serviços</h3>
-<div class="grid">
-  <div class="card"><div class="e">🛁</div><h4>Banho & tosa</h4><p>Produtos hipoalergênicos, secagem carinhosa</p><div class="pr">a partir de R$ 49</div></div>
-  <div class="card"><div class="e">💉</div><h4>Vacinas em dia</h4><p>Carteirinha digital com lembrete automático</p><div class="pr">a partir de R$ 89</div></div>
-  <div class="card"><div class="e">🩺</div><h4>Consulta veterinária</h4><p>Clínico geral e especialidades</p><div class="pr">R$ 120</div></div>
-  <div class="card"><div class="e">🦴</div><h4>Pet shop completo</h4><p>Ração, petiscos e acessórios — entrega no bairro</p><div class="pr">entrega grátis*</div></div>
-</div>
-<div class="plano">💚 <b>Plano PetVida:</b> banho semanal + 10% off na loja por R$ 159/mês — seu pet sempre cheiroso, seu bolso agradece</div>
+<section style="padding-top:0"><div class="wrap">
+  <span class="sec-k">Tutores que confiam</span>
+  <h2>Quem deixa o pet aqui, volta</h2>
+  <div class="revgrid">
+    <div class="rev"><div class="stars">★★★★★</div><p>"O lembrete de vacina pelo WhatsApp salvou a gente. E a Mel AMA o banho de lá — entra abanando o rabo."</p><b><span>🐕</span>Carla S. · tutora da Mel</b></div>
+    <div class="rev"><div class="stars">★★★★★</div><p>"Atenderam meu gato numa emergência à noite. Salvaram a vida dele. Gratidão eterna à equipe."</p><b><span>🐈</span>Pedro A. · tutor do Frajola</b></div>
+    <div class="rev"><div class="stars">★★★★★</div><p>"O leva-e-traz mudou minha rotina. Foto do antes e depois toda semana — parece rede social do meu cachorro."</p><b><span>🐩</span>Juliana R. · tutora do Bob</b></div>
+  </div>
 
-<h3>Tutores que confiam</h3>
-<div class="rev">"O lembrete de vacina pelo WhatsApp salvou a gente. E a Mel AMA o banho de lá."<b>— Carla S. · Google ★★★★★</b></div>
-<div class="rev">"Atenderam meu gato numa emergência à noite. Salvaram a vida dele. Gratidão eterna."<b>— Pedro A. · Google ★★★★★</b></div>
+  <div class="emerg"><div class="e">🚨</div><div><b>Emergência veterinária?</b> Ligue agora: <b>(11) 4002-7373</b> — orientação imediata por telefone, clínica de prontidão.</div></div>
 
-<h3>Visite a PetVida</h3>
-<div class="info">
-  <p>📍 Av. dos Bichos, 890 — Vila Feliz</p>
-  <p>🕐 Seg a sáb · 8h–19h</p>
-  <p>📞 (11) 4002-7373 · 🗺️ <a href="#" style="color:var(--teal)" onclick="alert('No site real: rota no Google Maps.');return false">Como chegar</a></p>
-</div>
+  <div class="info">
+    <div>📍 <b>Endereço</b><br>Av. dos Bichos, 890 — Vila Feliz</div>
+    <div>🕐 <b>Horários</b><br>Seg a sáb · 8h às 19h</div>
+    <div>🗺️ <b>Como chegar</b><br><a href="#" onclick="alert('No site real: rota no Google Maps.');return false" style="color:var(--teal)">Abrir no Google Maps →</a></div>
+  </div>
+</div></section>
 
-<footer>PetVida — marca fictícia para demonstração. *consulte área de cobertura.<br>Site modelo criado por <b>WFactory</b> · sites para pet shops e clínicas a partir de R$ 350<br>Feito por <b>Patrick Gouveia — WFactory</b> · <a href="https://1painerd.github.io/servicos.html" style="color:inherit">portfólio</a> · <a href="https://www.instagram.com/1painerd" style="color:inherit">@1painerd</a> (88 mil seguidores) · wfactory.design@gmail.com</footer>
-</div>
+<footer>PetVida — marca fictícia para demonstração. *leva-e-traz: consulte área de cobertura. Fotos: banco de imagens Pexels.<br>Site modelo criado por <b>WFactory</b> · sites para pet shops e clínicas a partir de R$ 350<br>Feito por <b>Patrick Gouveia — WFactory</b> · <a href="https://1painerd.github.io/servicos.html">portfólio</a> · <a href="https://www.instagram.com/1painerd">@1painerd</a> (88 mil seguidores) · wfactory.design@gmail.com</footer>
 <a class="float-wa" href="#" onclick="alert('No site real: WhatsApp direto.');return false">💬</a>
 </body>
 </html>
