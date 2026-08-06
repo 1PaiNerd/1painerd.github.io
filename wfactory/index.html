@@ -2,37 +2,128 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WFactory — Modelos de sites que vendem</title>
+<title>WFactory — Sites que transformam busca no Google em cliente na porta</title>
+<meta name="description" content="Sites profissionais para negócios locais a partir de R$ 350. Modelos reais por nicho — WFactory, por Patrick Gouveia.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#0f172a;--blue:#2563eb;--muted:#64748b;--bg:#f1f5f9}
+:root{--ink:#0b1220;--panel:#101a2e;--blue:#3b82f6;--cyan:#22d3ee;--txt:#e6edf7;--muted:#8fa3bf;--ok:#25d366}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
-.wrap{max-width:680px;margin:0 auto;padding:34px 20px 60px}
-h1{font-size:30px}
-h1 span{color:var(--blue)}
-.tag{color:var(--muted);margin-bottom:26px}
-a.card{display:flex;gap:16px;align-items:center;background:#fff;border-radius:16px;padding:18px;margin-bottom:12px;text-decoration:none;color:var(--ink);box-shadow:0 4px 14px rgba(15,23,42,.07);transition:transform .15s}
-a.card:active{transform:scale(.98)}
-.e{font-size:34px}
-.card h3{font-size:17px}
-.card p{font-size:13px;color:var(--muted)}
-.arrow{margin-left:auto;color:var(--blue);font-size:20px}
-.foot{margin-top:26px;background:#fff;border-radius:16px;padding:18px;font-size:14px;box-shadow:0 4px 14px rgba(15,23,42,.07)}
-.foot b{color:var(--blue)}
+body{font-family:Inter,system-ui,sans-serif;background:var(--ink);color:var(--txt);line-height:1.6}
+h1,h2,h3{font-family:Sora,Inter,sans-serif}
+.hero{position:relative;min-height:88vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:60px 22px;background:
+ linear-gradient(160deg,rgba(6,10,20,.92),rgba(11,18,32,.78) 55%,rgba(6,10,20,.94)),
+ url('https://images.pexels.com/photos/34803986/pexels-photo-34803986.jpeg?auto=compress&cs=tinysrgb&w=1600') center/cover}
+.hero .in{max-width:760px}
+.kicker{display:inline-block;border:1px solid rgba(34,211,238,.4);color:var(--cyan);border-radius:30px;padding:6px 16px;font-size:12.5px;letter-spacing:2px;text-transform:uppercase;margin-bottom:18px}
+.hero h1{font-size:clamp(32px,6vw,54px);font-weight:800;line-height:1.12}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--cyan),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--muted);font-size:clamp(15px,2.4vw,19px);margin:16px auto 0;max-width:560px}
+.cta-row{margin-top:28px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-block;padding:15px 30px;border-radius:12px;font-weight:700;text-decoration:none;font-size:16px}
+.btn.g{background:var(--ok);color:#fff;box-shadow:0 10px 30px rgba(37,211,102,.35)}
+.btn.o{border:1px solid rgba(255,255,255,.25);color:var(--txt)}
+.strip{display:flex;gap:0;justify-content:center;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07);background:#0d1526}
+.strip div{padding:20px 26px;text-align:center;min-width:170px}
+.strip b{display:block;font-size:24px;font-family:Sora;color:var(--cyan)}
+.strip span{font-size:12.5px;color:var(--muted)}
+.wrap{max-width:1060px;margin:0 auto;padding:0 22px}
+section{padding:64px 0}
+.sec-k{color:var(--cyan);font-size:13px;letter-spacing:3px;text-transform:uppercase}
+h2{font-size:clamp(24px,4vw,34px);margin:6px 0 8px}
+.sub{color:var(--muted);max-width:640px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:30px}
+.pcard{background:var(--panel);border:1px solid rgba(255,255,255,.07);border-radius:18px;overflow:hidden;text-decoration:none;color:var(--txt);transition:transform .2s,border-color .2s;display:block}
+.pcard:hover{transform:translateY(-4px);border-color:rgba(34,211,238,.45)}
+.pcard .ph{height:180px;background-size:cover;background-position:center;position:relative}
+.pcard .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(16,26,46,.95))}
+.pcard .tagn{position:absolute;left:14px;bottom:12px;z-index:2;background:rgba(11,18,32,.75);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:4px 10px;font-size:12px}
+.pcard .bd{padding:16px 18px 18px}
+.pcard h3{font-size:18px}
+.pcard p{font-size:13.5px;color:var(--muted);margin:4px 0 10px}
+.pcard .go{color:var(--cyan);font-weight:700;font-size:14px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:30px}
+.step{background:var(--panel);border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:24px}
+.step b{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--cyan),var(--blue));color:#06101f;font-family:Sora;font-size:18px;margin-bottom:12px}
+.step h3{font-size:17px;margin-bottom:6px}
+.step p{font-size:14px;color:var(--muted)}
+.trust{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:30px}
+.tcard{background:var(--panel);border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:24px}
+.tcard h3{font-size:16px;color:var(--cyan);margin-bottom:8px}
+.tcard p{font-size:14.5px;color:var(--muted)}
+.tcard a{color:var(--txt)}
+.price{background:linear-gradient(135deg,#0f1b33,#12244a);border:1px solid rgba(59,130,246,.35);border-radius:22px;padding:38px 28px;text-align:center;margin-top:30px}
+.price h3{font-size:24px}
+.price .v{font-family:Sora;font-size:44px;font-weight:800;color:var(--cyan);margin:6px 0}
+.price p{color:var(--muted);max-width:520px;margin:0 auto 18px}
+footer{border-top:1px solid rgba(255,255,255,.07);padding:34px 22px 90px;text-align:center;color:var(--muted);font-size:13px}
+footer a{color:var(--txt)}
+.float-wa{position:fixed;bottom:18px;right:18px;background:var(--ok);width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.45);z-index:50}
 </style>
 </head>
 <body>
-<div class="wrap">
-<h1>🏭 <span>WFactory</span> — sites que vendem</h1>
-<p class="tag">Modelos reais, feitos pra celular, prontos em poucos dias. Toque num modelo pra navegar:</p>
 
-<a class="card" href="churrascaria.html"><span class="e">🥩</span><div><h3>Churrascaria Braseiro</h3><p>Restaurantes, churrascarias e pizzarias</p></div><span class="arrow">→</span></a>
-<a class="card" href="buffet.html"><span class="e">🎈</span><div><h3>Buffet Aventura Kids</h3><p>Buffets infantis e casas de festas</p></div><span class="arrow">→</span></a>
-<a class="card" href="barbearia.html"><span class="e">💈</span><div><h3>Ferro & Navalha</h3><p>Barbearias, salões e studios de beleza</p></div><span class="arrow">→</span></a>
-<a class="card" href="pet.html"><span class="e">🐾</span><div><h3>PetVida</h3><p>Pet shops e clínicas veterinárias</p></div><span class="arrow">→</span></a>
-<a class="card" href="urgencia.html"><span class="e">🚨</span><div><h3>Resolve Já</h3><p>Desentupidoras, dedetizadoras e serviços 24h</p></div><span class="arrow">→</span></a>
+<div class="hero"><div class="in">
+  <span class="kicker">WFactory · sites para negócios locais</span>
+  <h1>Seu cliente te procura no Google.<br><em>Ele te encontra?</em></h1>
+  <p>Sites profissionais que transformam pesquisa em cliente na porta — feitos pra celular, prontos em poucos dias, a partir de R$ 350.</p>
+  <div class="cta-row">
+    <a class="btn g" href="mailto:wfactory.design@gmail.com">💬 Pedir orçamento grátis</a>
+    <a class="btn o" href="#modelos">Ver modelos ↓</a>
+  </div>
+</div></div>
 
-<div class="foot">💬 Gostou de algum? A gente faz o do SEU negócio — com seu nome, suas fotos e seu WhatsApp — <b>a partir de R$ 350</b>, pronto em poucos dias.<br><br>🧑‍💻 <b>Patrick Gouveia — WFactory</b><br>🌐 Portfólio: <a href="https://1painerd.github.io/servicos.html">1painerd.github.io/servicos</a><br>📸 Instagram: <a href="https://www.instagram.com/1painerd">@1painerd</a> (88 mil seguidores)<br>✉️ wfactory.design@gmail.com</div>
+<div class="strip">
+  <div><b>R$ 350</b><span>plano de lançamento</span></div>
+  <div><b>dias</b><span>não meses, pra ficar pronto</span></div>
+  <div><b>R$ 0</b><span>de mensalidade obrigatória</span></div>
+  <div><b>100%</b><span>feito pra celular</span></div>
 </div>
+
+<section id="modelos"><div class="wrap">
+  <span class="sec-k">Modelos por segmento</span>
+  <h2>Toque no seu ramo e navegue num site de verdade</h2>
+  <p class="sub">Cada modelo abaixo é um site completo e funcional. O seu fica assim — com o seu nome, suas fotos e o pedido caindo no seu WhatsApp.</p>
+  <div class="grid">
+    <a class="pcard" href="churrascaria.html"><div class="ph" style="background-image:url('https://images.pexels.com/photos/11172127/pexels-photo-11172127.jpeg?auto=compress&cs=tinysrgb&w=800')"><span class="tagn">🥩 Restaurantes</span></div><div class="bd"><h3>Churrascaria Braseiro</h3><p>Rodízio, cardápio, avaliações e reserva no WhatsApp</p><span class="go">Abrir modelo →</span></div></a>
+    <a class="pcard" href="buffet.html"><div class="ph" style="background-image:url('https://images.pexels.com/photos/12489331/pexels-photo-12489331.jpeg?auto=compress&cs=tinysrgb&w=800')"><span class="tagn">🎈 Buffets infantis</span></div><div class="bd"><h3>Buffet Aventura Kids</h3><p>Pacotes, fotos do espaço e orçamento em um toque</p><span class="go">Abrir modelo →</span></div></a>
+    <a class="pcard" href="barbearia.html"><div class="ph" style="background-image:url('https://images.pexels.com/photos/785537/pexels-photo-785537.jpeg?auto=compress&cs=tinysrgb&w=800')"><span class="tagn">💈 Barbearias</span></div><div class="bd"><h3>Ferro & Navalha</h3><p>Preços, agendamento online e clube de assinatura</p><span class="go">Abrir modelo →</span></div></a>
+    <a class="pcard" href="pet.html"><div class="ph" style="background-image:url('https://images.pexels.com/photos/19145882/pexels-photo-19145882.jpeg?auto=compress&cs=tinysrgb&w=800')"><span class="tagn">🐾 Pet shops</span></div><div class="bd"><h3>PetVida</h3><p>Banho & tosa, vacinas e agendamento pelo WhatsApp</p><span class="go">Abrir modelo →</span></div></a>
+    <a class="pcard" href="urgencia.html"><div class="ph" style="background-image:url('https://images.pexels.com/photos/32588548/pexels-photo-32588548.jpeg?auto=compress&cs=tinysrgb&w=800')"><span class="tagn">🚨 Serviços 24h</span></div><div class="bd"><h3>Resolve Já</h3><p>Desentupidora/dedetizadora com orçamento por foto</p><span class="go">Abrir modelo →</span></div></a>
+  </div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+  <span class="sec-k">Como funciona</span>
+  <h2>Do primeiro oi ao site no ar, sem dor de cabeça</h2>
+  <div class="steps">
+    <div class="step"><b>1</b><h3>Você me chama</h3><p>WhatsApp ou e-mail. Me conta o negócio e eu já te mostro o modelo do seu ramo.</p></div>
+    <div class="step"><b>2</b><h3>Eu monto uma prévia grátis</h3><p>Com seu nome e suas informações públicas. Você só paga se gostar.</p></div>
+    <div class="step"><b>3</b><h3>Site no ar em dias</h3><p>Com seu WhatsApp, suas fotos, mapa e tudo funcionando no celular do cliente.</p></div>
+  </div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+  <span class="sec-k">Quem faz</span>
+  <h2>Trabalho às claras, com nome e rosto públicos</h2>
+  <div class="trust">
+    <div class="tcard"><h3>🧑‍💻 Patrick Gouveia</h3><p>Desenvolvedor e criador digital em Mauá/SP. Meu nome, meu trabalho e minha reputação são públicos — sem empresa fantasma, sem golpe.</p></div>
+    <div class="tcard"><h3>📸 Comunidade de 88 mil</h3><p>Criador do <a href="https://www.instagram.com/1painerd" rel="noopener">@1painerd</a> no Instagram — uma comunidade com <b>88 mil seguidores</b>. Quem vive de reputação, entrega.</p></div>
+    <div class="tcard"><h3>🌐 Portfólio ao vivo</h3><p>O site <a href="https://1painerd.github.io" rel="noopener">1painerd.github.io</a> — que você pode visitar agora — foi 100% construído por mim. O que eu vendo, eu uso.</p></div>
+  </div>
+  <div class="price">
+    <h3>Plano de lançamento</h3>
+    <div class="v">a partir de R$ 350</div>
+    <p>Site completo no ar em poucos dias · prévia gratuita antes de pagar · manutenção opcional a partir de R$ 39/mês · sem fidelidade, sem pegadinha.</p>
+    <a class="btn g" href="mailto:wfactory.design@gmail.com">Quero minha prévia grátis</a>
+  </div>
+</div></section>
+
+<footer>
+  <b style="color:var(--txt)">WFactory</b> — sites para negócios locais · Patrick Gouveia<br>
+  ✉️ wfactory.design@gmail.com · 📸 <a href="https://www.instagram.com/1painerd" rel="noopener">@1painerd</a> · 🌐 <a href="https://1painerd.github.io" rel="noopener">portfólio</a><br>
+  <span style="font-size:11.5px">Modelos usam marcas fictícias e fotos de banco de imagens (Pexels) para demonstração.</span>
+</footer>
+<a class="float-wa" href="mailto:wfactory.design@gmail.com" title="Fale com a WFactory">💬</a>
 </body>
 </html>

@@ -15,7 +15,7 @@ header{padding:22px 0 8px;text-align:center}
 h1{font-size:34px}
 h1 span{color:var(--red)}
 .tag{color:var(--muted);font-size:14px}
-.hero{margin:18px auto;border-radius:16px;background:linear-gradient(150deg,var(--red),var(--redD));color:#fff;padding:30px 24px;text-align:center;box-shadow:0 16px 40px rgba(220,38,38,.3)}
+.hero{margin:18px auto;border-radius:16px;color:#fff;padding:30px 24px;text-align:center;box-shadow:0 16px 40px rgba(220,38,38,.3);background:linear-gradient(150deg,rgba(153,27,27,.88),rgba(220,38,38,.6) 60%,rgba(100,15,15,.92)),url('https://images.pexels.com/photos/32588548/pexels-photo-32588548.jpeg?auto=compress&cs=tinysrgb&w=1400') center/cover;min-height:400px;display:flex;flex-direction:column;justify-content:center}
 .hero h2{font-size:26px}
 .hero p{color:#fecaca;font-size:14px;margin-top:4px}
 .cta{display:block;margin:16px auto 0;background:#25d366;color:#fff;font-weight:800;font-size:18px;padding:16px;border-radius:12px;text-decoration:none;max-width:340px}
@@ -42,6 +42,7 @@ h3{font-size:22px;margin:32px 0 14px}
 footer{text-align:center;padding:30px 0 90px;color:var(--muted);font-size:12px}
 .float-wa{position:fixed;bottom:18px;right:18px;background:#25d366;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.35);animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.gal{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}.gal img{width:100%;height:110px;object-fit:cover;border-radius:12px;display:block}
 </style>
 </head>
 <body>
@@ -66,6 +67,9 @@ footer{text-align:center;padding:30px 0 90px;color:var(--muted);font-size:12px}
   <div><b>25</b><span>anos de experiência</span></div>
   <div><b>4,8★</b><span>avaliação no Google</span></div>
 </div>
+<h3>Equipe em ação</h3>
+<div class="gal"><img src="https://images.pexels.com/photos/17063686/pexels-photo-17063686.jpeg?auto=compress&cs=tinysrgb&w=500" alt="" loading="lazy"><img src="https://images.pexels.com/photos/8486978/pexels-photo-8486978.jpeg?auto=compress&cs=tinysrgb&w=500" alt="" loading="lazy"><img src="https://images.pexels.com/photos/5636929/pexels-photo-5636929.jpeg?auto=compress&cs=tinysrgb&w=500" alt="" loading="lazy"></div>
+
 
 <h3>O que resolvemos</h3>
 <div class="svc"><div class="e">🚿</div><div><h4>Desentupimento</h4><p>Pia, vaso, ralo, esgoto e caixa de gordura — máquina rotativa e hidrojato</p></div></div>

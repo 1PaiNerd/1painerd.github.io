@@ -13,7 +13,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--sand);color:var(--
 header{padding:64px 0 10px;text-align:center}
 h1{font-size:40px;color:var(--tealD)}
 .tag{color:var(--soft)}
-.hero{margin:22px auto;border-radius:24px;background:linear-gradient(150deg,var(--teal),var(--tealD));color:#fff;padding:34px 26px;text-align:center;box-shadow:0 18px 44px rgba(13,148,136,.28)}
+.hero{margin:22px auto;border-radius:24px;color:#fff;padding:34px 26px;text-align:center;box-shadow:0 18px 44px rgba(13,148,136,.28);background:linear-gradient(150deg,rgba(15,118,110,.82),rgba(13,148,136,.5) 60%,rgba(10,80,74,.9)),url('https://images.pexels.com/photos/19145882/pexels-photo-19145882.jpeg?auto=compress&cs=tinysrgb&w=1400') center/cover;min-height:400px;display:flex;flex-direction:column;justify-content:center}
 .hero .emo{font-size:54px}
 .hero h2{font-size:24px;margin:8px 0 6px}
 .hero p{color:#c9f2ec;font-size:14px}
@@ -38,6 +38,7 @@ h3{font-size:23px;margin:36px 0 14px;color:var(--tealD)}
 .info p{margin:6px 0}
 footer{text-align:center;padding:32px 0 90px;color:var(--soft);font-size:12px}
 .float-wa{position:fixed;bottom:18px;right:18px;background:#25d366;width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.gal{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}.gal img{width:100%;height:110px;object-fit:cover;border-radius:12px;display:block}
 </style>
 </head>
 <body>
@@ -49,7 +50,6 @@ footer{text-align:center;padding:32px 0 90px;color:var(--soft);font-size:12px}
 </header>
 
 <div class="hero">
-  <div class="emo">🐶🐱</div>
   <h2>Agende o banho do seu pet pelo WhatsApp</h2>
   <p>Busca e entrega em casa disponível. Seu pet vai limpinho, cheiroso e feliz — com foto de antes e depois no seu zap.</p>
   <a class="cta" href="#" onclick="alert('No site real: WhatsApp da clínica com mensagem pronta de agendamento.');return false">📱 Agendar agora</a>
@@ -61,6 +61,9 @@ footer{text-align:center;padding:32px 0 90px;color:var(--soft);font-size:12px}
   <div><b>15</b><span>anos cuidando</span></div>
   <div><b>🚗</b><span>leva-e-traz grátis*</span></div>
 </div>
+<h3>Clientes na hora do banho</h3>
+<div class="gal"><img src="https://images.pexels.com/photos/1436139/pexels-photo-1436139.jpeg?auto=compress&cs=tinysrgb&w=500" alt="" loading="lazy"><img src="https://images.pexels.com/photos/6131161/pexels-photo-6131161.jpeg?auto=compress&cs=tinysrgb&w=500" alt="" loading="lazy"><img src="https://images.pexels.com/photos/8343330/pexels-photo-8343330.jpeg?auto=compress&cs=tinysrgb&w=500" alt="" loading="lazy"></div>
+
 
 <h3>Nossos serviços</h3>
 <div class="grid">
