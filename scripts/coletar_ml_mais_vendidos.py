@@ -120,10 +120,24 @@ def detalhes_produtos(ids, token):
             continue
         fotos = p.get("pictures") or []
         bb = p.get("buy_box_winner") or {}
+
+        # o preço nem sempre vem no produto. Quando não vem, a gente pergunta
+        # qual anúncio está vencendo a caixa de compra e pega o preço dele.
+        preco = bb.get("price")
+        if preco is None:
+            try:
+                r = get(f"{API}/products/{pid}/items?limit=1", token)
+                res = r.get("results") or []
+                if res:
+                    bb = res[0]
+                    preco = bb.get("price")
+            except Exception as e:
+                print(f"    ! sem preço para {pid}: {e}")
+
         saida.append({
             "id": pid,
             "nome": p.get("name") or bb.get("title") or "",
-            "preco": bb.get("price"),
+            "preco": preco,
             "img": https((fotos[0] or {}).get("url") if fotos else bb.get("thumbnail")),
             "url": p.get("permalink") or f"https://www.mercadolivre.com.br/p/{pid}",
         })
@@ -180,7 +194,8 @@ def main():
                     itens.append(it)
             saida["categorias"].append({"id": cid, "nome": nome, "emoji": emoji, "itens": itens})
             total += len(itens)
-            print(f"  ✓ {nome}: {len(itens)} itens")
+            com_preco = sum(1 for it in itens if it.get("preco"))
+            print(f"  ✓ {nome}: {len(itens)} itens ({com_preco} com preço)")
         except Exception as e:
             print(f"  ! {nome}: {e}")
 
