@@ -31,6 +31,8 @@ import json, os, sys, datetime, urllib.request, urllib.parse, urllib.error
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ARQ = os.path.join(RAIZ, "ml_mais_vendidos.json")
+HIST = os.path.join(RAIZ, "historico_ml.json")
+DIAS_HISTORICO = 60      # guarda 2 meses por produto — o resto vira ruído
 NOVO_REFRESH = os.path.join(RAIZ, "novo_refresh.txt")
 HOJE = datetime.date.today().isoformat()
 DRY = "--dry-run" in sys.argv
@@ -210,6 +212,30 @@ def main():
 
     with open(ARQ, "w", encoding="utf-8") as f:
         json.dump(saida, f, ensure_ascii=False, separators=(",", ":"))
+
+    # ---- histórico de preço: 1 ponto por produto por dia (é isso que vira o gráfico)
+    try:
+        with open(HIST, encoding="utf-8") as f:
+            historico = json.load(f)
+    except Exception:
+        historico = {}
+
+    novos = 0
+    for c in saida["categorias"]:
+        for it in c["itens"]:
+            if not it.get("preco"):
+                continue
+            linha = historico.setdefault(it["id"], [])
+            if linha and linha[-1].get("d") == HOJE:
+                linha[-1]["p"] = it["preco"]      # rodou 2x no mesmo dia: corrige
+            else:
+                linha.append({"d": HOJE, "p": it["preco"]})
+                novos += 1
+            del linha[:-DIAS_HISTORICO]
+
+    with open(HIST, "w", encoding="utf-8") as f:
+        json.dump(historico, f, ensure_ascii=False, separators=(",", ":"))
+    print(f"histórico: {novos} preços novos, {len(historico)} produtos acompanhados")
 
     resumo = os.environ.get("GITHUB_STEP_SUMMARY")
     if resumo:
