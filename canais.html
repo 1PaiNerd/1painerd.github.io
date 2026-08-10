@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-tema="claro">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meus Canais — 1PaiNerd Studios</title>
+<meta name="description" content="Papai Tube, Cordas do Infinito e Sofia Tube — os vídeos mais recentes dos canais do 1PaiNerd.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080c16;--card:rgba(255,255,255,.045);--ink:#edf1fb;--sub:#8d99b5;--mut:#5d6883;
+--acc:#ff8a3d;--cy:#3fd6ff;--yt:#ff0033;--line:rgba(120,160,255,.16);--r:14px;--navh:60px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',-apple-system,'Segoe UI',Roboto,sans-serif;
+font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif;font-weight:600;line-height:1.2;letter-spacing:-.02em}
+a{color:var(--cy)}img{max-width:100%}
+.gridbg{position:fixed;inset:0;z-index:-2;pointer-events:none;
+background-image:linear-gradient(rgba(120,160,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(120,160,255,.05) 1px,transparent 1px);
+background-size:44px 44px;mask-image:radial-gradient(ellipse 85% 60% at 50% 12%,#000 30%,transparent 78%)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+nav{position:sticky;top:0;z-index:60;background:rgba(8,12,22,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.navin{max-width:1100px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:26px}
+.brand{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.05rem;color:var(--ink);text-decoration:none;margin-right:auto}
+.brand em{font-style:normal;color:var(--acc)}.brand small{font-weight:500;color:var(--sub)}
+nav a.nl{font-size:.92rem;font-weight:600;color:var(--sub);text-decoration:none;padding:4px 0;border-bottom:2px solid transparent;transition:.2s}
+nav a.nl:hover{color:var(--ink)}
+nav a.nl.on{color:var(--ink);border-bottom-color:var(--acc)}
+@media(max-width:760px){:root{--navh:52px}.navin{gap:16px;flex-wrap:nowrap;padding:0 16px;height:52px;overflow-x:auto;scrollbar-width:none}
+.navin::-webkit-scrollbar{display:none}.brand{flex:none;font-size:.98rem}nav a.nl{flex:none;white-space:nowrap;font-size:.86rem}}
+/* topo curto */
+.topline{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;padding:24px 0 12px;flex-wrap:wrap}
+.topline h1{font-size:clamp(1.45rem,3.4vw,1.95rem);margin:0}
+.sub1{color:var(--sub);font-size:.9rem;margin-top:2px}
+@media(max-width:640px){.topline{padding:14px 0 8px}.topline h1{font-size:1.3rem}}
+/* barra de canais (sticky) */
+.catbar{position:sticky;top:var(--navh);z-index:55;background:rgba(8,12,22,.97);
+backdrop-filter:blur(14px);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:12px 0 10px;margin-bottom:6px}
+.catrow{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+.catrow::-webkit-scrollbar{display:none}
+.chip{flex:none;background:var(--card);border:1.5px solid var(--line);color:var(--sub);
+font:600 .88rem/1 'Inter',sans-serif;padding:9px 15px;border-radius:999px;cursor:pointer;white-space:nowrap;
+transition:.18s;display:flex;align-items:center;gap:7px;font-family:'Inter',sans-serif}
+.chip:hover{color:var(--ink);border-color:rgba(63,214,255,.45);transform:translateY(-1px)}
+.chip.on{background:linear-gradient(135deg,var(--acc),#ff6d2e);border-color:transparent;color:#160a02;
+box-shadow:0 0 20px rgba(255,138,61,.32)}
+.chip .n{font-size:.76rem;opacity:.7;font-weight:700}
+/* bloco de canal */
+.canal{padding:24px 0 6px}
+.chead{display:flex;align-items:center;gap:14px;margin-bottom:14px;flex-wrap:wrap}
+.chead h2{font-size:1.25rem;margin:0}
+.chead .hd{color:var(--mut);font-size:.82rem;font-weight:600}
+.chead .insc{margin-left:auto;background:var(--yt);color:#fff;text-decoration:none;
+font:700 .84rem 'Inter',sans-serif;padding:9px 16px;border-radius:999px;white-space:nowrap;
+box-shadow:0 6px 20px rgba(255,0,51,.28);transition:.2s}
+.chead .insc:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(255,0,51,.45)}
+.vgrid{display:grid;gap:15px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+.vc{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;
+text-decoration:none;color:var(--ink);display:flex;flex-direction:column;
+transition:transform .22s,border-color .22s,box-shadow .22s}
+.vc:hover{transform:translateY(-4px);border-color:rgba(255,0,51,.45);
+box-shadow:0 0 26px rgba(255,0,51,.10),0 18px 40px rgba(0,0,0,.45)}
+.vthumb{position:relative;aspect-ratio:16/9;background:#0d1424;overflow:hidden}
+.vthumb img{width:100%;height:100%;object-fit:cover;display:block}
+.vthumb .play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+background:rgba(6,9,17,.18);opacity:0;transition:.2s}
+.vc:hover .vthumb .play{opacity:1}
+.vthumb .play span{width:52px;height:52px;border-radius:50%;background:var(--yt);color:#fff;
+display:flex;align-items:center;justify-content:center;font-size:1.2rem;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+.novo{position:absolute;top:9px;left:9px;background:var(--acc);color:#221007;
+font:800 .68rem 'Inter',sans-serif;padding:3px 9px;border-radius:999px}
+.vinfo{padding:12px 13px 14px;display:flex;flex-direction:column;gap:5px;flex:1}
+.vinfo h3{font-size:.92rem;line-height:1.35;font-family:'Inter',sans-serif;font-weight:600;
+display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.vinfo .meta{font-size:.75rem;color:var(--mut);margin-top:auto}
+@media(max-width:640px){.vgrid{grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:11px}
+ .vinfo{padding:10px 11px 12px}.vinfo h3{font-size:.84rem}}
+.como{border-top:1px solid var(--line);margin-top:26px;padding:30px 0 6px}
+.como h2{font-size:1.15rem;margin-bottom:8px}
+.como p{color:var(--sub);font-size:.92rem;max-width:70ch}
+footer{border-top:1px solid var(--line);margin-top:20px;padding:28px 0 60px;color:var(--sub);font-size:.84rem}
+footer a{color:var(--sub)}
+/* ---------- ponte de tema: segue a escolha feita na home ---------- */
+[data-tema="claro"],[data-tema="sol"]{
+  --bg:#f7f9ff;--card:#ffffff;--ink:#141a2b;--sub:#5b6784;--mut:#7d89a5;--line:#e4e9f5;--cy:#0b8fc4}
+[data-tema="sol"]{--bg:#fff6ef}
+[data-tema="claro"] body,[data-tema="sol"] body{background:var(--bg)}
+[data-tema="claro"] nav,[data-tema="sol"] nav{background:rgba(255,255,255,.94)}
+[data-tema="claro"] .catbar,[data-tema="sol"] .catbar{background:rgba(255,255,255,.97)}
+[data-tema="claro"] .gridbg,[data-tema="sol"] .gridbg{
+ background-image:linear-gradient(rgba(70,110,190,.08) 1px,transparent 1px),
+ linear-gradient(90deg,rgba(70,110,190,.08) 1px,transparent 1px)}
+[data-tema="claro"] .vc,[data-tema="sol"] .vc,
+[data-tema="claro"] .chip,[data-tema="sol"] .chip{background:#fff;border-color:var(--line);
+ box-shadow:0 1px 2px rgba(20,40,90,.04),0 10px 24px rgba(20,40,90,.07)}
+[data-tema="claro"] .chip.on,[data-tema="sol"] .chip.on{background:linear-gradient(135deg,var(--acc),#ff6d2e);color:#160a02}
+</style>
+</head>
+<body>
+<div class="gridbg"></div>
+<nav><div class="navin">
+  <a class="brand" href="index.html">1<em>Pai</em>Nerd <small>Studios</small></a>
+  <a class="nl" href="index.html">Início</a><a class="nl on" href="canais.html">Meus Canais</a>
+  <a class="nl" href="achadinhos.html">Achadinhos</a><a class="nl" href="mais-vendidos.html">Mais Vendidos</a>
+  <a class="nl" href="jogos.html">Jogos</a><a class="nl" href="servicos.html">Serviços</a>
+</div></nav>
+
+<main>
+<div class="wrap">
+  <div class="topline">
+    <div>
+      <h1>Meus canais</h1>
+      <p class="sub1" id="sub1">Os vídeos mais recentes dos canais que eu faço — atualiza sozinho todo dia</p>
+    </div>
+  </div>
+</div>
+
+<div class="catbar"><div class="wrap"><div class="catrow" id="catrow"></div></div></div>
+
+<div class="wrap" id="lista"></div>
+
+<section class="como"><div class="wrap">
+  <h2>Sobre esta página</h2>
+  <p>As capas e os títulos vêm direto do YouTube e se atualizam sozinhos — quando eu publico um vídeo novo,
+  ele aparece aqui no dia seguinte sem ninguém mexer em nada. Clicar abre o vídeo no YouTube.</p>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <b>1PaiNerd Studios</b> — Mauá/SP · <a href="https://www.instagram.com/1painerd">@1painerd</a> · <a href="index.html">1painerd.github.io</a>
+</div></footer>
+
+<script>
+(function(){var t='claro';try{t=localStorage.getItem('1pn-tema')||'claro'}catch(e){}
+document.documentElement.setAttribute('data-tema',t);})();
+
+let D=null, filtro='';
+const DT=s=>{const[a,m,d]=s.split('-');return d+'/'+m+'/'+a};
+const recente=s=>{const dias=(Date.now()-new Date(s+'T12:00:00').getTime())/864e5;return dias<=14};
+
+function chips(){
+  const cr=document.getElementById('catrow');
+  const total=D.canais.reduce((t,c)=>t+c.videos.length,0);
+  let h=`<button class="chip ${!filtro?'on':''}" data-c="">▶️ Todos <span class="n">${total}</span></button>`;
+  D.canais.forEach(c=>{h+=`<button class="chip ${filtro===c.slug?'on':''}" data-c="${c.slug}">${c.nome} <span class="n">${c.videos.length}</span></button>`});
+  cr.innerHTML=h;
+  cr.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{filtro=b.dataset.c;draw()});
+}
+function bloco(c){
+  const vids=c.videos.map(v=>`
+    <a class="vc" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">
+      <div class="vthumb">
+        <img src="https://i.ytimg.com/vi/${v.id}/hqdefault.jpg" loading="lazy" alt=""
+             onerror="this.src='https://i.ytimg.com/vi/${v.id}/mqdefault.jpg'">
+        ${recente(v.d)?'<span class="novo">NOVO</span>':''}
+        <div class="play"><span>▶</span></div>
+      </div>
+      <div class="vinfo"><h3>${v.t}</h3><div class="meta">${DT(v.d)}</div></div>
+    </a>`).join('');
+  return `<section class="canal">
+    <div class="chead">
+      <div><h2>${c.nome}</h2><div class="hd">${c.handle} · ${c.desc}</div></div>
+      <a class="insc" href="${c.url}?sub_confirmation=1" target="_blank" rel="noopener">▶ Inscrever-se</a>
+    </div>
+    <div class="vgrid">${vids}</div>
+  </section>`;
+}
+function draw(){
+  chips();
+  const cs=filtro?D.canais.filter(c=>c.slug===filtro):D.canais;
+  document.getElementById('lista').innerHTML=cs.map(bloco).join('');
+}
+fetch('videos.json?v='+Date.now()).then(r=>r.json()).then(j=>{
+  D=j;
+  document.getElementById('sub1').textContent=
+    'Os vídeos mais recentes dos canais que eu faço · atualizado em '+DT(j.gerado_em);
+  draw();
+}).catch(()=>{document.getElementById('lista').innerHTML=
+  '<p style="color:var(--sub);padding:30px 0">Não consegui carregar a lista de vídeos agora. Tente recarregar.</p>';});
+</script>
+</body>
+</html>

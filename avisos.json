@@ -1,0 +1,16 @@
+{
+  "ativo": true,
+  "_como_usar": "Para desligar o letreiro, troque ativo para false. Para trocar o recado, edite o texto abaixo. Se nao tiver link, deixe link vazio ('') que o recado vira so texto.",
+  "itens": [
+    {
+      "texto": "🔥 MENTORIA 1PaiNerd abre em breve — entre na lista de espera",
+      "link": "https://www.instagram.com/1painerd",
+      "cta": "quero entrar"
+    },
+    {
+      "texto": "🛒 Achadinhos atualizados: 20 itens testados em casa, com preço conferido",
+      "link": "achadinhos.html",
+      "cta": "ver agora"
+    }
+  ]
+}

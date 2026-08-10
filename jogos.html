@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-tema="claro">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jogos & Família — 1PaiNerd Studios</title><meta name="description" content="BirdTower, KORDEX-7 Drakkareth, Cordas do Infinito e os canais da família 1PaiNerd.">
@@ -162,26 +162,30 @@ footer{background:var(--bg2);border-color:var(--line)}
 <div class="gridbg" aria-hidden="true"></div><div class="aur a1" aria-hidden="true"></div><div class="aur a2" aria-hidden="true"></div>
 <nav><div class="navin">
   <a class="brand" href="index.html">1<em>Pai</em>Nerd <small>Studios</small></a>
-  <a class="nl" href="index.html">Início</a><a class="nl on" href="jogos.html">Jogos & Família</a><a class="nl" href="achadinhos.html">Achadinhos</a><a class="nl" href="mais-vendidos.html">Mais Vendidos</a><a class="nl" href="servicos.html">Serviços</a>
+  <a class="nl" href="index.html">Início</a><a class="nl on" href="jogos.html">Jogos & Família</a><a class="nl" href="canais.html">Meus Canais</a><a class="nl" href="achadinhos.html">Achadinhos</a><a class="nl" href="mais-vendidos.html">Mais Vendidos</a><a class="nl" href="servicos.html">Serviços</a>
 </div></nav>
 <main>
 <div class="wrap">
 <section style="padding-bottom:36px">
   <p class="kicker rv">Jogos & Família</p>
   <h1 class="rv" style="font-size:clamp(1.9rem,4.5vw,2.7rem)">Feitos em casa, testados sem dó</h1>
+<p style="margin:14px 0 4px"><a href="https://www.roblox.com/pt/users/1657649200/profile" target="_blank" rel="noopener"
+ style="display:inline-flex;align-items:center;gap:9px;background:linear-gradient(135deg,#ff8a3d,#ff6d2e);
+ color:#221007;font-weight:800;font-size:.95rem;padding:12px 22px;border-radius:999px;text-decoration:none;
+ box-shadow:0 8px 24px rgba(255,138,61,.3)">🟥 Meu perfil no Roblox &rarr;</a></p>
   <p class="lead rv">Cada mundo daqui passa pela crítica mais exigente que existe: minha filha. Ela aprova — ou manda refazer.</p>
 </section>
 
 <section style="padding-top:0">
   <h2 class="rv">Os jogos</h2>
   <div class="mgrid" style="margin-top:22px">
-    <a class="mcard rv" href="#" data-todo="link-birdtower"><img src="assets/birdtower.png" alt="Arte do jogo BirdTower">
+    <a class="mcard rv" href="#" data-todo="link-birdtower"><img src="../assets/birdtower.png" alt="Arte do jogo BirdTower">
       <div class="mt"><h3>BirdTower <span class="tag">no ar</span></h3><p>Escale a torre, colete penas, fuja das cobras. Sem checkpoint — coragem.</p></div></a>
-    <a class="mcard rv" href="#" data-todo="link-drakkareth"><img src="assets/drakkareth.png" alt="Arte do jogo KORDEX-7 Drakkareth">
+    <a class="mcard rv" href="#" data-todo="link-drakkareth"><img src="../assets/drakkareth.png" alt="Arte do jogo KORDEX-7 Drakkareth">
       <div class="mt"><h3>KORDEX-7 · Drakkareth <span class="tag">em produção</span></h3><p>Fuga da Forja: 20 fases num vulcão vivo, com um chefe primordial na sua cola.</p></div></a>
-    <a class="mcard rv" href="https://www.instagram.com/1painerd" rel="noopener"><img src="assets/cordas.png" alt="Arte de Cordas do Infinito">
+    <a class="mcard rv" href="https://www.instagram.com/1painerd" rel="noopener"><img src="../assets/cordas.png" alt="Arte de Cordas do Infinito">
       <div class="mt"><h3>Cordas do Infinito <span class="tag">no ar</span></h3><p>Zorg e Xul tentando entender a Terra nos Relatórios Terrestres.</p></div></a>
-    <a class="mcard rv" href="#" data-todo="link-lume"><img src="assets/lume.png" alt="Arte do app Lumé">
+    <a class="mcard rv" href="#" data-todo="link-lume"><img src="../assets/lume.png" alt="Arte do app Lumé">
       <div class="mt"><h3>Lumé <span class="tag">em design</span></h3><p>Um app que trata o céu como instrumento de autoconhecimento.</p></div></a>
   </div>
 </section>
@@ -217,5 +221,7 @@ document.addEventListener('click',function(e){
   else if(h.indexOf('mailto:')===0||h.indexOf('wa.me')>-1) gtag('event','contato_servico');
 });
 </script>
+<script>(function(){var t='claro';try{t=localStorage.getItem('1pn-tema')||'claro'}catch(e){}
+document.documentElement.setAttribute('data-tema',t);})();</script>
 </body>
 </html>
