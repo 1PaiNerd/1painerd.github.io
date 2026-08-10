@@ -1,0 +1,51 @@
+name: Atualiza o site (preços + vídeos)
+
+# Todo dia às 12:10 UTC (09:10 em Brasília). Minuto quebrado de propósito:
+# no minuto cheio a fila do GitHub fica cheia e atrasa.
+on:
+  schedule:
+    - cron: "10 12 * * *"
+  workflow_dispatch:        # botão "Run workflow" pra rodar na hora
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Vídeos dos canais (YouTube RSS)
+        run: python scripts/coletar_videos.py
+
+      - name: Preços dos achadinhos
+        continue-on-error: true          # se a coleta de preço falhar, os vídeos ainda sobem
+        env:
+          ML_ACCESS_TOKEN: ${{ secrets.ML_ACCESS_TOKEN }}
+          AMZ_ACCESS_KEY: ${{ secrets.AMZ_ACCESS_KEY }}
+          AMZ_SECRET_KEY: ${{ secrets.AMZ_SECRET_KEY }}
+          AMZ_PARTNER_TAG: ${{ secrets.AMZ_PARTNER_TAG }}
+        run: python scripts/coletar_precos.py
+
+      - name: Publicar
+        run: |
+          git config user.name  "1painerd-bot"
+          git config user.email "actions@github.com"
+          git add -A videos.json precos.json alertas.json alerta_titulo.txt 2>/dev/null || true
+          git diff --staged --quiet || git commit -m "site: atualização de $(date +%F)"
+          git push
+
+      - name: Avisar quando algo bater o menor preço
+        if: hashFiles('alerta_titulo.txt') != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITULO=$(cat alerta_titulo.txt)
+          if [ -n "$TITULO" ]; then
+            gh issue create --title "$TITULO" --body-file alertas.json || true
+          fi
