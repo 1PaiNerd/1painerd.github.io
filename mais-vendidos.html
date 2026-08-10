@@ -178,6 +178,50 @@ border-radius:999px;padding:7px 14px;white-space:nowrap}
 .como .cur2{float:right;width:145px;margin:0 0 12px 22px}
 @media(max-width:640px){.como .cur2{display:none}.como{padding:26px 0 6px}}
 
+/* ---------- BARRA DE LOJAS: cada uma com a cara dela ---------- */
+.lojabar{border-bottom:1px solid var(--line);padding:14px 0 12px}
+.lojarow{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none}
+.lojarow::-webkit-scrollbar{display:none}
+.lchip{flex:none;display:flex;align-items:center;gap:9px;cursor:pointer;white-space:nowrap;
+ background:var(--card);border:2px solid var(--line);border-radius:12px;padding:9px 16px 9px 12px;
+ font:700 .92rem/1 'Inter',sans-serif;color:var(--sub);transition:.18s;position:relative}
+.lchip:hover{transform:translateY(-2px);color:var(--ink)}
+.lchip .lg{width:26px;height:26px;border-radius:7px;display:grid;place-items:center;flex:none;
+ font:800 .82rem/1 'Space Grotesk',sans-serif;letter-spacing:-.03em}
+.lchip .n{font-size:.74rem;font-weight:700;opacity:.65}
+/* cores oficiais de cada loja */
+.lchip[data-l="tudo"] .lg{background:linear-gradient(135deg,#ff8a3d,#ff6d2e);color:#fff}
+.lchip[data-l="ml"]    .lg{background:#ffe600;color:#2d3277}
+.lchip[data-l="amazon"].lg,.lchip[data-l="amazon"] .lg{background:#ff9900;color:#232f3e}
+.lchip[data-l="shopee"] .lg{background:#ee4d2d;color:#fff}
+/* aba ativa: a barra inteira veste a cor da loja */
+.lchip.on{color:#fff;border-color:transparent}
+.lchip[data-l="tudo"].on{background:linear-gradient(135deg,#ff8a3d,#ff6d2e);color:#160a02;
+ box-shadow:0 6px 20px rgba(255,138,61,.4)}
+.lchip[data-l="tudo"].on .lg{background:rgba(0,0,0,.16);color:#160a02}
+.lchip[data-l="ml"].on{background:#ffe600;color:#2d3277;box-shadow:0 6px 20px rgba(255,230,0,.38)}
+.lchip[data-l="ml"].on .lg{background:#2d3277;color:#ffe600}
+.lchip[data-l="amazon"].on{background:#232f3e;color:#fff;box-shadow:0 6px 20px rgba(35,47,62,.45)}
+.lchip[data-l="amazon"].on .lg{background:#ff9900;color:#232f3e}
+.lchip[data-l="shopee"].on{background:#ee4d2d;color:#fff;box-shadow:0 6px 20px rgba(238,77,45,.4)}
+.lchip[data-l="shopee"].on .lg{background:rgba(255,255,255,.9);color:#ee4d2d}
+.lchip .n{color:inherit}
+@media(max-width:640px){.lchip{padding:8px 13px 8px 10px;font-size:.85rem}.lchip .lg{width:23px;height:23px;font-size:.74rem}}
+/* botao de comprar na cor de cada loja */
+.pbtn.go[data-l="ml"]{background:linear-gradient(135deg,#ffe600,#ffd400);color:#2d3277;box-shadow:0 4px 16px rgba(255,214,0,.3)}
+.pbtn.go[data-l="amazon"]{background:linear-gradient(135deg,#ff9900,#ff8000);color:#232f3e;box-shadow:0 4px 16px rgba(255,153,0,.3)}
+.pbtn.go[data-l="shopee"]{background:linear-gradient(135deg,#ee4d2d,#d73211);color:#fff;box-shadow:0 4px 16px rgba(238,77,45,.3)}
+.selo{position:absolute;top:10px;right:10px;font:800 .62rem/1 'Inter',sans-serif;padding:5px 8px;
+ border-radius:7px;letter-spacing:.04em;text-transform:uppercase}
+.selo[data-l="ml"]{background:#ffe600;color:#2d3277}
+.selo[data-l="amazon"]{background:#232f3e;color:#ff9900}
+.selo[data-l="shopee"]{background:#ee4d2d;color:#fff}
+/* ---------- mini grafico de preco (tipo Buscape) ---------- */
+.spark{margin-top:2px;display:flex;align-items:center;gap:9px}
+.spark svg{display:block}
+.spark .sl{font:700 .7rem 'Inter',sans-serif;color:var(--sub)}
+.spark .down{color:#3ddc97}.spark .up{color:#ff7b7b}
+.semdados{font:600 .7rem 'Inter',sans-serif;color:var(--sub);opacity:.75}
 /* ---------- ponte de tema: segue a escolha feita na home ---------- */
 [data-tema="claro"],[data-tema="sol"]{
   --bg:#f7f9ff; --surf:#ffffff; --card:#ffffff; --ink:#141a2b; --sub:#5b6784; --mut:#7d89a5;
@@ -216,11 +260,16 @@ border-radius:999px;padding:7px 14px;white-space:nowrap}
   <div class="topline">
     <div>
       <h1>O que o Brasil nerd está comprando</h1>
-      <p class="sub1">52 itens do ranking oficial da Amazon · atualizado 03/08/2026</p>
+      <p class="sub1" id="sub1">rankings oficiais das lojas · atualizado todo dia</p>
     </div>
     <a class="how" href="#como">de onde vem essa lista ↓</a>
   </div>
 </div>
+
+<!-- ESCOLHA A LOJA -->
+<div class="lojabar"><div class="wrap">
+  <div class="lojarow" id="lojarow"></div>
+</div></div>
 
 <!-- BARRA DE CATEGORIAS + SUBCATEGORIAS (movida pra baixo do hero, gruda no topo ao rolar) -->
 <div class="catbar">
@@ -257,10 +306,14 @@ border-radius:999px;padding:7px 14px;white-space:nowrap}
 
 <section class="como" id="como"><div class="wrap">
   <h2>De onde vem essa lista</h2>
-  <p>Colhido direto do <b>ranking oficial de mais vendidos da Amazon</b> — sem achismo, é o que está saindo
-  agora. Minha curadoria pessoal, com o "por quê" de cada item, fica nos <a href="achadinhos.html">Achadinhos</a>.</p>
-  <p><b>Transparência:</b> links de afiliado Amazon — você não paga nada a mais e o site ganha uma comissão.
-  Os preços marcados como "visto por" são do momento da coleta e mudam a toda hora; clique pra ver o preço do dia.</p>
+  <p>Cada aba mostra o <b>ranking oficial de mais vendidos daquela loja</b> — sem achismo, é o que está saindo
+  agora. O do <b>Mercado Livre</b> vem da API oficial deles e é atualizado sozinho todo dia de manhã.
+  Minha curadoria pessoal, com o "por quê" de cada item, fica nos <a href="achadinhos.html">Achadinhos</a>.</p>
+  <p><b>O gráfico:</b> a partir do dia em que um produto entra na lista, eu anoto o preço dele todo dia.
+  A linha verde quer dizer que baixou; a vermelha, que subiu. Nos primeiros dias ainda não tem curva —
+  ela vai se formando sozinha.</p>
+  <p><b>Transparência:</b> uso links de afiliado — você não paga nada a mais e o site ganha uma comissão.
+  Os preços são do momento da coleta e mudam a toda hora; clique pra ver o preço do dia.</p>
 </div></section>
 </main>
 
@@ -274,14 +327,40 @@ border-radius:999px;padding:7px 14px;white-space:nowrap}
 <script>
 const P = [{"cat": "games", "rank": 1, "nome": "Grand Theft Auto VI - PlayStation 5", "img": "https://images-na.ssl-images-amazon.com/images/I/81o4MCqBv5L._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 449,90", "preco": 449.9, "url": "https://www.amazon.com.br/dp/B0H6KT2RWH?tag=1painerd-20"}, {"cat": "games", "rank": 2, "nome": "Controle sem fio PlayStation DualSense – Branco", "img": "https://images-na.ssl-images-amazon.com/images/I/51zRVFcqMLL._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 410,02", "preco": 410.02, "url": "https://www.amazon.com.br/dp/B0FY6X2XXY?tag=1painerd-20"}, {"cat": "games", "rank": 3, "nome": "Base De Carregamento Do Dualsense - PlayStation 5", "img": "https://images-na.ssl-images-amazon.com/images/I/41y-G-g+dVL._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 171,45", "preco": 171.45, "url": "https://www.amazon.com.br/dp/B09JH4PD8Q?tag=1painerd-20"}, {"cat": "games", "rank": 4, "nome": "Havit Headphone Fone de Ouvido H2002d, Gamer, com Microfone", "img": "https://images-na.ssl-images-amazon.com/images/I/71+kXnOiM2L._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 152,97", "preco": 152.97, "url": "https://www.amazon.com.br/dp/B07Y2G7VX5?tag=1painerd-20"}, {"cat": "games", "rank": 5, "nome": "PlayStation 5 Slim Digital 825GB – Pacote ASTRO BOT e Gran Turismo 7", "img": "https://images-na.ssl-images-amazon.com/images/I/71WCygaQDAL._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 4.399,00", "preco": 4399.0, "url": "https://www.amazon.com.br/dp/B0FPGF9J2J?tag=1painerd-20"}, {"cat": "games", "rank": 6, "nome": "Kit Marvel's Wolverine PlayStation 5 + Boneco Wolverine", "img": "https://images-na.ssl-images-amazon.com/images/I/71VioLwuWoL._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 399,90", "preco": 399.9, "url": "https://www.amazon.com.br/dp/B0H46QLPKD?tag=1painerd-20"}, {"cat": "games", "rank": 7, "nome": "Controle Dualshock 4 - PlayStation 4 - Preto", "img": "https://images-na.ssl-images-amazon.com/images/I/61kwdPH8+xL._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 239,90", "preco": 239.9, "url": "https://www.amazon.com.br/dp/B07FN1MZBH?tag=1painerd-20"}, {"cat": "games", "rank": 8, "nome": "Nintendo Switch 2 Console Nacional", "img": "https://images-na.ssl-images-amazon.com/images/I/61oPb9El-SL._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 3.951,00", "preco": 3951.0, "url": "https://www.amazon.com.br/dp/B0F6D7MQQB?tag=1painerd-20"}, {"cat": "games", "rank": 9, "nome": "GameSir G7 SE Controle com Fio para PC e Xbox", "img": "https://images-na.ssl-images-amazon.com/images/I/51iXILIT27L._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 279,99", "preco": 279.99, "url": "https://www.amazon.com.br/dp/B0C7GW9F88?tag=1painerd-20"}, {"cat": "games", "rank": 10, "nome": "Marvel's Wolverine - PlayStation 5", "img": "", "precoTxt": "R$ 399,00", "preco": 399.0, "url": "https://www.amazon.com.br/dp/B0GWCCBDRR?tag=1painerd-20"}, {"cat": "games", "rank": 11, "nome": "Red Dead Redemption - PlayStation 5", "img": "https://images-na.ssl-images-amazon.com/images/I/61-lT5Jq0FL._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 169,90", "preco": 169.9, "url": "https://www.amazon.com.br/dp/B0H2KBN3K1?tag=1painerd-20"}, {"cat": "games", "rank": 12, "nome": "Mouse Gamer Redragon Predator RGB M612", "img": "https://images-na.ssl-images-amazon.com/images/I/51AVGfhKbOL._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 94,09", "preco": 94.09, "url": "https://www.amazon.com.br/dp/B08T68T1T6?tag=1painerd-20"}, {"cat": "games", "rank": 13, "nome": "Teclado Gamer HyperX Alloy Core RGB ABNT2", "img": "https://images-na.ssl-images-amazon.com/images/I/61XRKm0vZaL._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 176,46", "preco": 176.46, "url": "https://www.amazon.com.br/dp/B07TV9B7Z3?tag=1painerd-20"}, {"cat": "games", "rank": 14, "nome": "Controle Wireless 8BitDo Ultimate 2C Bluetooth", "img": "", "precoTxt": "R$ 208,27", "preco": 208.27, "url": "https://www.amazon.com.br/dp/B0D739FJLG?tag=1painerd-20"}, {"cat": "games", "rank": 15, "nome": "The Blood of Dawnwalker - Steelbook PlayStation 5", "img": "", "precoTxt": "R$ 399,97", "preco": 399.97, "url": "https://www.amazon.com.br/dp/B0GWGTH4LF?tag=1painerd-20"}, {"cat": "games", "rank": 16, "nome": "Bundle Nintendo Switch OLED + Super Mario Bros. Wonder", "img": "", "precoTxt": "R$ 2.298,00", "preco": 2298.0, "url": "https://www.amazon.com.br/dp/B0FR6PC1FB?tag=1painerd-20"}, {"cat": "games", "rank": 17, "nome": "Mario Kart World - Nintendo Switch 2", "img": "", "precoTxt": "R$ 499,90", "preco": 499.9, "url": "https://www.amazon.com.br/dp/B0F6DB3Y8P?tag=1painerd-20"}, {"cat": "games", "rank": 18, "nome": "Cartão Samsung microSD Express 256GB (Switch 2)", "img": "", "precoTxt": "R$ 399,89", "preco": 399.89, "url": "https://www.amazon.com.br/dp/B0F3VTCZK8?tag=1painerd-20"}, {"cat": "games", "rank": 19, "nome": "Controle sem fio DualSense Midnight Black", "img": "", "precoTxt": "R$ 429,00", "preco": 429.0, "url": "https://www.amazon.com.br/dp/B0CQKKHT5J?tag=1painerd-20"}, {"cat": "games", "rank": 20, "nome": "The Last Of Us Part II - PlayStation 4", "img": "", "precoTxt": "R$ 159,89", "preco": 159.89, "url": "https://www.amazon.com.br/dp/B07ZGFHZVZ?tag=1painerd-20"}, {"cat": "informatica", "rank": 1, "nome": "Mochila Masculina de Viagem para Notebook Romantic Crown", "img": "https://images-na.ssl-images-amazon.com/images/I/613o1RrqyAL._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 107,98", "preco": 107.98, "url": "https://www.amazon.com.br/dp/B0F2N7L7HQ?tag=1painerd-20"}, {"cat": "informatica", "rank": 2, "nome": "Mouse sem fio Logitech M170 Ambidestro Compacto", "img": "https://images-na.ssl-images-amazon.com/images/I/51+TpH1VS8L._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 49,90", "preco": 49.9, "url": "https://www.amazon.com.br/dp/B074L9L5KZ?tag=1painerd-20"}, {"cat": "informatica", "rank": 3, "nome": "Mouse Sem Fio Recarregável Bluetooth Óptico LED RGB", "img": "https://images-na.ssl-images-amazon.com/images/I/51NVWRIcQ2L._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 19,00", "preco": 19.0, "url": "https://www.amazon.com.br/dp/B0F1G2TL8P?tag=1painerd-20"}, {"cat": "informatica", "rank": 4, "nome": "Tablet Samsung Galaxy Tab S10 FE 128GB 8GB RAM", "img": "", "precoTxt": "R$ 2.789,07", "preco": 2789.07, "url": "https://www.amazon.com.br/dp/B0F3LTWYS5?tag=1painerd-20"}, {"cat": "informatica", "rank": 5, "nome": "Tablet Samsung Galaxy Tab A11+ 128GB 6GB RAM WiFi", "img": "https://images-na.ssl-images-amazon.com/images/I/51TU36U5C1L._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 1.529,00", "preco": 1529.0, "url": "https://www.amazon.com.br/dp/B0G4SLJNFF?tag=1painerd-20"}, {"cat": "informatica", "rank": 6, "nome": "Headset Gamer Havit Fuxi-H3 White Black", "img": "https://images-na.ssl-images-amazon.com/images/I/61yPxJ9xSbL._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 143,90", "preco": 143.9, "url": "https://www.amazon.com.br/dp/B0CK2DP7FX?tag=1painerd-20"}, {"cat": "informatica", "rank": 7, "nome": "Suporte Articulado de Mesa ELG F80N Pistão a Gás", "img": "https://images-na.ssl-images-amazon.com/images/I/61-TzEg09KL._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 159,00", "preco": 159.0, "url": "https://www.amazon.com.br/dp/B0765KZ264?tag=1painerd-20"}, {"cat": "informatica", "rank": 8, "nome": "Impressora Multifuncional Epson Ecotank L3250", "img": "https://images-na.ssl-images-amazon.com/images/I/51Go2vIg0ML._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 1.046,00", "preco": 1046.0, "url": "https://www.amazon.com.br/dp/B098YHFT9S?tag=1painerd-20"}, {"cat": "informatica", "rank": 9, "nome": "HD Externo Toshiba 1TB Canvio Basics", "img": "https://images-na.ssl-images-amazon.com/images/I/91e-WNUpH0L._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 552,93", "preco": 552.93, "url": "https://www.amazon.com.br/dp/B0BQX6DVWY?tag=1painerd-20"}, {"cat": "informatica", "rank": 10, "nome": "Headphone Havit H2002d Black Red Gamer", "img": "", "precoTxt": "R$ 120,06", "preco": 120.06, "url": "https://www.amazon.com.br/dp/B0DGQLYST1?tag=1painerd-20"}, {"cat": "informatica", "rank": 11, "nome": "Cabo Carregador Turbo USB-C Trançado Nylon 1m", "img": "https://images-na.ssl-images-amazon.com/images/I/51jTagQW4aL._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 21,99", "preco": 21.99, "url": "https://www.amazon.com.br/dp/B0GMXN4H9M?tag=1painerd-20"}, {"cat": "informatica", "rank": 12, "nome": "Monitor Gamer LG 24MS500 24\" IPS 100Hz Full HD", "img": "https://images-na.ssl-images-amazon.com/images/I/61oWoZ+68iL._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 499,00", "preco": 499.0, "url": "https://www.amazon.com.br/dp/B0DF2WSGF6?tag=1painerd-20"}, {"cat": "informatica", "rank": 13, "nome": "Monitor Gamer Samsung Odyssey G5 32\" QHD", "img": "", "precoTxt": "R$ 1.079,10", "preco": 1079.1, "url": "https://www.amazon.com.br/dp/B0DWQNS8TN?tag=1painerd-20"}, {"cat": "informatica", "rank": 14, "nome": "Multifuncional Epson EcoTank L4360 frente e verso", "img": "", "precoTxt": "R$ 1.452,00", "preco": 1452.0, "url": "https://www.amazon.com.br/dp/B0GJ7H8WLW?tag=1painerd-20"}, {"cat": "brinquedos", "rank": 1, "nome": "UNO Original", "img": "https://images-na.ssl-images-amazon.com/images/I/71yJ6Tu7+zL._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 16,90", "preco": 16.9, "url": "https://www.amazon.com.br/dp/B00CTH0A1Q?tag=1painerd-20"}, {"cat": "brinquedos", "rank": 2, "nome": "Caiu Perdeu Pais & Filhos 54 peças", "img": "https://images-na.ssl-images-amazon.com/images/I/81QAJDzi7DL._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 16,20", "preco": 16.2, "url": "https://www.amazon.com.br/dp/B07LHC55HY?tag=1painerd-20"}, {"cat": "brinquedos", "rank": 3, "nome": "Bicicleta de Equilíbrio Buba 4 Rodas", "img": "https://images-na.ssl-images-amazon.com/images/I/51Gz7G2XQ7L._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 141,00", "preco": 141.0, "url": "https://www.amazon.com.br/dp/B0DFFTP71B?tag=1painerd-20"}, {"cat": "brinquedos", "rank": 4, "nome": "Blocos de Montar Magnéticos Educativos", "img": "https://images-na.ssl-images-amazon.com/images/I/81BLH8BzGXL._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 168,41", "preco": 168.41, "url": "https://www.amazon.com.br/dp/B0DGKY94HS?tag=1painerd-20"}, {"cat": "brinquedos", "rank": 5, "nome": "Play-Doh Massinha Smoothies Coloridos", "img": "", "precoTxt": "R$ 42,88", "preco": 42.88, "url": "https://www.amazon.com.br/dp/B0CQTNGCF9?tag=1painerd-20"}, {"cat": "brinquedos", "rank": 6, "nome": "Sleeves MeepleBR padrão 100un (proteção de cartas TCG)", "img": "https://images-na.ssl-images-amazon.com/images/I/51oiDX4s96L._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 19,99", "preco": 19.99, "url": "https://www.amazon.com.br/dp/B07PDGL5X4?tag=1painerd-20"}, {"cat": "brinquedos", "rank": 7, "nome": "Mangá Jujutsu Kaisen 0", "img": "", "precoTxt": "R$ 36,90", "preco": 36.9, "url": "https://www.amazon.com.br/dp/6555127279?tag=1painerd-20"}, {"cat": "brinquedos", "rank": 8, "nome": "Lápis de Cor BIC Evolution 24 cores", "img": "https://images-na.ssl-images-amazon.com/images/I/61m1k3wVSWL._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 16,50", "preco": 16.5, "url": "https://www.amazon.com.br/dp/B0778T3SRK?tag=1painerd-20"}, {"cat": "eletronicos", "rank": 1, "nome": "Echo Dot com Alexa (geração mais recente)", "img": "https://images-na.ssl-images-amazon.com/images/I/71xoR4A6q-L._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 459,00", "preco": 459.0, "url": "https://www.amazon.com.br/dp/B09B8VGCR8?tag=1painerd-20"}, {"cat": "eletronicos", "rank": 2, "nome": "Smartwatch Samsung Galaxy Fit3 1.6\" Grafite", "img": "https://images-na.ssl-images-amazon.com/images/I/51bjAlTBzZL._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 230,42", "preco": 230.42, "url": "https://www.amazon.com.br/dp/B0CVCLGV1W?tag=1painerd-20"}, {"cat": "eletronicos", "rank": 3, "nome": "Fone Bluetooth Soundcore P30i (Anker)", "img": "https://images-na.ssl-images-amazon.com/images/I/51o-AcAQWgL._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 196,90", "preco": 196.9, "url": "https://www.amazon.com.br/dp/B0CRTYZG5C?tag=1painerd-20"}, {"cat": "eletronicos", "rank": 4, "nome": "Filtro de Linha iCLAMPER Energia 5 Tomadas (protege o setup!)", "img": "https://images-na.ssl-images-amazon.com/images/I/51rRxbJnGeL._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 71,99", "preco": 71.99, "url": "https://www.amazon.com.br/dp/B0D8V3QLDD?tag=1painerd-20"}, {"cat": "eletronicos", "rank": 5, "nome": "Amazon Fire TV Stick HD com Controle por Voz", "img": "https://images-na.ssl-images-amazon.com/images/I/614YeT6MRAL._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 379,00", "preco": 379.0, "url": "https://www.amazon.com.br/dp/B0DVK166SV?tag=1painerd-20"}, {"cat": "eletronicos", "rank": 6, "nome": "Roku Streaming Stick HD 2025", "img": "https://images-na.ssl-images-amazon.com/images/I/71NIAAVDxML._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 232,22", "preco": 232.22, "url": "https://www.amazon.com.br/dp/B0FH7LY3R4?tag=1painerd-20"}, {"cat": "eletronicos", "rank": 7, "nome": "Fone TWS Philips TAT1109 Bluetooth", "img": "https://images-na.ssl-images-amazon.com/images/I/519bjoeFBTL._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 119,90", "preco": 119.9, "url": "https://www.amazon.com.br/dp/B0DVMQVVDY?tag=1painerd-20"}, {"cat": "eletronicos", "rank": 8, "nome": "Headphone Bluetooth Philips TAH2300 com Microfone", "img": "https://images-na.ssl-images-amazon.com/images/I/51BmQ8K9sML._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 129,90", "preco": 129.9, "url": "https://www.amazon.com.br/dp/B0FJMHMCBZ?tag=1painerd-20"}, {"cat": "eletronicos", "rank": 9, "nome": "Pilha recarregável AAA Elgin 4un (controles!)", "img": "https://images-na.ssl-images-amazon.com/images/I/71SnHLZ+XjL._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 22,25", "preco": 22.25, "url": "https://www.amazon.com.br/dp/B0754KMGFN?tag=1painerd-20"}, {"cat": "eletronicos", "rank": 10, "nome": "Celular Samsung Galaxy A17 128GB (primeiro cel do filho)", "img": "https://images-na.ssl-images-amazon.com/images/I/51kT5SgPhNL._AC_UL600_SR600,400_.jpg", "precoTxt": "R$ 949,00", "preco": 949.0, "url": "https://www.amazon.com.br/dp/B0FPYV6K68?tag=1painerd-20"}];
 const CATS = {"games": {"nome": "Games & Consoles", "emoji": "🎮"}, "informatica": {"nome": "Informática", "emoji": "🖥️"}, "brinquedos": {"nome": "Brinquedos & Família", "emoji": "🧸"}, "eletronicos": {"nome": "Eletrônicos & Casa", "emoji": "🔌"}};
-let st={cat:'',preco:'',q:'',ord:'rank',view:'grid'};
+/* ---- lojas ---- */
+const LOJAS={
+  amazon:{nome:'Amazon',      sigla:'a',  cta:'Ver na Amazon'},
+  ml:    {nome:'Mercado Livre',sigla:'ML', cta:'Ver no Mercado Livre'},
+  shopee:{nome:'Shopee',      sigla:'S',  cta:'Ver na Shopee'}
+};
+const ORDEM_LOJA=['tudo','amazon','ml','shopee'];
+/* de qual categoria do ML cai em qual aba nossa */
+const DE_PARA_ML={MLB1132:'brinquedos',MLB1648:'informatica',MLB1000:'eletronicos',MLB1144:'games'};
+P.forEach(p=>{p.loja='amazon'});
+let HIST={};      /* id -> [{d:'2026-08-10',p:47.9}, ...] */
+let AFIL={};      /* id -> link de afiliado curtinho */
+let st={cat:'',preco:'',q:'',ord:'rank',view:'grid',loja:'tudo'};
 const BRL=v=>v?v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'}):'ver preço';
 const norm=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
 function match(p,ig){
+  if(st.loja!=='tudo'&&ig!=='loja'&&p.loja!==st.loja)return false;
   if(st.cat&&ig!=='cat'&&p.cat!==st.cat)return false;
   if(st.preco&&ig!=='preco'){const[a,b]=st.preco.split('-').map(Number);if(p.preco<a||p.preco>=b)return false}
   if(st.q){const t=norm(p.nome);if(!norm(st.q).split(/\s+/).every(w=>t.includes(w)))return false}
   return true;
+}
+function renderLojas(){
+  const lr=document.getElementById('lojarow');let h='';
+  for(const k of ORDEM_LOJA){
+    const n=k==='tudo'?P.filter(p=>match(p,'loja')).length
+                      :P.filter(p=>p.loja===k&&match(p,'loja')).length;
+    const nome=k==='tudo'?'Todas as lojas':LOJAS[k].nome;
+    const sig =k==='tudo'?'★':LOJAS[k].sigla;
+    h+=`<button class="lchip ${st.loja===k?'on':''}" data-l="${k}">
+        <span class="lg">${sig}</span>${nome} <span class="n">${n}</span></button>`;
+  }
+  lr.innerHTML=h;
+  lr.querySelectorAll('.lchip').forEach(b=>b.onclick=()=>{st.loja=b.dataset.l;st.cat='';draw()});
 }
 function renderCats(){
   const cr=document.getElementById('catrow');
@@ -308,15 +387,38 @@ function renderActive(n){
   const ca=document.getElementById('ca');
   if(ca)ca.onclick=()=>{st={...st,cat:'',preco:'',q:''};document.getElementById('preco').value='';document.getElementById('q').value='';draw()};
 }
+/* mini grafico: desenha a curva do preco dos ultimos dias */
+function grafico(p){
+  const h=HIST[p.id]||[];
+  if(h.length<2) return `<span class="semdados">📈 histórico começa a partir de hoje</span>`;
+  const v=h.map(x=>x.p),min=Math.min(...v),max=Math.max(...v),amp=(max-min)||1;
+  const W=88,H=26;
+  const pts=v.map((y,i)=>`${(i/(v.length-1)*W).toFixed(1)},${(H-((y-min)/amp)*(H-4)-2).toFixed(1)}`).join(' ');
+  const dif=v[v.length-1]-v[0], caiu=dif<0;
+  const pct=v[0]?Math.abs(dif/v[0]*100):0;
+  const cor=caiu?'#3ddc97':(dif>0?'#ff7b7b':'#8d99b5');
+  const seta=caiu?'▼':(dif>0?'▲':'—');
+  return `<span class="spark">
+    <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" aria-hidden="true">
+      <polyline points="${pts}" fill="none" stroke="${cor}" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span class="sl" style="color:${cor}">${seta} ${pct.toFixed(0)}% em ${v.length} dias</span></span>`;
+}
 function card(p){
   const medalha = p.rank<=3 ? ['🥇','🥈','🥉'][p.rank-1] : '';
+  const L=LOJAS[p.loja]||LOJAS.amazon;
+  const link=AFIL[p.id]||p.url;
+  const preco=p.precoTxt||(p.preco?BRL(p.preco):'ver preço');
   return `<article class="pcard">
    <div class="ptile"><img src="${p.img}" loading="lazy" alt="">
-     <span class="badge rk">${medalha} #${p.rank} em ${CATS[p.cat].nome}</span></div>
+     <span class="badge rk" title="#${p.rank} em ${CATS[p.cat].nome}">${medalha} #${p.rank}</span>
+     <span class="selo" data-l="${p.loja}">${L.nome}</span></div>
    <div class="pinfo">
      <h3>${p.nome}</h3>
-     <p class="pfaixa">${p.precoTxt}<span class="sel2">visto na coleta · o preço do dia pode estar melhor</span></p>
-     <div class="plinks"><a class="pbtn go" href="${p.url}" target="_blank" rel="noopener sponsored">Ver na Amazon →</a></div>
+     <p class="pfaixa">${preco}<span class="sel2">visto na coleta · o preço do dia pode estar melhor</span></p>
+     ${grafico(p)}
+     <div class="plinks"><a class="pbtn go" data-l="${p.loja}" href="${link}" target="_blank" rel="noopener sponsored">${L.cta} →</a></div>
    </div></article>`;
 }
 function draw(){
@@ -325,11 +427,40 @@ function draw(){
   if(st.ord==='asc')r.sort((a,b)=>a.preco-b.preco);
   if(st.ord==='desc')r.sort((a,b)=>b.preco-a.preco);
   if(st.ord==='az')r.sort((a,b)=>a.nome.localeCompare(b.nome,'pt'));
-  renderCats();renderActive(r.length);
+  renderLojas();renderCats();renderActive(r.length);
   const g=document.getElementById('grid');
   g.className='pgrid'+(st.view==='list'?' list':'');
-  g.innerHTML=r.length?r.map(card).join(''):
-   `<div class="empty"><span class="e">🔍</span><b>Nada com esses filtros.</b><br>Tente afrouxar a busca ou o preço.</div>`;
+  const vazio = st.loja==='shopee'
+    ? `<div class="empty"><span class="e">🛍️</span><b>A Shopee entra em breve.</b><br>
+       Estou montando a lista de mais vendidos dela — assim que estiver pronta aparece aqui.</div>`
+    : `<div class="empty"><span class="e">🔍</span><b>Nada com esses filtros.</b><br>Tente afrouxar a busca ou o preço.</div>`;
+  g.innerHTML=r.length?r.map(card).join(''):vazio;
+}
+/* ---- carrega o que o robo atualiza sozinho todo dia ---- */
+async function jsonOuNada(arq){
+  try{const r=await fetch(arq+'?v='+Date.now(),{cache:'no-store'});return r.ok?await r.json():null}
+  catch(e){return null}
+}
+async function carregarML(){
+  const [d,hist,afil]=await Promise.all([
+    jsonOuNada('ml_mais_vendidos.json'),
+    jsonOuNada('historico_ml.json'),
+    jsonOuNada('links_afiliados.json')
+  ]);
+  if(hist)HIST=hist;
+  if(afil)AFIL=afil;
+  if(d&&d.categorias){
+    for(const c of d.categorias){
+      const cat=DE_PARA_ML[c.id]; if(!cat)continue;
+      for(const it of (c.itens||[])){
+        P.push({id:it.id,cat,loja:'ml',rank:it.rank,nome:it.nome,img:it.img,
+                preco:it.preco||0,precoTxt:it.preco?BRL(it.preco):'ver preço',url:it.url});
+      }
+    }
+    const s=document.getElementById('sub1');
+    if(s)s.textContent=`rankings oficiais das lojas · Mercado Livre atualizado em ${d.gerado_em.split('-').reverse().join('/')}`;
+  }
+  draw();
 }
 document.getElementById('q').addEventListener('input',e=>{st.q=e.target.value.trim();draw()});
 document.getElementById('preco').addEventListener('change',e=>{st.preco=e.target.value;draw()});
@@ -337,7 +468,8 @@ document.getElementById('ord').addEventListener('change',e=>{st.ord=e.target.val
 document.getElementById('bg').onclick=()=>{st.view='grid';document.getElementById('bg').classList.add('on');document.getElementById('bl').classList.remove('on');draw()};
 document.getElementById('bl').onclick=()=>{st.view='list';document.getElementById('bl').classList.add('on');document.getElementById('bg').classList.remove('on');draw()};
 document.getElementById('fab').onclick=()=>{document.querySelector('.catbar').scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>document.getElementById('q').focus(),450)};
-draw();
+draw();          /* mostra a Amazon na hora */
+carregarML();    /* o resto entra assim que o arquivo do robo chegar */
 </script>
 <script>
 /* aplica o tema escolhido na home (claro/sol = claro · neon/escuro = escuro) */
