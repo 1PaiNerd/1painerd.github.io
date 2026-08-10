@@ -32,11 +32,32 @@ jobs:
           AMZ_PARTNER_TAG: ${{ secrets.AMZ_PARTNER_TAG }}
         run: python scripts/coletar_precos.py
 
+      - name: Mais Vendidos do Mercado Livre
+        continue-on-error: true          # se o ML cair, o resto do site ainda sobe
+        env:
+          ML_CLIENT_ID: ${{ secrets.ML_CLIENT_ID }}
+          ML_CLIENT_SECRET: ${{ secrets.ML_CLIENT_SECRET }}
+          ML_REFRESH_TOKEN: ${{ secrets.ML_REFRESH_TOKEN }}
+        run: python scripts/coletar_ml_mais_vendidos.py
+
+      # O refresh_token do ML é de USO ÚNICO: cada renovação devolve um novo.
+      # Aqui a gente guarda o novo no cofre, senão amanhã a automação morre.
+      - name: Guardar o refresh_token novo
+        continue-on-error: true
+        if: hashFiles('novo_refresh.txt') != ''
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT_SECRETS }}
+        run: |
+          gh secret set ML_REFRESH_TOKEN --body "$(cat novo_refresh.txt)" \
+            --repo "${{ github.repository }}"
+          rm -f novo_refresh.txt          # nunca comitar token: o repo é público
+
       - name: Publicar
         run: |
           git config user.name  "1painerd-bot"
           git config user.email "actions@github.com"
-          git add -A videos.json precos.json alertas.json alerta_titulo.txt 2>/dev/null || true
+          rm -f novo_refresh.txt
+          git add -A videos.json precos.json ml_mais_vendidos.json alertas.json alerta_titulo.txt 2>/dev/null || true
           git diff --staged --quiet || git commit -m "site: atualização de $(date +%F)"
           git push
 
