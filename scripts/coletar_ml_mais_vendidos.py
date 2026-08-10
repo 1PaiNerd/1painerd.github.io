@@ -79,15 +79,19 @@ def renovar_token():
     return d["access_token"]
 
 
-def detalhes(ids, token):
-    """Busca nome, preço, foto e link de até 20 itens por vez."""
+def https(u):
+    return (u or "").replace("http://", "https://").replace("-I.jpg", "-O.jpg")
+
+
+def detalhes_itens(ids, token):
+    """Anúncios normais (type=ITEM): nome, preço, foto e link, 20 por vez."""
     saida = []
     for i in range(0, len(ids), 20):
         lote = ",".join(ids[i:i + 20])
         try:
             r = get(f"{API}/items?ids={lote}", token)
         except Exception as e:
-            print(f"  ! falha no lote: {e}")
+            print(f"    ! falha no lote de itens: {e}")
             continue
         for it in r:
             b = it.get("body") or {}
@@ -97,9 +101,32 @@ def detalhes(ids, token):
                 "id": b["id"],
                 "nome": b.get("title", ""),
                 "preco": b.get("price"),
-                "img": (b.get("thumbnail") or "").replace("http://", "https://").replace("-I.jpg", "-O.jpg"),
+                "img": https(b.get("thumbnail")),
                 "url": b.get("permalink", ""),
             })
+    return saida
+
+
+def detalhes_produtos(ids, token):
+    """Produtos de catálogo (type=PRODUCT). Hoje é isso que o ML devolve na
+    maioria dos mais vendidos: um produto único com vários vendedores.
+    O preço vem do vencedor da caixa de compra (buy box)."""
+    saida = []
+    for pid in ids:
+        try:
+            p = get(f"{API}/products/{pid}", token)
+        except Exception as e:
+            print(f"    ! falha no produto {pid}: {e}")
+            continue
+        fotos = p.get("pictures") or []
+        bb = p.get("buy_box_winner") or {}
+        saida.append({
+            "id": pid,
+            "nome": p.get("name") or bb.get("title") or "",
+            "preco": bb.get("price"),
+            "img": https((fotos[0] or {}).get("url") if fotos else bb.get("thumbnail")),
+            "url": p.get("permalink") or f"https://www.mercadolivre.com.br/p/{pid}",
+        })
     return saida
 
 
@@ -124,11 +151,33 @@ def main():
     for cid, nome, emoji in CATEGORIAS:
         try:
             hl = get(f"{API}/highlights/MLB/category/{cid}", token)
-            ids = [c["id"] for c in hl.get("content", [])
-                   if c.get("type") == "ITEM" and c.get("id")][:POR_CATEGORIA]
-            itens = detalhes(ids, token)
-            for pos, it in enumerate(itens, 1):
-                it["rank"] = pos
+            conteudo = hl.get("content") or []
+            if not conteudo:
+                print(f"  ! {nome}: resposta sem 'content' (chaves: {list(hl)[:8]})")
+                continue
+
+            # o ML mistura anúncio avulso (ITEM) com produto de catálogo (PRODUCT)
+            tipos = {}
+            for c in conteudo:
+                t = c.get("type") or "?"
+                tipos[t] = tipos.get(t, 0) + 1
+            print(f"    {nome}: {len(conteudo)} destaques {tipos}")
+
+            topo = conteudo[:POR_CATEGORIA]
+            ids_item = [c["id"] for c in topo if c.get("type") == "ITEM" and c.get("id")]
+            ids_prod = [c["id"] for c in topo if c.get("type") == "PRODUCT" and c.get("id")]
+
+            achados = {}
+            for it in detalhes_itens(ids_item, token) + detalhes_produtos(ids_prod, token):
+                achados[it["id"]] = it
+
+            # respeita a ordem do ranking que o ML mandou
+            itens = []
+            for pos, c in enumerate(topo, 1):
+                it = achados.get(c.get("id"))
+                if it:
+                    it["rank"] = pos
+                    itens.append(it)
             saida["categorias"].append({"id": cid, "nome": nome, "emoji": emoji, "itens": itens})
             total += len(itens)
             print(f"  ✓ {nome}: {len(itens)} itens")
