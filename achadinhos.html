@@ -200,6 +200,47 @@ border-radius:999px;padding:7px 14px;white-space:nowrap}
 [data-tema="claro"] .pbtn:not(.go),[data-tema="sol"] .pbtn:not(.go){background:#f4f7fd;border-color:var(--line)}
 [data-tema="claro"] .tip,[data-tema="sol"] .tip{background:#fff;color:var(--ink)}
 [data-tema="claro"] .ptile,[data-tema="sol"] .ptile{background:#fff;border-bottom:1px solid var(--line)}
+
+/* ---------- seletor de loja no card ---------- */
+.lojas{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.loja{flex:1;min-width:74px;display:flex;align-items:center;justify-content:center;gap:5px;
+text-decoration:none;font:700 .74rem 'Inter',sans-serif;padding:8px 6px;border-radius:9px;
+background:rgba(255,255,255,.05);color:var(--sub);border:1px solid var(--line);transition:.18s}
+.loja:hover{color:var(--ink);transform:translateY(-1px)}
+.loja .pt{width:8px;height:8px;border-radius:50%;flex:none}
+.loja[data-l="amazon"] .pt{background:#ff9900}
+.loja[data-l="ml"] .pt{background:#ffe600}
+.loja[data-l="shopee"] .pt{background:#ee4d2d}
+.loja[data-l="amazon"]:hover{border-color:#ff9900}
+.loja[data-l="ml"]:hover{border-color:#ffe600}
+.loja[data-l="shopee"]:hover{border-color:#ee4d2d}
+[data-tema="claro"] .loja,[data-tema="sol"] .loja{background:#f4f7fd}
+.ondecomprar{font:600 .7rem 'Inter',sans-serif;color:var(--mut);letter-spacing:.04em;
+text-transform:uppercase;margin-top:10px}
+
+/* ---------- botoes com a identidade de cada loja ---------- */
+.pbtn.go{border:none}
+.pbtn.go[data-l="amazon"]{background:linear-gradient(135deg,#ff9900,#f08804);color:#1a1000;
+ box-shadow:0 4px 16px rgba(255,153,0,.30)}
+.pbtn.go[data-l="ml"]{background:linear-gradient(135deg,#ffe600,#ffd400);color:#1c1c1c;
+ box-shadow:0 4px 16px rgba(255,214,0,.34)}
+.pbtn.go[data-l="shopee"]{background:linear-gradient(135deg,#ee4d2d,#d8401f);color:#fff;
+ box-shadow:0 4px 16px rgba(238,77,45,.34)}
+.pbtn.go:hover{transform:translateY(-2px);filter:brightness(1.05)}
+.marca{display:inline-flex;align-items:center;gap:7px;justify-content:center}
+.marca .mk{font-weight:800;letter-spacing:-.01em}
+/* pills secundarias: contorno na cor da marca */
+.loja{border-width:1.5px}
+.loja[data-l="amazon"]{color:#c47200;border-color:rgba(255,153,0,.5)}
+.loja[data-l="ml"]{color:#8a7500;border-color:rgba(255,214,0,.75)}
+.loja[data-l="shopee"]{color:#c9401f;border-color:rgba(238,77,45,.5)}
+[data-tema="escuro"] .loja[data-l="amazon"],[data-tema="neon"] .loja[data-l="amazon"]{color:#ffb43d}
+[data-tema="escuro"] .loja[data-l="ml"],[data-tema="neon"] .loja[data-l="ml"]{color:#ffe600}
+[data-tema="escuro"] .loja[data-l="shopee"],[data-tema="neon"] .loja[data-l="shopee"]{color:#ff7a5c}
+.loja:hover[data-l="amazon"]{background:rgba(255,153,0,.12)}
+.loja:hover[data-l="ml"]{background:rgba(255,214,0,.16)}
+.loja:hover[data-l="shopee"]{background:rgba(238,77,45,.12)}
+.loja .pt{width:9px;height:9px}
 </style>
 </head>
 <body>
@@ -250,6 +291,7 @@ border-radius:999px;padding:7px 14px;white-space:nowrap}
       <button id="bl" title="Ver em lista">☰ Lista</button>
     </div>
   </div>
+  <div class="catrow" id="lojarow" style="padding:2px 0 10px"></div>
   <div class="active" id="active"></div>
   <div class="pgrid" id="grid"></div>
 </div>
@@ -274,16 +316,21 @@ border-radius:999px;padding:7px 14px;white-space:nowrap}
 <button class="fab" id="fab">🔎 Filtrar e ordenar</button>
 
 <script>
-const P = [{"img": "https://m.media-amazon.com/images/I/71lhVag75AL._AC_UL320_.jpg", "nome": "LEGO Creator 3-em-1 Ônibus Espacial (31134)", "faixa": "R$ 84–130", "porque": "Três brinquedos em um: ônibus espacial, astronauta e nave. LEGO de verdade sem preço de vitrine.", "praquem": "6+ anos — criança que gosta de montar e remontar.", "amz": "https://www.amazon.com.br/dp/B0BLJ4FDT4?tag=1painerd-20", "cat": "presentes", "sub": "montar", "emoji": "🧱", "preco": 84, "casa": false}, {"img": "https://m.media-amazon.com/images/I/719Tpe9iBqL._AC_UL320_.jpg", "nome": "LEGO Minecraft (set de entrada)", "faixa": "R$ 130–190", "porque": "Junta o jogo favorito com o brinquedo que nunca envelhece. Sucesso garantido.", "praquem": "Fã de Minecraft de 7+ anos.", "amz": "https://www.amazon.com.br/dp/B0GS932Q5M?tag=1painerd-20", "cat": "presentes", "sub": "montar", "emoji": "🧱", "preco": 130, "casa": false}, {"img": "https://m.media-amazon.com/images/I/61lvsNL1LWL._AC_UL320_.jpg", "nome": "Gift Card Robux (Roblox)", "faixa": "R$ 50+", "porque": "O presente que NUNCA erra com quem joga Roblox — a criança escolhe o que quiser.", "praquem": "Qualquer fã de Roblox (e os pais que não sabem o que dar).", "amz": "https://www.amazon.com.br/dp/374750437X?tag=1painerd-20", "cat": "presentes", "sub": "digital", "emoji": "🎮", "preco": 50, "casa": false}, {"img": "https://m.media-amazon.com/images/I/71yRIgepE-L._AC_UL320_.jpg", "nome": "Uno Clássico", "faixa": "R$ 20–40", "porque": "O jogo que faz a família largar o celular por uma hora. Imbatível pelo preço.", "praquem": "Todo mundo a partir de 7 anos.", "amz": "https://www.amazon.com.br/dp/B0F7LV66YJ?tag=1painerd-20", "cat": "presentes", "sub": "mesa", "emoji": "🃏", "preco": 20, "casa": false}, {"img": "https://m.media-amazon.com/images/I/511r2jqT0RL._AC_UL320_.jpg", "nome": "Hot Wheels kit com 5 carrinhos", "faixa": "R$ 50–80", "porque": "O brinquedo mais vendido do Brasil ano após ano — colecionável e indestrutível.", "praquem": "3+ anos (e muito adulto colecionador).", "amz": "https://www.amazon.com.br/dp/B07M8NXRGT?tag=1painerd-20", "cat": "presentes", "sub": "colecionavel", "emoji": "🚗", "preco": 50, "casa": false}, {"img": "https://m.media-amazon.com/images/I/61X3jgNR4iL._AC_UL320_.jpg", "nome": "Kit Laboratório 42 Experimentos (Estrela)", "faixa": "R$ 150–210", "porque": "Ciência de verdade em casa: vulcão, slime e reações — diversão que ensina.", "praquem": "Curiosos de 8+ anos.", "amz": "https://www.amazon.com.br/dp/B077P982B6?tag=1painerd-20", "cat": "presentes", "sub": "criativo", "emoji": "🔬", "preco": 150, "casa": false}, {"img": "https://m.media-amazon.com/images/I/71cepauGVkL._AC_UL320_.jpg", "nome": "Play-Doh Fábrica de Diversão", "faixa": "R$ 60–100", "porque": "Criatividade sem tela, bagunça controlada e horas de silêncio abençoado.", "praquem": "3–7 anos.", "amz": "https://www.amazon.com.br/dp/B0CQTNQ58F?tag=1painerd-20", "cat": "presentes", "sub": "criativo", "emoji": "🎨", "preco": 60, "casa": false}, {"img": "https://m.media-amazon.com/images/I/81vuoMiXF9L._AC_UL320_.jpg", "nome": "Figura de ação Marvel/Minecraft", "faixa": "R$ 60–110", "porque": "Boneco articulado dos heróis do momento — presente certeiro de aniversário.", "praquem": "4+ anos, fãs de herói ou do jogo.", "amz": "https://www.amazon.com.br/dp/B0D9R799QH?tag=1painerd-20", "cat": "presentes", "sub": "colecionavel", "emoji": "🦸", "preco": 60, "casa": false}, {"img": "https://m.media-amazon.com/images/I/61LJizifVPL._AC_UL320_.jpg", "nome": "Dobble (jogo de cartas)", "faixa": "R$ 70–100", "porque": "Partidas de 5 minutos, gargalhada garantida, cabe no bolso — o melhor party game familiar.", "praquem": "Famílias com crianças 6+ anos.", "amz": "https://www.amazon.com.br/dp/B0GP32N2VQ?tag=1painerd-20", "cat": "presentes", "sub": "mesa", "emoji": "🃏", "preco": 70, "casa": false}, {"img": "https://m.media-amazon.com/images/I/81OThJ9KS1L._AC_UL320_.jpg", "nome": "Pelúcia de personagem (Creeper, axolote...)", "faixa": "R$ 60–120", "porque": "O abraço no personagem favorito — funciona de 3 a 99 anos.", "praquem": "Fãs de Minecraft/games que curtem fofura.", "amz": "https://www.amazon.com.br/dp/B0C1HS7JWK?tag=1painerd-20", "cat": "presentes", "sub": "colecionavel", "emoji": "🧸", "preco": 60, "casa": false}, {"img": "https://m.media-amazon.com/images/I/51NSQ6YYaSL._AC_UL320_.jpg", "nome": "Teclado mecânico Redragon Kumara (K552)", "faixa": "R$ 180–260", "porque": "O mecânico barato mais aprovado do Brasil: switches que aguentam anos de uso e RGB sem frescura.", "praquem": "Quem quer sair do teclado de escritório sem gastar R$ 500.", "amz": "https://www.amazon.com.br/dp/B0GVQ73KH9?tag=1painerd-20", "cat": "setup", "sub": "perifericos", "emoji": "⌨️", "preco": 180, "casa": false}, {"img": "https://m.media-amazon.com/images/I/61oE1NouXuL._AC_UL320_.jpg", "nome": "Mouse Logitech G203 Lightsync", "faixa": "R$ 85–140", "porque": "Sensor preciso de marca grande pelo preço de mouse genérico. Simplesmente não tem defeito nessa faixa.", "praquem": "Qualquer jogo, qualquer mão — o primeiro mouse gamer certo.", "amz": "https://www.amazon.com.br/dp/B087CT8PWY?tag=1painerd-20", "cat": "setup", "sub": "perifericos", "emoji": "🖱️", "preco": 85, "casa": false}, {"img": "https://m.media-amazon.com/images/I/61HhDfm-+EL._AC_UL320_.jpg", "nome": "Headset Havit H2002D", "faixa": "R$ 160–190", "porque": "Hastes de metal, confortável e som limpo — o queridinho do custo-benefício.", "praquem": "Jogar e fazer call sem parecer robô.", "amz": "https://www.amazon.com.br/dp/B0D6NJCK5G?tag=1painerd-20", "cat": "setup", "sub": "perifericos", "emoji": "🎧", "preco": 160, "casa": false}, {"img": "https://m.media-amazon.com/images/I/81nLaAZKKrL._AC_UL320_.jpg", "nome": "Microfone Fifine AmpliGame A6/K669", "faixa": "R$ 150–250", "porque": "Som de streamer sem preço de streamer: USB, plugou funcionou.", "praquem": "Quem grava vídeo, faz live ou quer call decente.", "amz": "https://www.amazon.com.br/dp/B0B8SNVK5K?tag=1painerd-20", "cat": "setup", "sub": "audiovideo", "emoji": "🎙️", "preco": 150, "casa": false}, {"img": "https://m.media-amazon.com/images/I/61PrRrCu7lL._AC_UL320_.jpg", "nome": "Monitor Acer Nitro KG241Y (100Hz+)", "faixa": "R$ 600–700", "porque": "Full HD acima de 100Hz por preço de monitor comum — a diferença no jogo é visível.", "praquem": "Primeiro upgrade sério de quem joga no PC.", "amz": "https://www.amazon.com.br/dp/B0GP93BGJM?tag=1painerd-20", "cat": "setup", "sub": "tela", "emoji": "🖥️", "preco": 600, "casa": false}, {"img": "https://m.media-amazon.com/images/I/61-6uAf8soL._AC_UL320_.jpg", "nome": "Webcam Logitech C920s", "faixa": "R$ 280–400", "porque": "A webcam padrão do mercado há anos: imagem que nenhuma câmera de notebook alcança.", "praquem": "Reunião, live e vídeo com a família.", "amz": "https://www.amazon.com.br/dp/B07K986YLL?tag=1painerd-20", "cat": "setup", "sub": "audiovideo", "emoji": "📷", "preco": 280, "casa": false}, {"img": "https://m.media-amazon.com/images/I/51jlC3sL0BL._AC_UL320_.jpg", "nome": "Mousepad XL (90×40cm)", "faixa": "R$ 50–100", "porque": "Cobre a mesa inteira, mouse desliza igual em todo canto e ainda protege a madeira.", "praquem": "Todo setup — é a melhoria mais barata que existe.", "amz": "https://www.amazon.com.br/dp/B0BHMN52LY?tag=1painerd-20", "cat": "setup", "sub": "perifericos", "emoji": "🟪", "preco": 50, "casa": false}, {"img": "https://m.media-amazon.com/images/I/61-TzEg09KL._AC_UL320_.jpg", "nome": "Suporte articulado de monitor", "faixa": "R$ 120–200", "porque": "Libera a mesa, alinha a altura dos olhos e o setup ganha cara de profissional na hora.", "praquem": "Quem passa horas sentado e sente o pescoço.", "amz": "https://www.amazon.com.br/dp/B0765KZ264?tag=1painerd-20", "cat": "setup", "sub": "ergonomia", "emoji": "🦾", "preco": 120, "casa": false}, {"img": "", "nome": "Suporte ergonômico de notebook", "faixa": "R$ 40–90", "porque": "Notebook na altura certa esfria melhor e acaba com a corcunda de gamer.", "praquem": "Quem trabalha ou joga no notebook.", "amz": "https://www.amazon.com.br/s?k=suporte+notebook+ergonomico+mesa&tag=1painerd-20", "cat": "setup", "sub": "ergonomia", "emoji": "💻", "preco": 40, "casa": false}, {"img": "https://m.media-amazon.com/images/I/61IWpsaMFJL._AC_UL320_.jpg", "nome": "Luminária de mesa com braço articulado", "faixa": "R$ 80–160", "porque": "Luz certa pra jogar, gravar e trabalhar sem cansar a vista — e valoriza qualquer vídeo.", "praquem": "Setup de quem cria conteúdo ou estuda à noite.", "amz": "https://www.amazon.com.br/dp/B0H6VHLQJM?tag=1painerd-20", "cat": "setup", "sub": "ergonomia", "emoji": "💡", "preco": 80, "casa": false}];
+const P = [{"img": "https://m.media-amazon.com/images/I/71lhVag75AL._AC_UL320_.jpg", "nome": "LEGO Creator 3-em-1 Ônibus Espacial (31134)", "faixa": "R$ 84–130", "porque": "Três brinquedos em um: ônibus espacial, astronauta e nave. LEGO de verdade sem preço de vitrine.", "praquem": "6+ anos — criança que gosta de montar e remontar.", "cat": "presentes", "sub": "montar", "emoji": "🧱", "preco": 84, "casa": false, "lojas": {"amazon": "https://www.amazon.com.br/dp/B0BLJ4FDT4?tag=1painerd-20", "ml": "", "shopee": ""}}, {"img": "https://m.media-amazon.com/images/I/719Tpe9iBqL._AC_UL320_.jpg", "nome": "LEGO Minecraft (set de entrada)", "faixa": "R$ 130–190", "porque": "Junta o jogo favorito com o brinquedo que nunca envelhece. Sucesso garantido.", "praquem": "Fã de Minecraft de 7+ anos.", "cat": "presentes", "sub": "montar", "emoji": "🧱", "preco": 130, "casa": false, "lojas": {"amazon": "https://www.amazon.com.br/dp/B0GS932Q5M?tag=1painerd-20", "ml": "", "shopee": ""}}, {"img": "https://m.media-amazon.com/images/I/61lvsNL1LWL._AC_UL320_.jpg", "nome": "Gift Card Robux (Roblox)", "faixa": "R$ 50+", "porque": "O presente que NUNCA erra com quem joga Roblox — a criança escolhe o que quiser.", "praquem": "Qualquer fã de Roblox (e os pais que não sabem o que dar).", "cat": "presentes", "sub": "digital", "emoji": "🎮", "preco": 50, "casa": false, "lojas": {"amazon": "https://www.amazon.com.br/dp/374750437X?tag=1painerd-20", "ml": "", "shopee": ""}}, {"img": "https://m.media-amazon.com/images/I/71yRIgepE-L._AC_UL320_.jpg", "nome": "Uno Clássico", "faixa": "R$ 20–40", "porque": "O jogo que faz a família largar o celular por uma hora. Imbatível pelo preço.", "praquem": "Todo mundo a partir de 7 anos.", "cat": "presentes", "sub": "mesa", "emoji": "🃏", "preco": 20, "casa": false, "lojas": {"amazon": "https://www.amazon.com.br/dp/B0F7LV66YJ?tag=1painerd-20", "ml": "", "shopee": ""}}, {"img": "https://m.media-amazon.com/images/I/511r2jqT0RL._AC_UL320_.jpg", "nome": "Hot Wheels kit com 5 carrinhos", "faixa": "R$ 50–80", "porque": "O brinquedo mais vendido do Brasil ano após ano — colecionável e indestrutível.", "praquem": "3+ anos (e muito adulto colecionador).", "cat": "presentes", "sub": "colecionavel", "emoji": "🚗", "preco": 50, "casa": false, "lojas": {"amazon": "https://www.amazon.com.br/dp/B07M8NXRGT?tag=1painerd-20", "ml": "", "shopee": ""}}, {"img": "https://m.media-amazon.com/images/I/61X3jgNR4iL._AC_UL320_.jpg", "nome": "Kit Laboratório 42 Experimentos (Estrela)", "faixa": "R$ 150–210", "porque": "Ciência de verdade em casa: vulcão, slime e reações — diversão que ensina.", "praquem": "Curiosos de 8+ anos.", "cat": "presentes", "sub": "criativo", "emoji": "🔬", "preco": 150, "casa": false, "lojas": {"amazon": "https://www.amazon.com.br/dp/B077P982B6?tag=1painerd-20", "ml": "", "shopee": ""}}, {"img": "https://m.media-amazon.com/images/I/71cepauGVkL._AC_UL320_.jpg", "nome": "Play-Doh Fábrica de Diversão", "faixa": "R$ 60–100", "porque": "Criatividade sem tela, bagunça controlada e horas de silêncio abençoado.", "praquem": "3–7 anos.", "cat": "presentes", "sub": "criativo", "emoji": "🎨", "preco": 60, "casa": false, "lojas": {"amazon": "https://www.amazon.com.br/dp/B0CQTNQ58F?tag=1painerd-20", "ml": "", "shopee": ""}}, {"img": "https://m.media-amazon.com/images/I/81vuoMiXF9L._AC_UL320_.jpg", "nome": "Figura de ação Marvel/Minecraft", "faixa": "R$ 60–110", "porque": "Boneco articulado dos heróis do momento — presente certeiro de aniversário.", "praquem": "4+ anos, fãs de herói ou do jogo.", "cat": "presentes", "sub": "colecionavel", "emoji": "🦸", "preco": 60, "casa": false, "lojas": {"amazon": "https://www.amazon.com.br/dp/B0D9R799QH?tag=1painerd-20", "ml": "", "shopee": ""}}, {"img": "https://m.media-amazon.com/images/I/61LJizifVPL._AC_UL320_.jpg", "nome": "Dobble (jogo de cartas)", "faixa": "R$ 70–100", "porque": "Partidas de 5 minutos, gargalhada garantida, cabe no bolso — o melhor party game familiar.", "praquem": "Famílias com crianças 6+ anos.", "cat": "presentes", "sub": "mesa", "emoji": "🃏", "preco": 70, "casa": false, "lojas": {"amazon": "https://www.amazon.com.br/dp/B0GP32N2VQ?tag=1painerd-20", "ml": "", "shopee": ""}}, {"img": "https://m.media-amazon.com/images/I/81OThJ9KS1L._AC_UL320_.jpg", "nome": "Pelúcia de personagem (Creeper, axolote...)", "faixa": "R$ 60–120", "porque": "O abraço no personagem favorito — funciona de 3 a 99 anos.", "praquem": "Fãs de Minecraft/games que curtem fofura.", "cat": "presentes", "sub": "colecionavel", "emoji": "🧸", "preco": 60, "casa": false, "lojas": {"amazon": "https://www.amazon.com.br/dp/B0C1HS7JWK?tag=1painerd-20", "ml": "", "shopee": ""}}, {"img": "https://m.media-amazon.com/images/I/51NSQ6YYaSL._AC_UL320_.jpg", "nome": "Teclado mecânico Redragon Kumara (K552)", "faixa": "R$ 180–260", "porque": "O mecânico barato mais aprovado do Brasil: switches que aguentam anos de uso e RGB sem frescura.", "praquem": "Quem quer sair do teclado de escritório sem gastar R$ 500.", "cat": "setup", "sub": "perifericos", "emoji": "⌨️", "preco": 180, "casa": false, "lojas": {"amazon": "https://www.amazon.com.br/dp/B0GVQ73KH9?tag=1painerd-20", "ml": "https://meli.la/1f6REbd", "shopee": ""}}, {"img": "https://m.media-amazon.com/images/I/61oE1NouXuL._AC_UL320_.jpg", "nome": "Mouse Logitech G203 Lightsync", "faixa": "R$ 85–140", "porque": "Sensor preciso de marca grande pelo preço de mouse genérico. Simplesmente não tem defeito nessa faixa.", "praquem": "Qualquer jogo, qualquer mão — o primeiro mouse gamer certo.", "cat": "setup", "sub": "perifericos", "emoji": "🖱️", "preco": 85, "casa": false, "lojas": {"amazon": "https://www.amazon.com.br/dp/B087CT8PWY?tag=1painerd-20", "ml": "", "shopee": ""}}, {"img": "https://m.media-amazon.com/images/I/61HhDfm-+EL._AC_UL320_.jpg", "nome": "Headset Havit H2002D", "faixa": "R$ 160–190", "porque": "Hastes de metal, confortável e som limpo — o queridinho do custo-benefício.", "praquem": "Jogar e fazer call sem parecer robô.", "cat": "setup", "sub": "perifericos", "emoji": "🎧", "preco": 160, "casa": false, "lojas": {"amazon": "https://www.amazon.com.br/dp/B0D6NJCK5G?tag=1painerd-20", "ml": "", "shopee": ""}}, {"img": "https://m.media-amazon.com/images/I/81nLaAZKKrL._AC_UL320_.jpg", "nome": "Microfone Fifine AmpliGame A6/K669", "faixa": "R$ 150–250", "porque": "Som de streamer sem preço de streamer: USB, plugou funcionou.", "praquem": "Quem grava vídeo, faz live ou quer call decente.", "cat": "setup", "sub": "audiovideo", "emoji": "🎙️", "preco": 150, "casa": false, "lojas": {"amazon": "https://www.amazon.com.br/dp/B0B8SNVK5K?tag=1painerd-20", "ml": "", "shopee": ""}}, {"img": "https://m.media-amazon.com/images/I/61PrRrCu7lL._AC_UL320_.jpg", "nome": "Monitor Acer Nitro KG241Y (100Hz+)", "faixa": "R$ 600–700", "porque": "Full HD acima de 100Hz por preço de monitor comum — a diferença no jogo é visível.", "praquem": "Primeiro upgrade sério de quem joga no PC.", "cat": "setup", "sub": "tela", "emoji": "🖥️", "preco": 600, "casa": false, "lojas": {"amazon": "https://www.amazon.com.br/dp/B0GP93BGJM?tag=1painerd-20", "ml": "", "shopee": ""}}, {"img": "https://m.media-amazon.com/images/I/61-6uAf8soL._AC_UL320_.jpg", "nome": "Webcam Logitech C920s", "faixa": "R$ 280–400", "porque": "A webcam padrão do mercado há anos: imagem que nenhuma câmera de notebook alcança.", "praquem": "Reunião, live e vídeo com a família.", "cat": "setup", "sub": "audiovideo", "emoji": "📷", "preco": 280, "casa": false, "lojas": {"amazon": "https://www.amazon.com.br/dp/B07K986YLL?tag=1painerd-20", "ml": "", "shopee": ""}}, {"img": "https://m.media-amazon.com/images/I/51jlC3sL0BL._AC_UL320_.jpg", "nome": "Mousepad XL (90×40cm)", "faixa": "R$ 50–100", "porque": "Cobre a mesa inteira, mouse desliza igual em todo canto e ainda protege a madeira.", "praquem": "Todo setup — é a melhoria mais barata que existe.", "cat": "setup", "sub": "perifericos", "emoji": "🟪", "preco": 50, "casa": false, "lojas": {"amazon": "https://www.amazon.com.br/dp/B0BHMN52LY?tag=1painerd-20", "ml": "", "shopee": ""}}, {"img": "https://m.media-amazon.com/images/I/61-TzEg09KL._AC_UL320_.jpg", "nome": "Suporte articulado de monitor", "faixa": "R$ 120–200", "porque": "Libera a mesa, alinha a altura dos olhos e o setup ganha cara de profissional na hora.", "praquem": "Quem passa horas sentado e sente o pescoço.", "cat": "setup", "sub": "ergonomia", "emoji": "🦾", "preco": 120, "casa": false, "lojas": {"amazon": "https://www.amazon.com.br/dp/B0765KZ264?tag=1painerd-20", "ml": "", "shopee": ""}}, {"img": "", "nome": "Suporte ergonômico de notebook", "faixa": "R$ 40–90", "porque": "Notebook na altura certa esfria melhor e acaba com a corcunda de gamer.", "praquem": "Quem trabalha ou joga no notebook.", "cat": "setup", "sub": "ergonomia", "emoji": "💻", "preco": 40, "casa": false, "lojas": {"amazon": "https://www.amazon.com.br/s?k=suporte+notebook+ergonomico+mesa&tag=1painerd-20", "ml": "", "shopee": ""}}, {"img": "https://m.media-amazon.com/images/I/61IWpsaMFJL._AC_UL320_.jpg", "nome": "Luminária de mesa com braço articulado", "faixa": "R$ 80–160", "porque": "Luz certa pra jogar, gravar e trabalhar sem cansar a vista — e valoriza qualquer vídeo.", "praquem": "Setup de quem cria conteúdo ou estuda à noite.", "cat": "setup", "sub": "ergonomia", "emoji": "💡", "preco": 80, "casa": false, "lojas": {"amazon": "https://www.amazon.com.br/dp/B0H6VHLQJM?tag=1painerd-20", "ml": "", "shopee": ""}}];
 const CATS = {presentes:{nome:'Presentes geek',emoji:'🎁',subs:{montar:'Montar',mesa:'Jogos de mesa',colecionavel:'Colecionáveis',criativo:'Criativos',digital:'Digital'}},
               setup:{nome:'Setup & periféricos',emoji:'🖥️',subs:{perifericos:'Periféricos',audiovideo:'Áudio & vídeo',tela:'Tela',ergonomia:'Ergonomia'}}};
-let st={cat:'',sub:'',preco:'',q:'',ord:'rec',view:'grid'};
+let st={cat:'',sub:'',preco:'',q:'',ord:'rec',view:'grid',loja:''};
+// ordem de preferencia: quem tem mais gente comprando no Brasil vem primeiro
+const ORDEM=['ml','amazon','shopee'];
+const LOJAS={amazon:'Amazon',ml:'Mercado Livre',shopee:'Shopee'};
+function temLoja(k){return P.some(p=>p.lojas&&p.lojas[k])}
 
 const norm=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
 function match(p,ignore){
   if(st.cat&&ignore!=='cat'&&p.cat!==st.cat)return false;
   if(st.sub&&ignore!=='sub'&&p.sub!==st.sub)return false;
   if(st.preco&&ignore!=='preco'){const[a,b]=st.preco.split('-').map(Number);if(p.preco<a||p.preco>=b)return false}
+  if(st.loja&&ignore!=='loja'&&!(p.lojas&&p.lojas[st.loja]))return false;
   if(st.q){const t=norm(p.nome+' '+p.porque+' '+p.praquem);if(!norm(st.q).split(/\s+/).every(w=>t.includes(w)))return false}
   return true;
 }
@@ -309,12 +356,23 @@ function renderCats(){
   sr.className='subrow';sr.innerHTML=s;
   sr.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{st.sub=b.dataset.sub;draw()});
 }
+function renderLojas(){
+  const el=document.getElementById('lojarow');
+  const disp=ORDEM.filter(temLoja);
+  if(disp.length<2){el.innerHTML='';return}
+  let h=`<button class="chip sm ${!st.loja?'on':''}" data-l="">Todas as lojas</button>`;
+  disp.forEach(k=>{const n=P.filter(p=>p.lojas[k]&&match(p,'loja')).length;
+    h+=`<button class="chip sm ${st.loja===k?'on':''}" data-l="${k}">${LOJAS[k]} <span class="n">${n}</span></button>`});
+  el.innerHTML=h;
+  el.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{st.loja=b.dataset.l;draw()});
+}
 function renderActive(n){
   const a=document.getElementById('active');let h='';
   if(st.cat)h+=`<button class="tag" data-k="cat">${CATS[st.cat].nome}<span class="x">✕</span></button>`;
   if(st.sub)h+=`<button class="tag" data-k="sub">${CATS[st.cat].subs[st.sub]}<span class="x">✕</span></button>`;
   if(st.preco){const l=document.querySelector('#preco option[value="'+st.preco+'"]').textContent;
     h+=`<button class="tag" data-k="preco">${l}<span class="x">✕</span></button>`}
+  if(st.loja)h+=`<button class="tag" data-k="loja">${LOJAS[st.loja]}<span class="x">✕</span></button>`;
   if(st.q)h+=`<button class="tag" data-k="q">"${st.q}"<span class="x">✕</span></button>`;
   if(h)h+='<button class="clearall" id="ca">limpar tudo</button>';
   h+=`<span class="count">${n} ${n===1?'item':'itens'}</span>`;
@@ -322,16 +380,25 @@ function renderActive(n){
   a.querySelectorAll('.tag').forEach(b=>b.onclick=()=>{const k=b.dataset.k;st[k]='';if(k==='cat')st.sub='';
     if(k==='preco')document.getElementById('preco').value='';if(k==='q')document.getElementById('q').value='';draw()});
   const ca=document.getElementById('ca');
-  if(ca)ca.onclick=()=>{st={...st,cat:'',sub:'',preco:'',q:''};document.getElementById('preco').value='';document.getElementById('q').value='';draw()};
+  if(ca)ca.onclick=()=>{st={...st,cat:'',sub:'',preco:'',q:'',loja:''};document.getElementById('preco').value='';document.getElementById('q').value='';draw()};
 }
 function card(p){
   const tile=p.img?`<img src="${p.img}" loading="lazy" alt="">`:`<span class="ph">${p.emoji}</span>`;
   const badge=p.casa?'<span class="badge">🏠 Aprovado em casa</span>':'';
-  const L=[];
-  if(p.amz)L.push(`<a class="pbtn go" href="${p.amz}" target="_blank" rel="noopener sponsored">Ver na Amazon →</a>`);
-  if(p.shopee)L.push(`<a class="pbtn" href="${p.shopee}" target="_blank" rel="noopener sponsored">Shopee</a>`);
-  if(p.ml)L.push(`<a class="pbtn" href="${p.ml}" target="_blank" rel="noopener sponsored">Mercado Livre</a>`);
-  const lojas=L.join('');
+  const NOME={amazon:'Amazon',ml:'Mercado Livre',shopee:'Shopee'};
+  const PREP={amazon:'na',ml:'no',shopee:'na'};
+  const disp=ORDEM.filter(k=>p.lojas&&p.lojas[k]);
+  let bloco='';
+  if(disp.length===1){
+    const k=disp[0];
+    bloco=`<div class="plinks"><a class="pbtn go" data-l="${k}" href="${p.lojas[k]}" target="_blank" rel="noopener sponsored"><span class="marca"><span class="mk">${NOME[k]}</span> →</span></a></div>`;
+  }else if(disp.length>1){
+    const k=disp[0];
+    bloco=`<div class="plinks"><a class="pbtn go" data-l="${k}" href="${p.lojas[k]}" target="_blank" rel="noopener sponsored"><span class="marca"><span class="mk">${NOME[k]}</span> →</span></a></div>
+      <div class="ondecomprar">ou compre em</div>
+      <div class="lojas">${disp.slice(1).map(x=>
+        `<a class="loja" data-l="${x}" href="${p.lojas[x]}" target="_blank" rel="noopener sponsored"><span class="pt"></span>${NOME[x]}</a>`).join('')}</div>`;
+  }
   return `<article class="pcard">
    <div class="ptile">${tile}${badge}</div>
    <div class="pinfo">
@@ -339,7 +406,7 @@ function card(p){
      <p class="pfaixa">${p.faixa}<span class="sel2">🔎 garimpado com critério</span></p>
      <p class="d"><b>Por que este:</b> ${p.porque}</p>
      <p class="d"><b>Pra quem é:</b> ${p.praquem}</p>
-     <div class="plinks">${lojas}</div>
+     ${bloco}
    </div></article>`;
 }
 function draw(){
@@ -347,7 +414,7 @@ function draw(){
   if(st.ord==='asc')r.sort((a,b)=>a.preco-b.preco);
   if(st.ord==='desc')r.sort((a,b)=>b.preco-a.preco);
   if(st.ord==='az')r.sort((a,b)=>a.nome.localeCompare(b.nome,'pt'));
-  renderCats();renderActive(r.length);
+  renderCats();renderLojas();renderActive(r.length);
   const g=document.getElementById('grid');
   g.className='pgrid'+(st.view==='list'?' list':'');
   g.innerHTML=r.length?r.map(card).join(''):
