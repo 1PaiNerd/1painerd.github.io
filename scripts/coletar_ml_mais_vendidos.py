@@ -40,14 +40,35 @@ DRY = "--dry-run" in sys.argv
 API = "https://api.mercadolibre.com"
 UA = {"User-Agent": "1painerd-site/1.0 (+https://1painerd.github.io)"}
 
-# categorias que interessam pro público do canal
+# Categorias que interessam pro público do canal.
+# O NOME aqui é só um palpite pra emergência: o script pergunta o nome de
+# verdade pra API (/categories/<id>) e usa o oficial. Se o id estiver errado,
+# a API responde 404 e a categoria é pulada com aviso — sem inventar nada.
 CATEGORIAS = [
-    ("MLB1132", "Brinquedos e Hobbies", "🧸"),
-    ("MLB1648", "Informática",          "🖥️"),
-    ("MLB1000", "Eletrônicos e Áudio",  "🔌"),
-    ("MLB1144", "Games",                "🎮"),
+    # o núcleo nerd, que já estava rodando
+    ("MLB1144",  "Games",                      "🎮"),
+    ("MLB1648",  "Informática",                "🖥️"),
+    ("MLB1000",  "Eletrônicos e Áudio",        "🔌"),
+    ("MLB1132",  "Brinquedos e Hobbies",       "🧸"),
+    # o que o público feminino do canal mais compra em marketplace
+    ("MLB1246",  "Beleza e Cuidado Pessoal",   "💄"),
+    ("MLB1430",  "Calçados, Roupas e Bolsas",  "👟"),
+    ("MLB1574",  "Casa, Móveis e Decoração",   "🏠"),
+    ("MLB5726",  "Eletrodomésticos",           "🍳"),
+    ("MLB1276",  "Esportes e Fitness",         "🏋️"),
+    ("MLB1384",  "Bebês",                      "🍼"),
 ]
 POR_CATEGORIA = 10
+
+
+def nome_oficial(cid, token, palpite):
+    """Pergunta pro ML como a categoria se chama de verdade."""
+    try:
+        c = get(f"{API}/categories/{cid}", token)
+        return c.get("name") or palpite, True
+    except Exception as e:
+        print(f"  ! categoria {cid} não confere ({e}) — usando '{palpite}'")
+        return palpite, False
 
 
 def get(url, token=None):
@@ -164,7 +185,10 @@ def main():
 
     saida = {"gerado_em": HOJE, "fonte": "API oficial do Mercado Livre", "categorias": []}
     total = 0
-    for cid, nome, emoji in CATEGORIAS:
+    for cid, palpite, emoji in CATEGORIAS:
+        nome, conferido = nome_oficial(cid, token, palpite)
+        if conferido and nome != palpite:
+            print(f"    (nome oficial de {cid}: '{nome}' — o palpite era '{palpite}')")
         try:
             hl = get(f"{API}/highlights/MLB/category/{cid}", token)
             conteudo = hl.get("content") or []
