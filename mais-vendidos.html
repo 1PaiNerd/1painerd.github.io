@@ -515,7 +515,10 @@ async function carregarML(){
   if(afil)AFIL=afil;
   if(d&&d.categorias){
     for(const c of d.categorias){
-      const cat=DE_PARA_ML[c.id]; if(!cat)continue;
+      /* categoria conhecida cai na aba que já existe; categoria nova ganha
+         a aba dela sozinha, com o nome que o próprio Mercado Livre deu */
+      const cat=DE_PARA_ML[c.id]||c.id;
+      if(!CATS[cat])CATS[cat]={nome:c.nome,emoji:c.emoji||'🛒'};
       for(const it of (c.itens||[])){
         P.push({id:it.id,cat,loja:'ml',rank:it.rank,nome:it.nome,img:it.img,
                 preco:it.preco||0,precoTxt:it.preco?BRL(it.preco):'ver preço',url:it.url});
