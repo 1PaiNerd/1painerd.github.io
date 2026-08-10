@@ -177,6 +177,32 @@ border-radius:999px;padding:7px 14px;white-space:nowrap}
 .como .cur2{float:right;width:145px;margin:0 0 12px 22px}
 @media(max-width:640px){.como .cur2{display:none}.como{padding:26px 0 6px}}
 
+/* ---------- ABAS DE LOJA: cada uma com a cara dela ---------- */
+#lojarow{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none}
+#lojarow::-webkit-scrollbar{display:none}
+.lchip{flex:none;display:flex;align-items:center;gap:9px;cursor:pointer;white-space:nowrap;
+ background:var(--card);border:2px solid var(--line);border-radius:12px;padding:9px 16px 9px 12px;
+ font:700 .9rem/1 'Inter',sans-serif;color:var(--sub);transition:.18s}
+.lchip:hover{transform:translateY(-2px);color:var(--ink)}
+.lchip .lg{width:26px;height:26px;border-radius:7px;display:grid;place-items:center;flex:none;
+ font:800 .82rem/1 'Space Grotesk',sans-serif;letter-spacing:-.03em}
+.lchip .n{font-size:.74rem;font-weight:700;opacity:.65;color:inherit}
+.lchip[data-l="tudo"] .lg{background:linear-gradient(135deg,#ff8a3d,#ff6d2e);color:#fff}
+.lchip[data-l="ml"] .lg{background:#ffe600;color:#2d3277}
+.lchip[data-l="amazon"] .lg{background:#ff9900;color:#232f3e}
+.lchip[data-l="shopee"] .lg{background:#ee4d2d;color:#fff}
+.lchip.on{border-color:transparent}
+.lchip[data-l="tudo"].on{background:linear-gradient(135deg,#ff8a3d,#ff6d2e);color:#160a02;
+ box-shadow:0 6px 20px rgba(255,138,61,.4)}
+.lchip[data-l="tudo"].on .lg{background:rgba(0,0,0,.16);color:#160a02}
+.lchip[data-l="ml"].on{background:#ffe600;color:#2d3277;box-shadow:0 6px 20px rgba(255,230,0,.38)}
+.lchip[data-l="ml"].on .lg{background:#2d3277;color:#ffe600}
+.lchip[data-l="amazon"].on{background:#232f3e;color:#fff;box-shadow:0 6px 20px rgba(35,47,62,.45)}
+.lchip[data-l="amazon"].on .lg{background:#ff9900;color:#232f3e}
+.lchip[data-l="shopee"].on{background:#ee4d2d;color:#fff;box-shadow:0 6px 20px rgba(238,77,45,.4)}
+.lchip[data-l="shopee"].on .lg{background:rgba(255,255,255,.9);color:#ee4d2d}
+@media(max-width:640px){.lchip{padding:8px 13px 8px 10px;font-size:.84rem}
+ .lchip .lg{width:23px;height:23px;font-size:.74rem}}
 /* ---------- ponte de tema: segue a escolha feita na home ---------- */
 [data-tema="claro"],[data-tema="sol"]{
   --bg:#f7f9ff; --surf:#ffffff; --card:#ffffff; --ink:#141a2b; --sub:#5b6784; --mut:#7d89a5;
@@ -360,11 +386,15 @@ function renderLojas(){
   const el=document.getElementById('lojarow');
   const disp=ORDEM.filter(temLoja);
   if(disp.length<2){el.innerHTML='';return}
-  let h=`<button class="chip sm ${!st.loja?'on':''}" data-l="">Todas as lojas</button>`;
+  const SIG={amazon:'a',ml:'ML',shopee:'S'};
+  let h=`<button class="lchip ${!st.loja?'on':''}" data-l="tudo">
+      <span class="lg">★</span>Todas as lojas</button>`;
   disp.forEach(k=>{const n=P.filter(p=>p.lojas[k]&&match(p,'loja')).length;
-    h+=`<button class="chip sm ${st.loja===k?'on':''}" data-l="${k}">${LOJAS[k]} <span class="n">${n}</span></button>`});
+    h+=`<button class="lchip ${st.loja===k?'on':''}" data-l="${k}">
+        <span class="lg">${SIG[k]}</span>${LOJAS[k]} <span class="n">${n}</span></button>`});
   el.innerHTML=h;
-  el.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{st.loja=b.dataset.l;draw()});
+  el.querySelectorAll('.lchip').forEach(b=>b.onclick=()=>{
+    st.loja=b.dataset.l==='tudo'?'':b.dataset.l;draw()});
 }
 function renderActive(n){
   const a=document.getElementById('active');let h='';
