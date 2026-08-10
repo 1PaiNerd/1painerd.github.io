@@ -216,6 +216,41 @@ border-radius:999px;padding:7px 14px;white-space:nowrap}
 .selo[data-l="ml"]{background:#ffe600;color:#2d3277}
 .selo[data-l="amazon"]{background:#232f3e;color:#ff9900}
 .selo[data-l="shopee"]{background:#ee4d2d;color:#fff}
+/* ---------- FAIXA DA LOJA: o cabecalho da aba escolhida ---------- */
+.faixa{display:flex;align-items:center;gap:16px;border-radius:16px;padding:15px 20px;margin:12px 0 2px;
+ position:relative;overflow:hidden}
+.faixa .fxlg{width:52px;height:52px;border-radius:13px;display:grid;place-items:center;flex:none;
+ font:800 1.25rem/1 'Space Grotesk',sans-serif;letter-spacing:-.04em}
+.faixa .fxtx{flex:1;min-width:0}
+.faixa .fxtx b{display:block;font:700 1.12rem/1.25 'Space Grotesk',sans-serif;letter-spacing:-.02em}
+.faixa .fxtx span{display:block;font:600 .82rem/1.5 'Inter',sans-serif;opacity:.78;margin-top:3px}
+.faixa .fxn{flex:none;text-align:right;line-height:1}
+.faixa .fxn b{font:800 1.7rem/1 'Space Grotesk',sans-serif;letter-spacing:-.03em}
+.faixa .fxn span{display:block;font:700 .68rem/1 'Inter',sans-serif;opacity:.7;
+ letter-spacing:.1em;text-transform:uppercase;margin-top:5px}
+/* brilho suave no canto, pra não ficar chapado */
+.faixa::after{content:"";position:absolute;right:-40px;top:-60px;width:200px;height:200px;
+ border-radius:50%;background:rgba(255,255,255,.14);pointer-events:none}
+.faixa[data-l="ml"]{background:linear-gradient(120deg,#ffe600,#ffd400);color:#2d3277}
+.faixa[data-l="ml"] .fxlg{background:#2d3277;color:#ffe600}
+.faixa[data-l="amazon"]{background:linear-gradient(120deg,#232f3e,#37475a);color:#fff}
+.faixa[data-l="amazon"] .fxlg{background:#ff9900;color:#232f3e}
+.faixa[data-l="shopee"]{background:linear-gradient(120deg,#ee4d2d,#d73211);color:#fff}
+.faixa[data-l="shopee"] .fxlg{background:rgba(255,255,255,.92);color:#ee4d2d}
+.faixa[data-l="tudo"]{background:linear-gradient(120deg,#ff8a3d,#ff6d2e);color:#180b02}
+.faixa[data-l="tudo"] .fxlg{background:rgba(0,0,0,.18);color:#180b02}
+@media(max-width:640px){
+ .faixa{gap:12px;padding:13px 15px;border-radius:14px}
+ .faixa .fxlg{width:42px;height:42px;border-radius:11px;font-size:1rem}
+ .faixa .fxtx b{font-size:.98rem}
+ .faixa .fxtx span{font-size:.75rem}
+ .faixa .fxn b{font-size:1.35rem}
+ .faixa .fxn span{font-size:.6rem}
+}
+/* medalhas de verdade pro top 3 */
+.badge.rk[data-m="1"]{background:linear-gradient(135deg,#ffd75e,#e8a300);color:#3a2600}
+.badge.rk[data-m="2"]{background:linear-gradient(135deg,#e6ecf5,#a8b6c9);color:#2b3646}
+.badge.rk[data-m="3"]{background:linear-gradient(135deg,#e4a273,#b96f36);color:#331a05}
 /* ---------- mini grafico de preco (tipo Buscape) ---------- */
 .spark{margin-top:2px;display:flex;align-items:center;gap:9px}
 .spark svg{display:block}
@@ -269,6 +304,7 @@ border-radius:999px;padding:7px 14px;white-space:nowrap}
 <!-- ESCOLHA A LOJA -->
 <div class="lojabar"><div class="wrap">
   <div class="lojarow" id="lojarow"></div>
+  <div id="faixa"></div>
 </div></div>
 
 <!-- BARRA DE CATEGORIAS + SUBCATEGORIAS (movida pra baixo do hero, gruda no topo ao rolar) -->
@@ -333,7 +369,8 @@ const LOJAS={
   ml:    {nome:'Mercado Livre',sigla:'ML', cta:'Ver no Mercado Livre'},
   shopee:{nome:'Shopee',      sigla:'S',  cta:'Ver na Shopee'}
 };
-const ORDEM_LOJA=['tudo','amazon','ml','shopee'];
+/* Mercado Livre primeiro: é a loja que mais vende no Brasil */
+const ORDEM_LOJA=['tudo','ml','amazon','shopee'];
 /* de qual categoria do ML cai em qual aba nossa */
 const DE_PARA_ML={MLB1132:'brinquedos',MLB1648:'informatica',MLB1000:'eletronicos',MLB1144:'games'};
 P.forEach(p=>{p.loja='amazon'});
@@ -363,6 +400,28 @@ function renderLojas(){
   }
   lr.innerHTML=h;
   lr.querySelectorAll('.lchip').forEach(b=>b.onclick=()=>{st.loja=b.dataset.l;st.cat='';draw()});
+  /* deixa a aba escolhida sempre visível, mesmo em tela estreita */
+  const ativa=lr.querySelector('.lchip.on');
+  if(ativa)lr.scrollTo({left:Math.max(0,ativa.offsetLeft-12),behavior:'smooth'});
+}
+let ML_DATA_EM='';
+function renderFaixa(n){
+  const f=document.getElementById('faixa');
+  const T={
+    tudo:  {sig:'★', nome:'Todas as lojas',
+            sub:'os campeões de venda de cada loja, um do lado do outro'},
+    ml:    {sig:'ML',nome:'Mais vendidos do Mercado Livre',
+            sub:'ranking oficial da maior loja do Brasil'+(ML_DATA_EM?` · atualizado em ${ML_DATA_EM}`:'')},
+    amazon:{sig:'a', nome:'Mais vendidos da Amazon',
+            sub:'ranking oficial da Amazon Brasil'},
+    shopee:{sig:'S', nome:'Mais vendidos da Shopee',
+            sub:'em montagem — a Shopee entra em breve'}
+  }[st.loja]||{};
+  f.innerHTML=`<div class="faixa" data-l="${st.loja}">
+    <span class="fxlg">${T.sig}</span>
+    <span class="fxtx"><b>${T.nome}</b><span>${T.sub}</span></span>
+    <span class="fxn"><b>${n}</b><span>${n===1?'produto':'produtos'}</span></span>
+  </div>`;
 }
 function renderCats(){
   const cr=document.getElementById('catrow');
@@ -414,7 +473,7 @@ function card(p){
   const preco=p.precoTxt||(p.preco?BRL(p.preco):'ver preço');
   return `<article class="pcard">
    <div class="ptile"><img src="${p.img}" loading="lazy" alt="">
-     <span class="badge rk" title="#${p.rank} em ${CATS[p.cat].nome}">${medalha} #${p.rank}</span>
+     <span class="badge rk" data-m="${p.rank<=3?p.rank:''}" title="#${p.rank} em ${CATS[p.cat].nome}">${medalha} #${p.rank}</span>
      <span class="selo" data-l="${p.loja}">${L.nome}</span></div>
    <div class="pinfo">
      <h3>${p.nome}</h3>
@@ -429,7 +488,7 @@ function draw(){
   if(st.ord==='asc')r.sort((a,b)=>a.preco-b.preco);
   if(st.ord==='desc')r.sort((a,b)=>b.preco-a.preco);
   if(st.ord==='az')r.sort((a,b)=>a.nome.localeCompare(b.nome,'pt'));
-  renderLojas();renderCats();renderActive(r.length);
+  renderLojas();renderCats();renderActive(r.length);renderFaixa(r.length);
   const g=document.getElementById('grid');
   g.className='pgrid'+(st.view==='list'?' list':'');
   let vazio = `<div class="empty"><span class="e">🔍</span><b>Nada com esses filtros.</b><br>Tente afrouxar a busca ou o preço.</div>`;
@@ -463,6 +522,7 @@ async function carregarML(){
       }
     }
     MLPRONTO=true;
+    ML_DATA_EM=d.gerado_em.split('-').reverse().join('/');
     const s=document.getElementById('sub1');
     if(s)s.textContent=`rankings oficiais das lojas · Mercado Livre atualizado em ${d.gerado_em.split('-').reverse().join('/')}`;
   }else if(st.loja==='ml'){
