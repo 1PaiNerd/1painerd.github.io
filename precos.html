@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-tema="claro">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radar de Preços — 1PaiNerd Studios</title>
+<meta name="description" content="Histórico de preço dos achadinhos: veja se o produto está barato de verdade antes de comprar.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080c16;--surf:#0f1526;--card:rgba(255,255,255,.045);--ink:#edf1fb;--sub:#8d99b5;--mut:#5d6883;
+--acc:#ff8a3d;--cy:#3fd6ff;--line:rgba(120,160,255,.16);--r:14px;--navh:60px;
+--mark:#e2701f;--mark2:#2f9ec4;--good:#3fbf7f;--bad:#e2564a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',-apple-system,'Segoe UI',Roboto,sans-serif;
+font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif;font-weight:600;line-height:1.2;letter-spacing:-.02em}
+a{color:var(--cy)}img{max-width:100%}
+.gridbg{position:fixed;inset:0;z-index:-2;pointer-events:none;
+background-image:linear-gradient(rgba(120,160,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(120,160,255,.05) 1px,transparent 1px);
+background-size:44px 44px;mask-image:radial-gradient(ellipse 85% 60% at 50% 12%,#000 30%,transparent 78%)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+nav{position:sticky;top:0;z-index:60;background:rgba(8,12,22,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.navin{max-width:1100px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:26px}
+.brand{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.05rem;color:var(--ink);text-decoration:none;margin-right:auto}
+.brand em{font-style:normal;color:var(--acc)}.brand small{font-weight:500;color:var(--sub)}
+nav a.nl{font-size:.92rem;font-weight:600;color:var(--sub);text-decoration:none;padding:4px 0;border-bottom:2px solid transparent}
+nav a.nl.on{color:var(--ink);border-bottom-color:var(--acc)}
+@media(max-width:760px){:root{--navh:52px}.navin{gap:16px;flex-wrap:nowrap;padding:0 16px;height:52px;overflow-x:auto;scrollbar-width:none}
+.navin::-webkit-scrollbar{display:none}.brand{flex:none;font-size:.98rem}nav a.nl{flex:none;white-space:nowrap;font-size:.86rem}}
+/* hero */
+.kicker{font-size:.76rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--cy);
+margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.kicker::before{content:"";width:26px;height:2px;background:linear-gradient(90deg,var(--cy),transparent)}
+header.hero{padding:44px 0 8px}
+header.hero h1{font-size:clamp(1.8rem,4.4vw,2.6rem);margin-bottom:12px}
+.lead{color:var(--sub);font-size:1.05rem;max-width:62ch}
+.warn{background:rgba(226,112,31,.1);border:1px solid rgba(226,112,31,.45);border-radius:10px;
+padding:12px 16px;font-size:.88rem;color:#f0c39a;margin:20px 0}
+/* KPI row */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin:22px 0 8px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px}
+.tile .lb{font-size:.78rem;color:var(--sub);font-weight:600;letter-spacing:.02em}
+.tile .vl{font-family:'Space Grotesk',sans-serif;font-size:1.85rem;font-weight:700;line-height:1.15;margin-top:2px}
+.tile .dt{font-size:.8rem;color:var(--mut)}
+/* toolbar */
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:22px 0 14px}
+.search{flex:1;min-width:190px;position:relative}
+.search input{width:100%;background:var(--card);border:1.5px solid var(--line);border-radius:10px;color:var(--ink);
+font:400 .95rem 'Inter',sans-serif;padding:11px 14px 11px 38px;outline:none}
+.search input:focus{border-color:var(--cy)}.search input::placeholder{color:var(--sub)}
+.search .mag{position:absolute;left:13px;top:50%;transform:translateY(-50%);opacity:.6;font-size:.9rem}
+select.sel,button.sel{background:var(--card);border:1.5px solid var(--line);border-radius:10px;color:var(--ink);
+font:600 .88rem 'Inter',sans-serif;padding:11px 14px;outline:none;cursor:pointer;font-family:'Inter',sans-serif}
+button.sel.on{background:rgba(63,214,255,.14);border-color:var(--cy);color:var(--cy)}
+.count{color:var(--sub);font-size:.88rem;font-weight:600;margin-left:auto}
+/* cards */
+.list{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));padding-bottom:70px}
+@media(max-width:900px){.list{grid-template-columns:1fr}}
+.pc{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px;
+display:flex;flex-direction:column;gap:12px}
+.pc.low{border-color:rgba(63,191,127,.5);box-shadow:0 0 26px rgba(63,191,127,.09)}
+.ph{display:flex;gap:13px;align-items:flex-start}
+.thumb{width:56px;height:56px;background:#fff;border-radius:9px;flex:none;display:flex;align-items:center;justify-content:center;padding:5px}
+.thumb img{max-height:100%;width:auto}
+.ph h3{font-size:1rem;line-height:1.3}
+.ph .cat{font-size:.76rem;color:var(--mut);font-weight:600}
+.now{font-family:'Space Grotesk',sans-serif;font-size:1.6rem;font-weight:700;white-space:nowrap}
+.delta{font-size:.82rem;font-weight:700;padding:3px 8px;border-radius:999px;white-space:nowrap}
+.delta.dn{background:rgba(63,191,127,.15);color:var(--good)}
+.delta.up{background:rgba(226,86,74,.15);color:var(--bad)}
+.delta.eq{background:rgba(255,255,255,.06);color:var(--sub)}
+.flag{display:flex;align-items:center;gap:8px;font-size:.85rem;font-weight:600;
+background:rgba(63,191,127,.13);border:1px solid rgba(63,191,127,.4);color:#8fe4b8;border-radius:9px;padding:8px 12px}
+.flag.neutral{background:rgba(255,255,255,.04);border-color:var(--line);color:var(--sub)}
+figure{margin:0;position:relative}
+figcaption{font-size:.78rem;color:var(--mut);margin-top:5px}
+svg.chart{display:block;width:100%;height:auto;overflow:visible;touch-action:pan-y}
+.tip{position:absolute;pointer-events:none;background:#141c31;border:1px solid var(--line);border-radius:9px;
+padding:7px 11px;font-size:.8rem;white-space:nowrap;opacity:0;transition:opacity .12s;z-index:5;
+box-shadow:0 10px 26px rgba(0,0,0,.55)}
+.tip b{font-family:'Space Grotesk',sans-serif;font-size:.95rem}
+.tip .dd{color:var(--sub);font-size:.74rem}
+.foot{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-top:auto}
+.go{flex:1;min-width:150px;text-align:center;text-decoration:none;font:700 .84rem 'Inter',sans-serif;padding:10px;
+border-radius:9px;background:linear-gradient(135deg,var(--acc),#ff6d2e);color:#160a02}
+.go:hover{transform:translateY(-1px)}
+.tbtn{background:none;border:1px solid var(--line);color:var(--sub);border-radius:9px;padding:9px 12px;
+font:600 .8rem 'Inter',sans-serif;cursor:pointer}
+.tbtn:hover{color:var(--ink);border-color:var(--cy)}
+table{width:100%;border-collapse:collapse;font-size:.82rem;margin-top:4px}
+table th,table td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--line)}
+table th{color:var(--sub);font-weight:600}
+.tw{max-height:220px;overflow:auto;border:1px solid var(--line);border-radius:9px}
+.hid{display:none}
+footer{border-top:1px solid var(--line);padding:30px 0 60px;color:var(--sub);font-size:.86rem}
+footer a{color:var(--sub)}
+
+/* ---------- ponte de tema: segue a escolha feita na home ---------- */
+[data-tema="claro"],[data-tema="sol"]{
+  --bg:#f7f9ff; --surf:#ffffff; --card:#ffffff; --ink:#141a2b; --sub:#5b6784; --mut:#7d89a5;
+  --line:#e4e9f5; --cy:#0b8fc4;
+}
+[data-tema="sol"]{--bg:#fff6ef}
+[data-tema="claro"] body,[data-tema="sol"] body{background:var(--bg)}
+[data-tema="claro"] nav,[data-tema="sol"] nav{background:rgba(255,255,255,.94)}
+[data-tema="claro"] .catbar,[data-tema="sol"] .catbar{background:rgba(255,255,255,.97)}
+[data-tema="claro"] .gridbg,[data-tema="sol"] .gridbg{
+ background-image:linear-gradient(rgba(70,110,190,.08) 1px,transparent 1px),
+ linear-gradient(90deg,rgba(70,110,190,.08) 1px,transparent 1px)}
+[data-tema="claro"] .pcard,[data-tema="sol"] .pcard,
+[data-tema="claro"] .pc,[data-tema="sol"] .pc,
+[data-tema="claro"] .tile,[data-tema="sol"] .tile{
+ background:#fff;border-color:var(--line);box-shadow:0 1px 2px rgba(20,40,90,.04),0 10px 24px rgba(20,40,90,.07)}
+[data-tema="claro"] .chip,[data-tema="sol"] .chip,
+[data-tema="claro"] .search input,[data-tema="sol"] .search input,
+[data-tema="claro"] select.sel,[data-tema="sol"] select.sel,
+[data-tema="claro"] button.sel,[data-tema="sol"] button.sel{background:#fff;border-color:var(--line)}
+[data-tema="claro"] .pbtn,[data-tema="sol"] .pbtn{background:#f4f7fd;border-color:var(--line)}
+[data-tema="claro"] .tip,[data-tema="sol"] .tip{background:#fff;color:var(--ink)}
+[data-tema="claro"] .ptile,[data-tema="sol"] .ptile{background:#fff;border-bottom:1px solid var(--line)}
+</style>
+</head>
+<body data-palette="#e2701f,#2f9ec4">
+<div class="gridbg"></div>
+<nav><div class="navin">
+  <a class="brand" href="index.html">1<em>Pai</em>Nerd <small>Studios</small></a>
+  <a class="nl" href="index.html">Início</a><a class="nl" href="achadinhos.html">Achadinhos</a>
+  <a class="nl on" href="precos.html">Radar de Preços</a><a class="nl" href="servicos.html">Serviços</a>
+</div></nav>
+
+<main class="wrap">
+<header class="hero">
+  <p class="kicker">Radar de Preços</p>
+  <h1>Antes de comprar, veja se está barato de verdade</h1>
+  <p class="lead">Acompanho o preço dos achadinhos todo dia. Aqui você vê o histórico e descobre se hoje é um bom dia pra comprar — ou se vale esperar.</p>
+</header>
+<div class="warn" id="warn"></div>
+
+<div class="kpis" id="kpis"></div>
+
+<div class="toolbar">
+  <div class="search"><span class="mag">🔎</span><input id="q" type="search" placeholder="Buscar produto..." autocomplete="off"></div>
+  <select class="sel" id="per"><option value="30">Últimos 30 dias</option><option value="90" selected>Últimos 90 dias</option></select>
+  <select class="sel" id="ord">
+    <option value="queda">Maiores quedas primeiro</option>
+    <option value="minimo">No menor preço primeiro</option>
+    <option value="az">Nome A–Z</option>
+  </select>
+  <button class="sel" id="onlylow">🟢 Só os que estão baratos</button>
+  <span class="count" id="cnt"></span>
+</div>
+
+<div class="list" id="list"></div>
+</main>
+
+<footer><div class="wrap">
+  <b>Como funciona:</b> um robô registra o preço uma vez por dia e guarda o histórico. Os valores são os observados na data —
+  o preço final é sempre o da loja. Links de afiliado: você não paga a mais e a curadoria se mantém.<br>
+  <a href="https://www.instagram.com/1painerd">@1painerd</a> · <a href="index.html">1painerd.github.io</a>
+</div></footer>
+
+<script>
+const BRL = v => v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const DT  = s => { const [y,m,d]=s.split('-'); return d+'/'+m; };
+let DATA=null, st={q:'',per:90,ord:'queda',low:false};
+
+function stats(h,per){
+  const w = h.slice(-per);
+  const ps = w.map(x=>x.p);
+  const now = ps[ps.length-1], min = Math.min(...ps), max = Math.max(...ps);
+  const prev = ps.length>1 ? ps[ps.length-2] : now;
+  const varDia = now-prev;
+  const noMin = now <= min*1.02;                  // dentro de 2% do menor
+  const pos = max===min ? 0 : (now-min)/(max-min); // 0 = no fundo
+  return {w,now,min,max,varDia,noMin,pos,economia:max-now};
+}
+
+function chart(p,s,i){
+  const W=560,H=150,PL=48,PR=54,PT=14,PB=22;
+  const n=s.w.length, min=s.min, max=s.max, span=(max-min)||1;
+  const pad=span*0.18, lo=min-pad, hi=max+pad;
+  const X=k=>PL+(k/(n-1))*(W-PL-PR), Y=v=>PT+(1-(v-lo)/(hi-lo))*(H-PT-PB);
+  const pts=s.w.map((d,k)=>[X(k),Y(d.p)]);
+  const line=pts.map((q,k)=>(k?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' ');
+  const area=line+` L${X(n-1).toFixed(1)} ${H-PB} L${X(0).toFixed(1)} ${H-PB} Z`;
+  const kmin=s.w.findIndex(d=>d.p===min);
+  const ticks=[min,(min+max)/2,max];
+  let g=ticks.map(v=>`<line x1="${PL}" x2="${W-PR}" y1="${Y(v).toFixed(1)}" y2="${Y(v).toFixed(1)}" stroke="#26304a" stroke-width="1"/>
+    <text x="${PL-8}" y="${(Y(v)+4).toFixed(1)}" text-anchor="end" fill="#5d6883" font-size="10">${Math.round(v)}</text>`).join('');
+  const end=pts[pts.length-1];
+  return `<figure>
+  <svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Histórico de preço de ${p.nome}" data-i="${i}">
+    ${g}
+    <path d="${area}" fill="var(--mark)" fill-opacity=".10"/>
+    <path d="${line}" fill="none" stroke="var(--mark)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="${X(kmin).toFixed(1)}" cy="${Y(min).toFixed(1)}" r="4" fill="var(--mark2)" stroke="var(--surf)" stroke-width="2"/>
+    <circle cx="${end[0].toFixed(1)}" cy="${end[1].toFixed(1)}" r="4.5" fill="var(--mark)" stroke="var(--surf)" stroke-width="2"/>
+    <text x="${(end[0]+9).toFixed(1)}" y="${(end[1]+4).toFixed(1)}" fill="#edf1fb" font-size="11" font-weight="700">${BRL(s.now)}</text>
+    <text x="${PL}" y="${H-6}" fill="#5d6883" font-size="10">${DT(s.w[0].d)}</text>
+    <text x="${W-PR}" y="${H-6}" text-anchor="end" fill="#5d6883" font-size="10">${DT(s.w[n-1].d)}</text>
+    <line class="cx" x1="0" x2="0" y1="${PT}" y2="${H-PB}" stroke="#8d99b5" stroke-width="1" opacity="0"/>
+    <circle class="cd" r="4" fill="var(--mark)" stroke="var(--surf)" stroke-width="2" opacity="0"/>
+    <rect class="hit" x="${PL}" y="0" width="${W-PL-PR}" height="${H}" fill="transparent"/>
+  </svg>
+  <div class="tip"></div>
+  <figcaption>Ponto azul = menor preço do período. Linha laranja = preço observado por dia.</figcaption>
+  </figure>`;
+}
+
+function card(p,i){
+  const s=stats(p.historico,st.per);
+  const d=s.varDia, cls=d<-0.005?'dn':d>0.005?'up':'eq';
+  const arrow=d<-0.005?'▼':d>0.005?'▲':'—';
+  const flag = s.noMin
+    ? `<div class="flag">🟢 <span><b>Melhor momento:</b> está no menor preço dos últimos ${st.per} dias — ${BRL(s.economia)} abaixo do pico.</span></div>`
+    : `<div class="flag neutral">⚪ <span>Já esteve por <b>${BRL(s.min)}</b> nos últimos ${st.per} dias. Vale esperar uma queda.</span></div>`;
+  const rows=[...s.w].reverse().map(x=>`<tr><td>${x.d.split('-').reverse().join('/')}</td><td>${BRL(x.p)}</td></tr>`).join('');
+  return `<article class="pc ${s.noMin?'low':''}">
+   <div class="ph">
+     <div class="thumb">${p.img?`<img src="${p.img}" loading="lazy" alt="">`:'📦'}</div>
+     <div style="flex:1"><h3>${p.nome}</h3><span class="cat">${p.loja}</span></div>
+     <div style="text-align:right"><div class="now">${BRL(s.now)}</div>
+       <span class="delta ${cls}">${arrow} ${d===0?'estável':BRL(Math.abs(d))+' hoje'}</span></div>
+   </div>
+   ${flag}
+   ${chart(p,s,i)}
+   <div class="foot">
+     <a class="go" href="${p.url}" target="_blank" rel="noopener sponsored">Ver na ${p.loja} →</a>
+     <button class="tbtn" data-t="${i}">📋 Ver tabela</button>
+   </div>
+   <div class="tw hid" id="t${i}"><table><thead><tr><th>Data</th><th>Preço</th></tr></thead><tbody>${rows}</tbody></table></div>
+  </article>`;
+}
+
+function draw(){
+  const norm=x=>x.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+  let semDados=DATA.produtos.filter(p=>!p.historico||!p.historico.length).length;
+  let r=DATA.produtos.filter(p=>p.historico&&p.historico.length&&(!st.q||norm(p.nome).includes(norm(st.q))));
+  r=r.map(p=>({p,s:stats(p.historico,st.per)}));
+  if(st.low) r=r.filter(x=>x.s.noMin);
+  if(st.ord==='queda') r.sort((a,b)=>(a.s.pos-b.s.pos)||(b.s.economia-a.s.economia));
+  if(st.ord==='minimo') r.sort((a,b)=>(b.s.noMin-a.s.noMin)||(a.s.pos-b.s.pos));
+  if(st.ord==='az') r.sort((a,b)=>a.p.nome.localeCompare(b.p.nome,'pt'));
+  document.getElementById('cnt').textContent=r.length+(r.length===1?' produto':' produtos')+(semDados?` · ${semDados} sem histórico ainda`:'');
+  document.getElementById('list').innerHTML=r.map((x,i)=>card(x.p,i)).join('') ||
+    '<p style="color:var(--sub);padding:30px 0">Sem histórico pra mostrar ainda — o robô começa a registrar no próximo ciclo.</p>';
+  wire(r);
+  // KPIs
+  const all=DATA.produtos.filter(p=>p.historico&&p.historico.length).map(p=>stats(p.historico,st.per));
+  const nlow=all.filter(a=>a.noMin).length;
+  const eco=all.reduce((t,a)=>t+a.economia,0);
+  const dias=all.length?Math.max(...DATA.produtos.filter(p=>p.historico&&p.historico.length).map(p=>p.historico.length)):0;
+  document.getElementById('kpis').innerHTML=`
+   <div class="tile"><div class="lb">No menor preço agora</div><div class="vl" style="color:var(--good)">${nlow}</div><div class="dt">de ${all.length} produtos monitorados</div></div>
+   <div class="tile"><div class="lb">Economia se comprar no fundo</div><div class="vl">${BRL(eco)}</div><div class="dt">somando todos, vs. o pico do período</div></div>
+   <div class="tile"><div class="lb">Dias de histórico</div><div class="vl">${dias}</div><div class="dt">registro diário, 1 leitura por dia</div></div>`;
+}
+
+function wire(r){
+  document.querySelectorAll('.tbtn').forEach(b=>b.onclick=()=>{
+    const t=document.getElementById('t'+b.dataset.t); t.classList.toggle('hid');
+    b.textContent=t.classList.contains('hid')?'📋 Ver tabela':'📋 Fechar tabela';});
+  document.querySelectorAll('svg.chart').forEach(svg=>{
+    const i=+svg.dataset.i, s=r[i].s, n=s.w.length;
+    const W=560,PL=48,PR=54,PT=14,PB=22,H=150;
+    const min=s.min,max=s.max,span=(max-min)||1,pad=span*0.18,lo=min-pad,hi=max+pad;
+    const X=k=>PL+(k/(n-1))*(W-PL-PR), Y=v=>PT+(1-(v-lo)/(hi-lo))*(H-PT-PB);
+    const cx=svg.querySelector('.cx'),cd=svg.querySelector('.cd'),tip=svg.parentNode.querySelector('.tip');
+    const move=e=>{
+      const rc=svg.getBoundingClientRect();
+      const px=((e.touches?e.touches[0].clientX:e.clientX)-rc.left)/rc.width*W;
+      let k=Math.round(((px-PL)/(W-PL-PR))*(n-1)); k=Math.max(0,Math.min(n-1,k));
+      const d=s.w[k];
+      cx.setAttribute('x1',X(k));cx.setAttribute('x2',X(k));cx.setAttribute('opacity','.45');
+      cd.setAttribute('cx',X(k));cd.setAttribute('cy',Y(d.p));cd.setAttribute('opacity','1');
+      tip.innerHTML=`<b>${BRL(d.p)}</b><div class="dd">${d.d.split('-').reverse().join('/')}</div>`;
+      tip.style.opacity='1';
+      tip.style.left=Math.min(Math.max(0,(X(k)/W)*rc.width-46),rc.width-96)+'px';
+      tip.style.top=((Y(d.p)/H)*rc.height-52)+'px';
+    };
+    const out=()=>{cx.setAttribute('opacity','0');cd.setAttribute('opacity','0');tip.style.opacity='0'};
+    svg.addEventListener('mousemove',move);svg.addEventListener('mouseleave',out);
+    svg.addEventListener('touchmove',move,{passive:true});svg.addEventListener('touchend',out);
+  });
+}
+
+fetch('precos.json').then(r=>r.json()).then(j=>{
+  DATA=j;
+  const w=document.getElementById('warn');
+  if(j.modo==='exemplo'){w.innerHTML='⚠️ <b>Modo exemplo:</b> os preços abaixo são simulados só para mostrar como a ferramenta funciona. Quando a coleta real começar, este aviso some sozinho.';}
+  else{w.className='';w.style.display='none';}
+  document.getElementById('q').addEventListener('input',e=>{st.q=e.target.value.trim();draw()});
+  document.getElementById('per').addEventListener('change',e=>{st.per=+e.target.value;draw()});
+  document.getElementById('ord').addEventListener('change',e=>{st.ord=e.target.value;draw()});
+  document.getElementById('onlylow').onclick=e=>{st.low=!st.low;e.target.classList.toggle('on',st.low);draw()};
+  draw();
+}).catch(()=>{document.getElementById('warn').textContent='Não consegui carregar precos.json — verifique se o arquivo está na mesma pasta.';});
+</script>
+<script>
+/* aplica o tema escolhido na home (claro/sol = claro · neon/escuro = escuro) */
+(function(){var t='claro';try{t=localStorage.getItem('1pn-tema')||'claro'}catch(e){}
+document.documentElement.setAttribute('data-tema',t);})();
+</script>
+</body>
+</html>

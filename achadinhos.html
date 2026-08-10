@@ -1,565 +1,370 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-tema="claro">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Achadinhos Nerd — 1PaiNerd Studios</title><meta name="description" content="Curadoria honesta de setup, tech e presentes geek — e a Guilda de ofertas do 1PaiNerd.">
+<title>Achadinhos Nerd — 1PaiNerd Studios</title>
+<meta name="description" content="Curadoria honesta de setup, tech e presentes geek — testado em casa antes de indicar.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#080c16;--card:rgba(255,255,255,.045);--ink:#edf1fb;--sub:#8d99b5;
---acc:#ff8a3d;--acc2:#ffab6b;--cy:#3fd6ff;--line:rgba(120,160,255,.16);--r:14px}
+--acc:#ff8a3d;--acc2:#ffab6b;--cy:#3fd6ff;--line:rgba(120,160,255,.16);--r:14px;--navh:60px}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--ink);font-family:'Inter',-apple-system,'Segoe UI',Roboto,sans-serif;
-font-size:17px;line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 h1,h2,h3{font-family:'Space Grotesk',sans-serif;font-weight:600;line-height:1.2;letter-spacing:-.02em}
-a{color:var(--cy)}
-img{max-width:100%}
+a{color:var(--cy)}img{max-width:100%}
 .gridbg{position:fixed;inset:0;z-index:-2;pointer-events:none;
 background-image:linear-gradient(rgba(120,160,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(120,160,255,.05) 1px,transparent 1px);
 background-size:44px 44px;mask-image:radial-gradient(ellipse 85% 60% at 50% 12%,#000 30%,transparent 78%)}
 .aur{position:fixed;z-index:-1;pointer-events:none;border-radius:50%;filter:blur(90px);opacity:.25}
 .aur.a1{width:52vw;height:52vw;background:#173a72;top:-20vw;left:-12vw}
 .aur.a2{width:38vw;height:38vw;background:#5a2a10;bottom:-14vw;right:-10vw}
-.wrap{max-width:1060px;margin:0 auto;padding:0 24px}
-/* nav */
-nav{position:sticky;top:0;z-index:50;background:rgba(8,12,22,.8);backdrop-filter:blur(12px);
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+nav{position:sticky;top:0;z-index:60;background:rgba(8,12,22,.94);backdrop-filter:blur(12px);
 -webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-.navin{max-width:1060px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;gap:26px}
+.navin{max-width:1100px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:26px}
 .brand{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.05rem;color:var(--ink);
 text-decoration:none;margin-right:auto;letter-spacing:-.01em}
 .brand em{font-style:normal;color:var(--acc)}
-.brand small{font-weight:500;color:var(--sub);letter-spacing:.02em}
+.brand small{font-weight:500;color:var(--sub)}
 nav a.nl{font-size:.92rem;font-weight:600;color:var(--sub);text-decoration:none;padding:4px 0;
 border-bottom:2px solid transparent;transition:.2s}
 nav a.nl:hover{color:var(--ink)}
-nav a.nl.on{color:var(--ink);border-bottom-color:var(--acc);text-shadow:0 0 18px rgba(255,138,61,.6)}
-@media(max-width:720px){.navin{gap:16px;flex-wrap:wrap;padding:14px 18px}.brand{width:100%}}
-/* type */
-.kicker{font-size:.78rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--cy);margin-bottom:18px;
-display:flex;align-items:center;gap:10px}
+nav a.nl.on{color:var(--ink);border-bottom-color:var(--acc)}
+@media(max-width:760px){
+ :root{--navh:52px}
+ .navin{gap:16px;flex-wrap:nowrap;padding:0 16px;height:52px;overflow-x:auto;scrollbar-width:none}
+ .navin::-webkit-scrollbar{display:none}
+ .brand{font-size:.98rem;margin-right:8px;flex:none}
+ nav a.nl{font-size:.86rem;flex:none;white-space:nowrap}
+}
+/* ---------- HERO enxuto ---------- */
+.pagehero{display:grid;grid-template-columns:1fr auto;gap:26px;align-items:center;padding:44px 0 26px}
+@media(max-width:820px){.pagehero{grid-template-columns:1fr;padding:32px 0 18px}.cur{display:none}}
+.kicker{font-size:.76rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--cy);
+margin-bottom:14px;display:flex;align-items:center;gap:10px}
 .kicker::before{content:"";width:26px;height:2px;background:linear-gradient(90deg,var(--cy),transparent)}
-h1{font-size:clamp(2.1rem,5vw,3.3rem);margin-bottom:20px}
-h2{font-size:clamp(1.4rem,3vw,1.9rem);margin-bottom:10px}
-.lead{color:var(--sub);font-size:1.12rem;max-width:56ch}
-section{padding:72px 0}
-/* buttons */
-.btn{display:inline-block;text-decoration:none;font-weight:700;font-size:.98rem;padding:14px 26px;
-border-radius:999px;transition:transform .2s,box-shadow .2s}
-.btn.p{background:linear-gradient(135deg,var(--acc),#ff6d2e);color:#160a02;box-shadow:0 0 24px rgba(255,138,61,.3)}
-.btn.p:hover{transform:translateY(-2px);box-shadow:0 0 38px rgba(255,138,61,.55)}
-.btn.s{background:var(--card);color:var(--ink);border:1.5px solid var(--line)}
-.btn.s:hover{border-color:var(--cy);transform:translateY(-2px);box-shadow:0 0 22px rgba(63,214,255,.2)}
-/* doors */
-.doors{display:grid;gap:18px;grid-template-columns:1fr}
-@media(min-width:760px){.doors{grid-template-columns:repeat(3,1fr)}}
-.door{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:30px 26px;
-text-decoration:none;color:var(--ink);transition:transform .25s,box-shadow .25s,border-color .25s;
-display:flex;flex-direction:column;gap:8px;backdrop-filter:blur(6px)}
-.door:hover{transform:translateY(-5px);border-color:rgba(63,214,255,.5);box-shadow:0 0 30px rgba(63,214,255,.12),0 20px 44px rgba(0,0,0,.4)}
-.door .em{font-size:1.7rem}
-.door h3{font-size:1.18rem}
-.door p{color:var(--sub);font-size:.94rem;flex:1}
-.door span{color:var(--cy);font-weight:700;font-size:.94rem}
-.tag{display:inline-block;font-size:.72rem;font-weight:700;color:var(--acc);background:rgba(255,138,61,.12);
-border:1px solid rgba(255,138,61,.3);border-radius:999px;padding:2px 12px;margin-left:8px;vertical-align:3px}
-/* media cards */
-.mgrid{display:grid;gap:22px;grid-template-columns:1fr}
-@media(min-width:700px){.mgrid{grid-template-columns:1fr 1fr}}
-.mcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;
-text-decoration:none;color:var(--ink);transition:transform .25s,box-shadow .25s,border-color .25s;display:block}
-.mcard:hover{transform:translateY(-5px);border-color:rgba(63,214,255,.5);box-shadow:0 0 34px rgba(63,214,255,.14),0 22px 48px rgba(0,0,0,.45)}
-.mcard img{width:100%;height:200px;object-fit:cover;display:block}
-.mcard .mt{padding:20px 24px}
-.mcard h3{font-size:1.15rem;margin-bottom:4px}
-.mcard p{color:var(--sub);font-size:.94rem}
-/* rows */
-.rows{display:flex;flex-direction:column}
-.row{display:flex;gap:20px;align-items:baseline;padding:26px 4px;border-bottom:1px solid var(--line);
-text-decoration:none;color:var(--ink);flex-wrap:wrap;transition:background .2s}
-.row:first-child{border-top:1px solid var(--line)}
-.row h3{font-size:1.15rem;min-width:240px}
-.row p{color:var(--sub);font-size:.96rem;flex:1;min-width:240px}
-.row span{color:var(--cy);font-weight:700;white-space:nowrap}
-a.row:hover h3{color:var(--acc);text-shadow:0 0 20px rgba(255,138,61,.5)}
-/* prova */
-.prova{display:flex;gap:44px;flex-wrap:wrap;padding:28px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.prova b{font-family:'Space Grotesk',sans-serif;font-size:1.5rem;display:block;line-height:1.2;color:var(--cy);
-text-shadow:0 0 22px rgba(63,214,255,.45)}
-.prova span{color:var(--sub);font-size:.88rem}
-/* passos */
-.passos{display:grid;gap:18px;grid-template-columns:1fr;counter-reset:p}
-@media(min-width:760px){.passos{grid-template-columns:repeat(3,1fr)}}
-.passo{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:26px;backdrop-filter:blur(6px)}
-.passo::before{counter-increment:p;content:"0" counter(p);display:block;font-family:'Space Grotesk',sans-serif;
-font-weight:700;font-size:1.3rem;color:var(--cy);margin-bottom:8px;text-shadow:0 0 18px rgba(63,214,255,.5)}
-.passo h3{font-size:1.05rem;margin-bottom:6px}
-.passo p{color:var(--sub);font-size:.92rem}
-/* hero */
-.hero{display:grid;gap:44px;align-items:center;grid-template-columns:1fr;padding:84px 0 64px}
-@media(min-width:860px){.hero{grid-template-columns:1.1fr .9fr}}
-.hero img{max-width:400px;width:100%;margin:0 auto;display:block;
-filter:drop-shadow(0 24px 48px rgba(63,214,255,.18))}
-.ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
-/* footer */
-footer{border-top:1px solid var(--line);padding:44px 24px;margin-top:40px;background:rgba(255,255,255,.02)}
-.footin{max-width:1060px;margin:0 auto;display:flex;gap:32px;flex-wrap:wrap;justify-content:space-between;
-color:var(--sub);font-size:.9rem}
-.footin a{color:var(--sub);text-decoration:none}
-.footin a:hover{color:var(--acc)}
-.footin b{color:var(--ink);font-family:'Space Grotesk',sans-serif}
-/* reveal */
-.rv{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
-.rv.on{opacity:1;transform:none}
-@media(prefers-reduced-motion:reduce){*{transition:none!important}.rv{opacity:1;transform:none}}
+.pagehero h1{font-size:clamp(1.8rem,4.4vw,2.6rem);margin-bottom:12px}
+.lead{color:var(--sub);font-size:1.05rem;max-width:58ch}
+.cur{width:180px;filter:drop-shadow(0 12px 30px rgba(0,0,0,.5))}
+.disclosure{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--acc);
+border-radius:10px;padding:12px 16px;font-size:.86rem;color:var(--sub);margin-bottom:22px}
+/* ---------- BARRA DE CATEGORIAS (agora ABAIXO do hero, sticky) ---------- */
+.catbar{position:sticky;top:var(--navh);z-index:55;background:rgba(8,12,22,.97);
+backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:12px 0 10px;margin-bottom:6px}
+.catrow{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.catrow::-webkit-scrollbar{display:none}
+.chip{flex:none;background:var(--card);border:1.5px solid var(--line);color:var(--sub);
+font:600 .88rem/1 'Inter',sans-serif;padding:9px 15px;border-radius:999px;cursor:pointer;
+white-space:nowrap;transition:.18s;display:flex;align-items:center;gap:7px}
+.chip:hover{color:var(--ink);border-color:rgba(63,214,255,.45);transform:translateY(-1px)}
+.chip.on{background:linear-gradient(135deg,var(--acc),#ff6d2e);border-color:transparent;color:#160a02;
+box-shadow:0 0 20px rgba(255,138,61,.32)}
+.chip .n{font-size:.76rem;opacity:.7;font-weight:700}
+.subrow{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;margin-top:9px;
+max-height:60px;transition:max-height .3s ease,opacity .25s,margin .3s}
+.subrow::-webkit-scrollbar{display:none}
+.subrow.hide{max-height:0;opacity:0;margin-top:0;overflow:hidden}
+.chip.sm{font-size:.8rem;padding:6px 12px;border-radius:8px}
+.chip.sm.on{background:rgba(63,214,255,.16);border-color:var(--cy);color:var(--cy);box-shadow:none}
+/* ---------- TOOLBAR (busca, ordenar, grade/lista) ---------- */
+.toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:16px 0 12px}
+.search{flex:1;min-width:190px;position:relative}
+.search input{width:100%;background:var(--card);border:1.5px solid var(--line);border-radius:10px;
+color:var(--ink);font:400 .95rem 'Inter',sans-serif;padding:11px 14px 11px 38px;outline:none;transition:.2s}
+.search input:focus{border-color:var(--cy);box-shadow:0 0 0 3px rgba(63,214,255,.12)}
+.search input::placeholder{color:var(--sub)}
+.search .mag{position:absolute;left:13px;top:50%;transform:translateY(-50%);opacity:.6;font-size:.9rem}
+select.sel{background:var(--card);border:1.5px solid var(--line);border-radius:10px;color:var(--ink);
+font:600 .88rem 'Inter',sans-serif;padding:11px 34px 11px 13px;outline:none;cursor:pointer;
+appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M2 4l4 4 4-4' stroke='%238d99b5' stroke-width='1.8' fill='none' stroke-linecap='round'/></svg>");
+background-repeat:no-repeat;background-position:right 12px center}
+select.sel:focus{border-color:var(--cy)}
+.view{display:flex;background:var(--card);border:1.5px solid var(--line);border-radius:10px;overflow:hidden}
+.view button{background:none;border:none;color:var(--sub);padding:10px 13px;cursor:pointer;
+font-size:1rem;line-height:1;transition:.18s;display:flex;align-items:center;gap:6px;font-family:inherit;font-weight:600;font-size:.85rem}
+.view button.on{background:rgba(63,214,255,.15);color:var(--cy)}
+.view button:hover{color:var(--ink)}
+/* filtros ativos */
+.active{display:flex;gap:7px;flex-wrap:wrap;align-items:center;padding:0 0 14px;min-height:0}
+.active:empty{padding:0}
+.tag{background:rgba(63,214,255,.12);border:1px solid rgba(63,214,255,.4);color:var(--cy);
+font:600 .8rem 'Inter',sans-serif;padding:5px 10px;border-radius:999px;cursor:pointer;transition:.18s;
+display:flex;align-items:center;gap:6px}
+.tag:hover{background:rgba(255,80,80,.14);border-color:#ff6b6b;color:#ff9b9b}
+.tag .x{font-weight:700;opacity:.7}
+.clearall{background:none;border:none;color:var(--sub);font:600 .8rem 'Inter',sans-serif;
+text-decoration:underline;cursor:pointer;padding:5px}
+.clearall:hover{color:var(--ink)}
+.count{color:var(--sub);font-size:.88rem;font-weight:600;margin-left:auto}
+/* ---------- GRADE / LISTA ---------- */
+.pgrid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));padding-bottom:20px}
+.pgrid.list{grid-template-columns:1fr}
+.pcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;
+display:flex;flex-direction:column;transition:transform .22s,border-color .22s,box-shadow .22s;
+animation:pop .32s ease both}
+@keyframes pop{from{opacity:0;transform:translateY(10px) scale(.985)}to{opacity:1;transform:none}}
+.pcard:hover{transform:translateY(-4px);border-color:rgba(63,214,255,.42);
+box-shadow:0 0 28px rgba(63,214,255,.1),0 18px 40px rgba(0,0,0,.45)}
+.ptile{background:#fff;height:180px;display:flex;align-items:center;justify-content:center;padding:14px;position:relative}
+.ptile img{max-height:100%;width:auto;object-fit:contain}
+.ptile .ph{font-size:3rem;filter:grayscale(.1)}
+.badge{position:absolute;top:10px;left:10px;background:rgba(8,12,22,.86);color:var(--acc2);
+font:700 .68rem 'Inter',sans-serif;padding:4px 9px;border-radius:999px;letter-spacing:.02em;backdrop-filter:blur(4px)}
+.pinfo{padding:16px 16px 14px;display:flex;flex-direction:column;gap:7px;flex:1}
+.pinfo h3{font-size:1.02rem}
+.pfaixa{font:700 1.05rem 'Space Grotesk',sans-serif;color:var(--acc)}
+.pfaixa .sel2{display:block;font:600 .68rem 'Inter',sans-serif;color:var(--sub);letter-spacing:.02em;margin-top:1px}
+.pinfo p.d{font-size:.87rem;color:var(--sub);line-height:1.55}
+.pinfo p.d b{color:var(--ink);font-weight:600}
+.plinks{display:flex;gap:7px;margin-top:auto;padding-top:12px;flex-wrap:wrap}
+.pbtn{flex:1;min-width:84px;text-align:center;text-decoration:none;font:700 .81rem 'Inter',sans-serif;
+padding:9px 8px;border-radius:9px;background:rgba(255,255,255,.06);color:var(--ink);
+border:1px solid var(--line);transition:.18s}
+.pbtn:hover{background:linear-gradient(135deg,var(--acc),#ff6d2e);color:#160a02;border-color:transparent;transform:translateY(-1px)}
+.pbtn.go{background:linear-gradient(135deg,var(--acc),#ff6d2e);color:#160a02;border-color:transparent;
+box-shadow:0 4px 16px rgba(255,138,61,.22)}
+.pbtn.go:hover{transform:translateY(-2px);box-shadow:0 6px 22px rgba(255,138,61,.45)}
+/* modo lista */
+.pgrid.list .pcard{flex-direction:row}
+.pgrid.list .ptile{width:190px;height:auto;min-height:150px;flex:none}
+.pgrid.list .pinfo{padding:18px 20px}
+.pgrid.list .plinks{max-width:420px}
+@media(max-width:640px){
+  .pgrid.list .pcard{flex-direction:row}
+  .pgrid.list .ptile{width:110px;min-height:120px;padding:8px}
+  .pgrid.list .pinfo{padding:12px 13px}
+  .pgrid.list .pinfo p.d{display:none}
+  .pgrid{grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:12px}
+  .ptile{height:140px}
+  .pinfo{padding:12px}
+  .pinfo h3{font-size:.92rem}
+  .pinfo p.d{font-size:.8rem}
+  .pbtn{min-width:0;font-size:.76rem;padding:9px 6px}
+  .pgrid:not(.list) .sel2{display:none}
+}
+#grid{padding-bottom:24px}
+@media(max-width:760px){#grid{padding-bottom:92px}}
+.empty{text-align:center;padding:60px 20px;color:var(--sub)}
+.empty .e{font-size:3rem;display:block;margin-bottom:12px}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:34px 0 60px;color:var(--sub);font-size:.86rem}
+footer a{color:var(--sub)}
+/* botão flutuante mobile */
+.fab{display:none}
+@media(max-width:760px){
+ .fab{display:flex;position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:70;
+ background:linear-gradient(135deg,var(--acc),#ff6d2e);color:#160a02;border:none;
+ font:700 .92rem 'Inter',sans-serif;padding:13px 24px;border-radius:999px;cursor:pointer;
+ box-shadow:0 8px 28px rgba(255,138,61,.45);align-items:center;gap:9px}
+}
 
-/* produtos */
-.disclosure{background:rgba(63,214,255,.06);border:1px solid rgba(63,214,255,.25);border-radius:var(--r);
-padding:16px 20px;color:var(--sub);font-size:.9rem;margin-bottom:40px}
-.disclosure b{color:var(--ink)}
-.pgrid{display:grid;gap:18px;grid-template-columns:1fr}
-@media(min-width:820px){.pgrid{grid-template-columns:1fr 1fr}}
-.pcard{display:flex;gap:18px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);
-padding:22px;transition:transform .25s,border-color .25s,box-shadow .25s;backdrop-filter:blur(6px)}
-.pcard:hover{transform:translateY(-4px);border-color:rgba(63,214,255,.45);box-shadow:0 0 26px rgba(63,214,255,.1)}
-.ptile{font-size:2rem;width:64px;height:64px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
-background:rgba(63,214,255,.08);border:1px solid var(--line);border-radius:14px}
-.pinfo h3{font-size:1.05rem;margin-bottom:4px}
-.pinfo p{color:var(--sub);font-size:.88rem;line-height:1.6;margin-bottom:5px}
-.pinfo p b{color:var(--ink)}
-.pfaixa{font-family:'Space Grotesk',sans-serif;color:var(--acc)!important;font-weight:600}
-.pselo{font-size:.7rem;font-weight:700;color:var(--cy);background:rgba(63,214,255,.1);
-border:1px solid rgba(63,214,255,.3);border-radius:999px;padding:2px 10px;margin-left:8px}
-.palt{font-style:italic}
-.plinks{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-.pbtn{font-size:.8rem;font-weight:700;text-decoration:none;color:var(--ink);background:rgba(255,255,255,.05);
-border:1px solid var(--line);border-radius:999px;padding:7px 16px;transition:.2s}
-.pbtn:hover{border-color:var(--acc);color:var(--acc);box-shadow:0 0 14px rgba(255,138,61,.25)}
-.catband{display:flex;align-items:center;gap:14px;margin:56px 0 22px}
-.catband h2{margin:0}
-.catband .cnum{font-family:'Space Grotesk',sans-serif;color:var(--sub);font-size:.85rem}
+/* ---------- topo curto: os produtos sao a primeira coisa ---------- */
+.topline{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;padding:24px 0 12px;flex-wrap:wrap}
+.topline h1{font-size:clamp(1.45rem,3.4vw,1.95rem);margin:0}
+.sub1{color:var(--sub);font-size:.9rem;margin-top:2px}
+.how{font-size:.83rem;font-weight:600;color:var(--cy);text-decoration:none;border:1px solid var(--line);
+border-radius:999px;padding:7px 14px;white-space:nowrap}
+.how:hover{border-color:var(--cy)}
+@media(max-width:640px){.topline{padding:14px 0 8px}.topline h1{font-size:1.3rem}.sub1{font-size:.82rem}.how{display:none}}
+/* ---------- bloco explicativo: agora no fim ---------- */
+.como{border-top:1px solid var(--line);margin-top:6px;padding:34px 0 6px}
+.como h2{font-size:1.22rem;margin-bottom:10px}
+.como p{color:var(--sub);font-size:.94rem;margin-bottom:12px;max-width:70ch}
+.como p b{color:var(--ink)}
+.como .cur2{float:right;width:145px;margin:0 0 12px 22px}
+@media(max-width:640px){.como .cur2{display:none}.como{padding:26px 0 6px}}
 
-/* ================= TEMA CLEAN CLARO (override) ================= */
-:root{--bg:#ffffff;--bg2:#f6f8fb;--panel:#ffffff;--card:#ffffff;
---line:#e7ebf2;--ink:#101828;--sub:#5b6478;
---acc:#ee6f2d;--acc2:#ff8a4b;--cy:#0899c6;--vi:#6d5ae0;--grn:#12805c;
---glow:0 0 0 rgba(0,0,0,0)}
-body{background:var(--bg);color:var(--ink)}
-::selection{background:var(--cy);color:#fff}
-.gridbg{background-image:linear-gradient(rgba(16,40,80,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(16,40,80,.045) 1px,transparent 1px)}
-.aur{opacity:.5}.aur.a1{background:#dcebff}.aur.a2{background:#ffe9d9}
-nav{background:rgba(255,255,255,.85);border-bottom:1px solid var(--line)}
-nav a.nl.on{text-shadow:none}
-.eyebrow{color:var(--cy);background:rgba(8,153,198,.07);border-color:rgba(8,153,198,.25)}
-.btn.p{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;box-shadow:0 8px 22px rgba(238,111,45,.28)}
-.btn.p:hover{box-shadow:0 12px 30px rgba(238,111,45,.4)}
-.btn.s{background:#fff;border:1.5px solid var(--line);color:var(--ink)}
-.btn.s:hover{border-color:var(--cy);box-shadow:0 6px 18px rgba(8,153,198,.15)}
-.card,.door,.mcard,.passo,.pcard{background:#fff;border:1px solid var(--line);backdrop-filter:none;
-box-shadow:0 4px 16px rgba(20,40,80,.05)}
-.card:hover,.door:hover,.mcard:hover,.pcard:hover{border-color:rgba(8,153,198,.45);
-box-shadow:0 16px 40px rgba(20,40,80,.12)}
-.tag{color:var(--acc);background:rgba(238,111,45,.08);border:1px solid rgba(238,111,45,.28)}
-.row{border-color:var(--line)}
-a.row:hover h3{color:var(--acc);text-shadow:none}
-.prova{border-color:var(--line)}
-.prova b{color:var(--cy);text-shadow:none}
-.passo::before{color:var(--cy);text-shadow:none}
-.disclosure{background:rgba(8,153,198,.05);border-color:rgba(8,153,198,.22)}
-.ptile,.lbi{background:var(--bg2);border:1px solid var(--line)}
-.pselo{color:var(--cy);background:rgba(8,153,198,.08);border-color:rgba(8,153,198,.28)}
-.pbtn{background:#fff;border:1px solid var(--line);color:var(--ink)}
-.pbtn:hover{border-color:var(--acc);color:var(--acc);box-shadow:0 4px 14px rgba(238,111,45,.2)}
-.pfaixa{color:var(--acc)!important}
-.servnote{background:#fff;border-color:rgba(8,153,198,.35)}
-footer{background:var(--bg2);border-color:var(--line)}
-.lb{background:#fff;border:1px solid var(--line);backdrop-filter:none;box-shadow:0 4px 14px rgba(20,40,80,.05)}
-.lb:hover{border-color:rgba(8,153,198,.5);box-shadow:0 12px 30px rgba(20,40,80,.12)}
-.lb.hot{background:linear-gradient(135deg,rgba(238,111,45,.1),rgba(255,138,75,.06));border-color:rgba(238,111,45,.45)}
-@keyframes lbpulsa{50%{box-shadow:0 0 20px rgba(238,111,45,.28)}}
-.fb{background:rgba(255,255,255,.92);border:1px solid var(--line);box-shadow:0 8px 22px rgba(20,40,80,.12)}
-.fb b{color:var(--cy)}
-.catband .cnum{color:var(--sub)}
-.rk{color:var(--acc)}
-.orbitwrap img{filter:drop-shadow(0 18px 36px rgba(20,60,120,.18))}
-
-/* icones premium */
-.lbi{background:transparent!important;border:none!important}
-.lbi img{width:46px;height:46px;object-fit:contain;filter:drop-shadow(0 3px 8px rgba(20,40,80,.18))}
-.emi{width:54px;height:54px;object-fit:contain;display:block;margin-bottom:4px;filter:drop-shadow(0 3px 8px rgba(20,40,80,.18))}
-.rico{width:56px;height:56px;object-fit:contain;flex-shrink:0;align-self:center;filter:drop-shadow(0 3px 8px rgba(20,40,80,.15))}
-.catbanner{width:100%;border-radius:16px;display:block;margin:50px 0 -34px;box-shadow:0 10px 30px rgba(20,40,80,.12)}
-.pagehero{display:grid;gap:30px;align-items:center;grid-template-columns:1fr}
-@media(min-width:820px){.pagehero{grid-template-columns:1.2fr .8fr}}
-.pagehero img.cur{max-width:280px;width:70%;margin:0 auto;display:block;filter:drop-shadow(0 18px 36px rgba(20,60,120,.18))}
-.hticon{width:26px;height:26px;object-fit:contain;vertical-align:-4px;margin-right:6px}
-
-/* fotos de produto */
-.ptile{width:84px;height:84px;padding:6px;background:#fff}
-.ptile img{width:100%;height:100%;object-fit:contain}
-.rimg{width:64px;height:64px;object-fit:contain;flex-shrink:0;align-self:center;background:#fff;
-border:1px solid var(--line);border-radius:10px;padding:5px}
+/* ---------- ponte de tema: segue a escolha feita na home ---------- */
+[data-tema="claro"],[data-tema="sol"]{
+  --bg:#f7f9ff; --surf:#ffffff; --card:#ffffff; --ink:#141a2b; --sub:#5b6784; --mut:#7d89a5;
+  --line:#e4e9f5; --cy:#0b8fc4;
+}
+[data-tema="sol"]{--bg:#fff6ef}
+[data-tema="claro"] body,[data-tema="sol"] body{background:var(--bg)}
+[data-tema="claro"] nav,[data-tema="sol"] nav{background:rgba(255,255,255,.94)}
+[data-tema="claro"] .catbar,[data-tema="sol"] .catbar{background:rgba(255,255,255,.97)}
+[data-tema="claro"] .gridbg,[data-tema="sol"] .gridbg{
+ background-image:linear-gradient(rgba(70,110,190,.08) 1px,transparent 1px),
+ linear-gradient(90deg,rgba(70,110,190,.08) 1px,transparent 1px)}
+[data-tema="claro"] .pcard,[data-tema="sol"] .pcard,
+[data-tema="claro"] .pc,[data-tema="sol"] .pc,
+[data-tema="claro"] .tile,[data-tema="sol"] .tile{
+ background:#fff;border-color:var(--line);box-shadow:0 1px 2px rgba(20,40,90,.04),0 10px 24px rgba(20,40,90,.07)}
+[data-tema="claro"] .chip,[data-tema="sol"] .chip,
+[data-tema="claro"] .search input,[data-tema="sol"] .search input,
+[data-tema="claro"] select.sel,[data-tema="sol"] select.sel,
+[data-tema="claro"] button.sel,[data-tema="sol"] button.sel{background:#fff;border-color:var(--line)}
+[data-tema="claro"] .pbtn,[data-tema="sol"] .pbtn{background:#f4f7fd;border-color:var(--line)}
+[data-tema="claro"] .tip,[data-tema="sol"] .tip{background:#fff;color:var(--ink)}
+[data-tema="claro"] .ptile,[data-tema="sol"] .ptile{background:#fff;border-bottom:1px solid var(--line)}
 </style>
 </head>
 <body>
-<div class="gridbg" aria-hidden="true"></div><div class="aur a1" aria-hidden="true"></div><div class="aur a2" aria-hidden="true"></div>
+<div class="gridbg"></div><div class="aur a1"></div><div class="aur a2"></div>
+
 <nav><div class="navin">
   <a class="brand" href="index.html">1<em>Pai</em>Nerd <small>Studios</small></a>
-  <a class="nl" href="index.html">Início</a><a class="nl" href="jogos.html">Jogos & Família</a><a class="nl on" href="achadinhos.html">Achadinhos</a><a class="nl" href="mais-vendidos.html">Mais Vendidos</a><a class="nl" href="servicos.html">Serviços</a>
+  <a class="nl" href="index.html">Início</a><a class="nl" href="jogos.html">Jogos &amp; Família</a><a class="nl on" href="achadinhos.html">Achadinhos</a><a class="nl" href="mais-vendidos.html">Mais Vendidos</a><a class="nl" href="servicos.html">Serviços</a>
 </div></nav>
+
 <main>
 <div class="wrap">
-<section style="padding-bottom:20px">
- <div class="pagehero">
-  <div>
-  <p class="kicker rv">Achadinhos Nerd</p>
-  <h1 class="rv" style="font-size:clamp(1.9rem,4.5vw,2.7rem)">Eu testo com a minha família antes de indicar pra sua</h1>
-  <p class="lead rv">Sem lista infinita: 20 itens garimpados com critério, cada um respondendo por que este, pra quem é e se tem opção mais barata. O selo "Aprovado em casa" só entra no que a gente usa de verdade.</p>
-  </div>
-  <img class="cur rv" src="assets/curador.png" alt="O Pai Nerd, curador, com sua lupa">
- </div>
-</section>
-
-<div class="disclosure rv"><b>Transparência total:</b> os botões de loja levarão a links de afiliado (Amazon, Shopee e Mercado Livre) — você não paga nada a mais e o site ganha uma comissão que mantém a curadoria no ar. A recomendação vem primeiro; a comissão é consequência. Faixas de preço aproximadas, verificadas em ago/2026.</div>
-
-<img class="catbanner rv" src="assets/banner-presentes.png" alt="">
-<div class="catband rv"><h2><img class="hticon" src="assets/icons/gift.png" alt=""> Presentes geek pra filhos</h2><span class="cnum">10 itens · aprovação da testadora oficial pendente 😄</span></div>
-<div class="pgrid">
-<div class="pcard rv">
-  <div class="ptile" aria-hidden="true"><img src="https://m.media-amazon.com/images/I/71lhVag75AL._AC_UL320_.jpg" loading="lazy" alt=""></div>
-  <div class="pinfo">
-    <h3>LEGO Creator 3-em-1 Ônibus Espacial (31134)</h3>
-    <p class="pfaixa">R$ 84–130 <span class="pselo">🔎 garimpado com critério</span></p>
-    <p><b>Por que este:</b> Três brinquedos em um: ônibus espacial, astronauta e nave. LEGO de verdade sem preço de vitrine.</p>
-    <p><b>Pra quem é:</b> 6+ anos — criança que gosta de montar e remontar.</p>
-    
-    <div class="plinks">
-      <a class="pbtn" href="https://www.amazon.com.br/dp/B0BLJ4FDT4?tag=1painerd-20" target="_blank" rel="noopener sponsored">Amazon</a>
-      <a class="pbtn" href="#" data-todo="afiliado-lego-creator-3-em-1-onibus-espacial-3113-shopee">Shopee</a>
-      <a class="pbtn" href="#" data-todo="afiliado-lego-creator-3-em-1-onibus-espacial-3113-ml">Mercado Livre</a>
+  <div class="topline">
+    <div>
+      <h1>Achadinhos Nerd</h1>
+      <p class="sub1">20 itens testados em casa · preços conferidos em ago/2026</p>
     </div>
+    <a class="how" href="#como">como eu escolho ↓</a>
   </div>
-</div>
-<div class="pcard rv">
-  <div class="ptile" aria-hidden="true"><img src="https://m.media-amazon.com/images/I/719Tpe9iBqL._AC_UL320_.jpg" loading="lazy" alt=""></div>
-  <div class="pinfo">
-    <h3>LEGO Minecraft (set de entrada)</h3>
-    <p class="pfaixa">R$ 130–190 <span class="pselo">🔎 garimpado com critério</span></p>
-    <p><b>Por que este:</b> Junta o jogo favorito com o brinquedo que nunca envelhece. Sucesso garantido.</p>
-    <p><b>Pra quem é:</b> Fã de Minecraft de 7+ anos.</p>
-    
-    <div class="plinks">
-      <a class="pbtn" href="https://www.amazon.com.br/dp/B0GS932Q5M?tag=1painerd-20" target="_blank" rel="noopener sponsored">Amazon</a>
-      <a class="pbtn" href="#" data-todo="afiliado-lego-minecraft-set-de-entrada-shopee">Shopee</a>
-      <a class="pbtn" href="#" data-todo="afiliado-lego-minecraft-set-de-entrada-ml">Mercado Livre</a>
-    </div>
-  </div>
-</div>
-<div class="pcard rv">
-  <div class="ptile" aria-hidden="true"><img src="https://m.media-amazon.com/images/I/61lvsNL1LWL._AC_UL320_.jpg" loading="lazy" alt=""></div>
-  <div class="pinfo">
-    <h3>Gift Card Robux (Roblox)</h3>
-    <p class="pfaixa">R$ 50+ <span class="pselo">🔎 garimpado com critério</span></p>
-    <p><b>Por que este:</b> O presente que NUNCA erra com quem joga Roblox — a criança escolhe o que quiser.</p>
-    <p><b>Pra quem é:</b> Qualquer fã de Roblox (e os pais que não sabem o que dar).</p>
-    
-    <div class="plinks">
-      <a class="pbtn" href="https://www.amazon.com.br/dp/374750437X?tag=1painerd-20" target="_blank" rel="noopener sponsored">Amazon</a>
-      <a class="pbtn" href="#" data-todo="afiliado-gift-card-robux-roblox-shopee">Shopee</a>
-      <a class="pbtn" href="#" data-todo="afiliado-gift-card-robux-roblox-ml">Mercado Livre</a>
-    </div>
-  </div>
-</div>
-<div class="pcard rv">
-  <div class="ptile" aria-hidden="true"><img src="https://m.media-amazon.com/images/I/71yRIgepE-L._AC_UL320_.jpg" loading="lazy" alt=""></div>
-  <div class="pinfo">
-    <h3>Uno Clássico</h3>
-    <p class="pfaixa">R$ 20–40 <span class="pselo">🔎 garimpado com critério</span></p>
-    <p><b>Por que este:</b> O jogo que faz a família largar o celular por uma hora. Imbatível pelo preço.</p>
-    <p><b>Pra quem é:</b> Todo mundo a partir de 7 anos.</p>
-    
-    <div class="plinks">
-      <a class="pbtn" href="https://www.amazon.com.br/dp/B0F7LV66YJ?tag=1painerd-20" target="_blank" rel="noopener sponsored">Amazon</a>
-      <a class="pbtn" href="#" data-todo="afiliado-uno-classico-shopee">Shopee</a>
-      <a class="pbtn" href="#" data-todo="afiliado-uno-classico-ml">Mercado Livre</a>
-    </div>
-  </div>
-</div>
-<div class="pcard rv">
-  <div class="ptile" aria-hidden="true"><img src="https://m.media-amazon.com/images/I/511r2jqT0RL._AC_UL320_.jpg" loading="lazy" alt=""></div>
-  <div class="pinfo">
-    <h3>Hot Wheels kit com 5 carrinhos</h3>
-    <p class="pfaixa">R$ 50–80 <span class="pselo">🔎 garimpado com critério</span></p>
-    <p><b>Por que este:</b> O brinquedo mais vendido do Brasil ano após ano — colecionável e indestrutível.</p>
-    <p><b>Pra quem é:</b> 3+ anos (e muito adulto colecionador).</p>
-    
-    <div class="plinks">
-      <a class="pbtn" href="https://www.amazon.com.br/dp/B07M8NXRGT?tag=1painerd-20" target="_blank" rel="noopener sponsored">Amazon</a>
-      <a class="pbtn" href="#" data-todo="afiliado-hot-wheels-kit-com-5-carrinhos-shopee">Shopee</a>
-      <a class="pbtn" href="#" data-todo="afiliado-hot-wheels-kit-com-5-carrinhos-ml">Mercado Livre</a>
-    </div>
-  </div>
-</div>
-<div class="pcard rv">
-  <div class="ptile" aria-hidden="true"><img src="https://m.media-amazon.com/images/I/61X3jgNR4iL._AC_UL320_.jpg" loading="lazy" alt=""></div>
-  <div class="pinfo">
-    <h3>Kit Laboratório 42 Experimentos (Estrela)</h3>
-    <p class="pfaixa">R$ 150–210 <span class="pselo">🔎 garimpado com critério</span></p>
-    <p><b>Por que este:</b> Ciência de verdade em casa: vulcão, slime e reações — diversão que ensina.</p>
-    <p><b>Pra quem é:</b> Curiosos de 8+ anos.</p>
-    
-    <div class="plinks">
-      <a class="pbtn" href="https://www.amazon.com.br/dp/B077P982B6?tag=1painerd-20" target="_blank" rel="noopener sponsored">Amazon</a>
-      <a class="pbtn" href="#" data-todo="afiliado-kit-laboratorio-42-experimentos-estrela-shopee">Shopee</a>
-      <a class="pbtn" href="#" data-todo="afiliado-kit-laboratorio-42-experimentos-estrela-ml">Mercado Livre</a>
-    </div>
-  </div>
-</div>
-<div class="pcard rv">
-  <div class="ptile" aria-hidden="true"><img src="https://m.media-amazon.com/images/I/71cepauGVkL._AC_UL320_.jpg" loading="lazy" alt=""></div>
-  <div class="pinfo">
-    <h3>Play-Doh Fábrica de Diversão</h3>
-    <p class="pfaixa">R$ 60–100 <span class="pselo">🔎 garimpado com critério</span></p>
-    <p><b>Por que este:</b> Criatividade sem tela, bagunça controlada e horas de silêncio abençoado.</p>
-    <p><b>Pra quem é:</b> 3–7 anos.</p>
-    
-    <div class="plinks">
-      <a class="pbtn" href="https://www.amazon.com.br/dp/B0CQTNQ58F?tag=1painerd-20" target="_blank" rel="noopener sponsored">Amazon</a>
-      <a class="pbtn" href="#" data-todo="afiliado-play-doh-fabrica-de-diversao-shopee">Shopee</a>
-      <a class="pbtn" href="#" data-todo="afiliado-play-doh-fabrica-de-diversao-ml">Mercado Livre</a>
-    </div>
-  </div>
-</div>
-<div class="pcard rv">
-  <div class="ptile" aria-hidden="true"><img src="https://m.media-amazon.com/images/I/81vuoMiXF9L._AC_UL320_.jpg" loading="lazy" alt=""></div>
-  <div class="pinfo">
-    <h3>Figura de ação Marvel/Minecraft</h3>
-    <p class="pfaixa">R$ 60–110 <span class="pselo">🔎 garimpado com critério</span></p>
-    <p><b>Por que este:</b> Boneco articulado dos heróis do momento — presente certeiro de aniversário.</p>
-    <p><b>Pra quem é:</b> 4+ anos, fãs de herói ou do jogo.</p>
-    
-    <div class="plinks">
-      <a class="pbtn" href="https://www.amazon.com.br/dp/B0D9R799QH?tag=1painerd-20" target="_blank" rel="noopener sponsored">Amazon</a>
-      <a class="pbtn" href="#" data-todo="afiliado-figura-de-acao-marvel-minecraft-shopee">Shopee</a>
-      <a class="pbtn" href="#" data-todo="afiliado-figura-de-acao-marvel-minecraft-ml">Mercado Livre</a>
-    </div>
-  </div>
-</div>
-<div class="pcard rv">
-  <div class="ptile" aria-hidden="true"><img src="https://m.media-amazon.com/images/I/61LJizifVPL._AC_UL320_.jpg" loading="lazy" alt=""></div>
-  <div class="pinfo">
-    <h3>Dobble (jogo de cartas)</h3>
-    <p class="pfaixa">R$ 70–100 <span class="pselo">🔎 garimpado com critério</span></p>
-    <p><b>Por que este:</b> Partidas de 5 minutos, gargalhada garantida, cabe no bolso — o melhor party game familiar.</p>
-    <p><b>Pra quem é:</b> Famílias com crianças 6+ anos.</p>
-    
-    <div class="plinks">
-      <a class="pbtn" href="https://www.amazon.com.br/dp/B0GP32N2VQ?tag=1painerd-20" target="_blank" rel="noopener sponsored">Amazon</a>
-      <a class="pbtn" href="#" data-todo="afiliado-dobble-jogo-de-cartas-shopee">Shopee</a>
-      <a class="pbtn" href="#" data-todo="afiliado-dobble-jogo-de-cartas-ml">Mercado Livre</a>
-    </div>
-  </div>
-</div>
-<div class="pcard rv">
-  <div class="ptile" aria-hidden="true"><img src="https://m.media-amazon.com/images/I/81OThJ9KS1L._AC_UL320_.jpg" loading="lazy" alt=""></div>
-  <div class="pinfo">
-    <h3>Pelúcia de personagem (Creeper, axolote...)</h3>
-    <p class="pfaixa">R$ 60–120 <span class="pselo">🔎 garimpado com critério</span></p>
-    <p><b>Por que este:</b> O abraço no personagem favorito — funciona de 3 a 99 anos.</p>
-    <p><b>Pra quem é:</b> Fãs de Minecraft/games que curtem fofura.</p>
-    
-    <div class="plinks">
-      <a class="pbtn" href="https://www.amazon.com.br/dp/B0C1HS7JWK?tag=1painerd-20" target="_blank" rel="noopener sponsored">Amazon</a>
-      <a class="pbtn" href="#" data-todo="afiliado-pelucia-de-personagem-creeper-axolote-shopee">Shopee</a>
-      <a class="pbtn" href="#" data-todo="afiliado-pelucia-de-personagem-creeper-axolote-ml">Mercado Livre</a>
-    </div>
-  </div>
-</div>
 </div>
 
-<img class="catbanner rv" src="assets/banner-setup.png" alt="">
-<div class="catband rv"><h2><img class="hticon" src="assets/icons/keyboard.png" alt=""> Setup & periféricos</h2><span class="cnum">10 itens · o que vale o preço pra jogar e trabalhar</span></div>
-<div class="pgrid">
-<div class="pcard rv">
-  <div class="ptile" aria-hidden="true"><img src="https://m.media-amazon.com/images/I/51NSQ6YYaSL._AC_UL320_.jpg" loading="lazy" alt=""></div>
-  <div class="pinfo">
-    <h3>Teclado mecânico Redragon Kumara (K552)</h3>
-    <p class="pfaixa">R$ 180–260 <span class="pselo">🔎 garimpado com critério</span></p>
-    <p><b>Por que este:</b> O mecânico barato mais aprovado do Brasil: switches que aguentam anos de uso e RGB sem frescura.</p>
-    <p><b>Pra quem é:</b> Quem quer sair do teclado de escritório sem gastar R$ 500.</p>
-    <p class="palt">💰 Alternativa: Versão Pro V2 sem fio se o orçamento esticar</p>
-    <div class="plinks">
-      <a class="pbtn" href="https://www.amazon.com.br/dp/B0GVQ73KH9?tag=1painerd-20" target="_blank" rel="noopener sponsored">Amazon</a>
-      <a class="pbtn" href="#" data-todo="afiliado-teclado-mecanico-redragon-kumara-k552-shopee">Shopee</a>
-      <a class="pbtn" href="#" data-todo="afiliado-teclado-mecanico-redragon-kumara-k552-ml">Mercado Livre</a>
-    </div>
+<!-- BARRA DE CATEGORIAS + SUBCATEGORIAS (movida pra baixo do hero, gruda no topo ao rolar) -->
+<div class="catbar">
+  <div class="wrap">
+    <div class="catrow" id="catrow"></div>
+    <div class="subrow hide" id="subrow"></div>
   </div>
-</div>
-<div class="pcard rv">
-  <div class="ptile" aria-hidden="true"><img src="https://m.media-amazon.com/images/I/61oE1NouXuL._AC_UL320_.jpg" loading="lazy" alt=""></div>
-  <div class="pinfo">
-    <h3>Mouse Logitech G203 Lightsync</h3>
-    <p class="pfaixa">R$ 85–140 <span class="pselo">🔎 garimpado com critério</span></p>
-    <p><b>Por que este:</b> Sensor preciso de marca grande pelo preço de mouse genérico. Simplesmente não tem defeito nessa faixa.</p>
-    <p><b>Pra quem é:</b> Qualquer jogo, qualquer mão — o primeiro mouse gamer certo.</p>
-    <p class="palt">💰 Alternativa: Redragon Cobra se achar em promoção</p>
-    <div class="plinks">
-      <a class="pbtn" href="https://www.amazon.com.br/dp/B087CT8PWY?tag=1painerd-20" target="_blank" rel="noopener sponsored">Amazon</a>
-      <a class="pbtn" href="#" data-todo="afiliado-mouse-logitech-g203-lightsync-shopee">Shopee</a>
-      <a class="pbtn" href="#" data-todo="afiliado-mouse-logitech-g203-lightsync-ml">Mercado Livre</a>
-    </div>
-  </div>
-</div>
-<div class="pcard rv">
-  <div class="ptile" aria-hidden="true"><img src="https://m.media-amazon.com/images/I/61HhDfm-+EL._AC_UL320_.jpg" loading="lazy" alt=""></div>
-  <div class="pinfo">
-    <h3>Headset Havit H2002D</h3>
-    <p class="pfaixa">R$ 160–190 <span class="pselo">🔎 garimpado com critério</span></p>
-    <p><b>Por que este:</b> Hastes de metal, confortável e som limpo — o queridinho do custo-benefício.</p>
-    <p><b>Pra quem é:</b> Jogar e fazer call sem parecer robô.</p>
-    <p class="palt">💰 Alternativa: HyperX Cloud Stinger 2 Core na mesma faixa, marca consolidada</p>
-    <div class="plinks">
-      <a class="pbtn" href="https://www.amazon.com.br/dp/B0D6NJCK5G?tag=1painerd-20" target="_blank" rel="noopener sponsored">Amazon</a>
-      <a class="pbtn" href="#" data-todo="afiliado-headset-havit-h2002d-shopee">Shopee</a>
-      <a class="pbtn" href="#" data-todo="afiliado-headset-havit-h2002d-ml">Mercado Livre</a>
-    </div>
-  </div>
-</div>
-<div class="pcard rv">
-  <div class="ptile" aria-hidden="true"><img src="https://m.media-amazon.com/images/I/81nLaAZKKrL._AC_UL320_.jpg" loading="lazy" alt=""></div>
-  <div class="pinfo">
-    <h3>Microfone Fifine AmpliGame A6/K669</h3>
-    <p class="pfaixa">R$ 150–250 <span class="pselo">🔎 garimpado com critério</span></p>
-    <p><b>Por que este:</b> Som de streamer sem preço de streamer: USB, plugou funcionou.</p>
-    <p><b>Pra quem é:</b> Quem grava vídeo, faz live ou quer call decente.</p>
-    
-    <div class="plinks">
-      <a class="pbtn" href="https://www.amazon.com.br/dp/B0B8SNVK5K?tag=1painerd-20" target="_blank" rel="noopener sponsored">Amazon</a>
-      <a class="pbtn" href="#" data-todo="afiliado-microfone-fifine-ampligame-a6-k669-shopee">Shopee</a>
-      <a class="pbtn" href="#" data-todo="afiliado-microfone-fifine-ampligame-a6-k669-ml">Mercado Livre</a>
-    </div>
-  </div>
-</div>
-<div class="pcard rv">
-  <div class="ptile" aria-hidden="true"><img src="https://m.media-amazon.com/images/I/61PrRrCu7lL._AC_UL320_.jpg" loading="lazy" alt=""></div>
-  <div class="pinfo">
-    <h3>Monitor Acer Nitro KG241Y (100Hz+)</h3>
-    <p class="pfaixa">R$ 600–700 <span class="pselo">🔎 garimpado com critério</span></p>
-    <p><b>Por que este:</b> Full HD acima de 100Hz por preço de monitor comum — a diferença no jogo é visível.</p>
-    <p><b>Pra quem é:</b> Primeiro upgrade sério de quem joga no PC.</p>
-    
-    <div class="plinks">
-      <a class="pbtn" href="https://www.amazon.com.br/dp/B0GP93BGJM?tag=1painerd-20" target="_blank" rel="noopener sponsored">Amazon</a>
-      <a class="pbtn" href="#" data-todo="afiliado-monitor-acer-nitro-kg241y-100hz-shopee">Shopee</a>
-      <a class="pbtn" href="#" data-todo="afiliado-monitor-acer-nitro-kg241y-100hz-ml">Mercado Livre</a>
-    </div>
-  </div>
-</div>
-<div class="pcard rv">
-  <div class="ptile" aria-hidden="true"><img src="https://m.media-amazon.com/images/I/61-6uAf8soL._AC_UL320_.jpg" loading="lazy" alt=""></div>
-  <div class="pinfo">
-    <h3>Webcam Logitech C920s</h3>
-    <p class="pfaixa">R$ 280–400 <span class="pselo">🔎 garimpado com critério</span></p>
-    <p><b>Por que este:</b> A webcam padrão do mercado há anos: imagem que nenhuma câmera de notebook alcança.</p>
-    <p><b>Pra quem é:</b> Reunião, live e vídeo com a família.</p>
-    
-    <div class="plinks">
-      <a class="pbtn" href="https://www.amazon.com.br/dp/B07K986YLL?tag=1painerd-20" target="_blank" rel="noopener sponsored">Amazon</a>
-      <a class="pbtn" href="#" data-todo="afiliado-webcam-logitech-c920s-shopee">Shopee</a>
-      <a class="pbtn" href="#" data-todo="afiliado-webcam-logitech-c920s-ml">Mercado Livre</a>
-    </div>
-  </div>
-</div>
-<div class="pcard rv">
-  <div class="ptile" aria-hidden="true"><img src="https://m.media-amazon.com/images/I/51jlC3sL0BL._AC_UL320_.jpg" loading="lazy" alt=""></div>
-  <div class="pinfo">
-    <h3>Mousepad XL (90×40cm)</h3>
-    <p class="pfaixa">R$ 50–100 <span class="pselo">🔎 garimpado com critério</span></p>
-    <p><b>Por que este:</b> Cobre a mesa inteira, mouse desliza igual em todo canto e ainda protege a madeira.</p>
-    <p><b>Pra quem é:</b> Todo setup — é a melhoria mais barata que existe.</p>
-    
-    <div class="plinks">
-      <a class="pbtn" href="https://www.amazon.com.br/dp/B0BHMN52LY?tag=1painerd-20" target="_blank" rel="noopener sponsored">Amazon</a>
-      <a class="pbtn" href="#" data-todo="afiliado-mousepad-xl-9040cm-shopee">Shopee</a>
-      <a class="pbtn" href="#" data-todo="afiliado-mousepad-xl-9040cm-ml">Mercado Livre</a>
-    </div>
-  </div>
-</div>
-<div class="pcard rv">
-  <div class="ptile" aria-hidden="true"><img src="https://m.media-amazon.com/images/I/61-TzEg09KL._AC_UL320_.jpg" loading="lazy" alt=""></div>
-  <div class="pinfo">
-    <h3>Suporte articulado de monitor</h3>
-    <p class="pfaixa">R$ 120–200 <span class="pselo">🔎 garimpado com critério</span></p>
-    <p><b>Por que este:</b> Libera a mesa, alinha a altura dos olhos e o setup ganha cara de profissional na hora.</p>
-    <p><b>Pra quem é:</b> Quem passa horas sentado e sente o pescoço.</p>
-    
-    <div class="plinks">
-      <a class="pbtn" href="https://www.amazon.com.br/dp/B0765KZ264?tag=1painerd-20" target="_blank" rel="noopener sponsored">Amazon</a>
-      <a class="pbtn" href="#" data-todo="afiliado-suporte-articulado-de-monitor-shopee">Shopee</a>
-      <a class="pbtn" href="#" data-todo="afiliado-suporte-articulado-de-monitor-ml">Mercado Livre</a>
-    </div>
-  </div>
-</div>
-<div class="pcard rv">
-  <div class="ptile" aria-hidden="true">💻</div>
-  <div class="pinfo">
-    <h3>Suporte ergonômico de notebook</h3>
-    <p class="pfaixa">R$ 40–90 <span class="pselo">🔎 garimpado com critério</span></p>
-    <p><b>Por que este:</b> Notebook na altura certa esfria melhor e acaba com a corcunda de gamer.</p>
-    <p><b>Pra quem é:</b> Quem trabalha ou joga no notebook.</p>
-    
-    <div class="plinks">
-      <a class="pbtn" href="https://www.amazon.com.br/s?k=suporte+notebook+ergonomico+mesa&tag=1painerd-20" target="_blank" rel="noopener sponsored">Amazon</a>
-      <a class="pbtn" href="#" data-todo="afiliado-suporte-ergonomico-de-notebook-shopee">Shopee</a>
-      <a class="pbtn" href="#" data-todo="afiliado-suporte-ergonomico-de-notebook-ml">Mercado Livre</a>
-    </div>
-  </div>
-</div>
-<div class="pcard rv">
-  <div class="ptile" aria-hidden="true"><img src="https://m.media-amazon.com/images/I/61IWpsaMFJL._AC_UL320_.jpg" loading="lazy" alt=""></div>
-  <div class="pinfo">
-    <h3>Luminária de mesa com braço articulado</h3>
-    <p class="pfaixa">R$ 80–160 <span class="pselo">🔎 garimpado com critério</span></p>
-    <p><b>Por que este:</b> Luz certa pra jogar, gravar e trabalhar sem cansar a vista — e valoriza qualquer vídeo.</p>
-    <p><b>Pra quem é:</b> Setup de quem cria conteúdo ou estuda à noite.</p>
-    <p class="palt">💰 Alternativa: Ring light se o foco for aparecer na câmera</p>
-    <div class="plinks">
-      <a class="pbtn" href="https://www.amazon.com.br/dp/B0H6VHLQJM?tag=1painerd-20" target="_blank" rel="noopener sponsored">Amazon</a>
-      <a class="pbtn" href="#" data-todo="afiliado-luminaria-de-mesa-com-braco-articulado-shopee">Shopee</a>
-      <a class="pbtn" href="#" data-todo="afiliado-luminaria-de-mesa-com-braco-articulado-ml">Mercado Livre</a>
-    </div>
-  </div>
-</div>
 </div>
 
-<section>
-  <div class="passo rv" style="max-width:640px">
-    <h3 style="font-size:1.3rem">🎁 Guilda de Achadinhos Nerd</h3>
-    <p style="margin:10px 0 18px">As melhores ofertas desses e de outros garimpos, direto no seu celular. Vagas abrem em breve — quem segue no Instagram entra primeiro.</p>
-    <a class="btn p" href="https://www.instagram.com/1painerd" rel="noopener">Quero entrar na Guilda</a>
+<div class="wrap">
+  <div class="toolbar">
+    <div class="search"><span class="mag">🔎</span><input id="q" type="search" placeholder="Buscar achadinho..." autocomplete="off"></div>
+    <select class="sel" id="preco">
+      <option value="">Qualquer preço</option>
+      <option value="0-50">Até R$ 50</option>
+      <option value="50-100">R$ 50 a 100</option>
+      <option value="100-200">R$ 100 a 200</option>
+      <option value="200-99999">Acima de R$ 200</option>
+    </select>
+    <select class="sel" id="ord">
+      <option value="rec">Recomendados</option>
+      <option value="asc">Menor preço</option>
+      <option value="desc">Maior preço</option>
+      <option value="az">Nome A–Z</option>
+    </select>
+    <div class="view">
+      <button id="bg" class="on" title="Ver em grade">▦ Grade</button>
+      <button id="bl" title="Ver em lista">☰ Lista</button>
+    </div>
   </div>
-</section>
+  <div class="active" id="active"></div>
+  <div class="pgrid" id="grid"></div>
 </div>
+
+<section class="como" id="como"><div class="wrap">
+  <img class="cur2" src="../assets/curador.png" alt="O Pai Nerd, curador, com sua lupa" onerror="this.style.display='none'">
+  <h2>Como eu escolho os achadinhos</h2>
+  <p>Sem lista infinita. São 20 itens garimpados com critério — cada um respondendo <b>por que este</b>,
+  <b>pra quem é</b> e se existe opção mais barata. O selo <b>🏠 Aprovado em casa</b> só entra no que a
+  gente usa de verdade. Eu testo com a minha família antes de indicar pra sua.</p>
+  <p><b>Transparência total:</b> os botões de loja levam a links de afiliado — você não paga nada a mais e
+  o site ganha uma comissão que mantém a curadoria no ar. A recomendação vem primeiro; a comissão é
+  consequência. Faixas de preço aproximadas, verificadas em ago/2026.</p>
+</div></section>
 </main>
-<footer><div class="footin">
-  <div><b>1PaiNerd Studios</b><br>Jogos, histórias e tecnologia,<br>feitos em família. Mauá/SP.</div>
-  <div><a href="jogos.html">Jogos & Família</a><br><a href="achadinhos.html">Achadinhos</a><br><a href="servicos.html">Serviços</a></div>
-  <div><a href="https://www.instagram.com/1painerd" rel="noopener">Instagram</a><br><a href="mailto:wfactory.design@gmail.com">E-mail</a><br>© 2026 Patrick Gouveia</div>
+
+<footer><div class="wrap">
+  <b>1PaiNerd Studios</b> — curadoria honesta de pai pra pai.<br>
+  <a href="https://www.instagram.com/1painerd">@1painerd</a> · <a href="index.html">1painerd.github.io</a>
 </div></footer>
+
+<button class="fab" id="fab">🔎 Filtrar e ordenar</button>
+
 <script>
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.1});
-document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+const P = [{"img": "https://m.media-amazon.com/images/I/71lhVag75AL._AC_UL320_.jpg", "nome": "LEGO Creator 3-em-1 Ônibus Espacial (31134)", "faixa": "R$ 84–130", "porque": "Três brinquedos em um: ônibus espacial, astronauta e nave. LEGO de verdade sem preço de vitrine.", "praquem": "6+ anos — criança que gosta de montar e remontar.", "amz": "https://www.amazon.com.br/dp/B0BLJ4FDT4?tag=1painerd-20", "cat": "presentes", "sub": "montar", "emoji": "🧱", "preco": 84, "casa": false}, {"img": "https://m.media-amazon.com/images/I/719Tpe9iBqL._AC_UL320_.jpg", "nome": "LEGO Minecraft (set de entrada)", "faixa": "R$ 130–190", "porque": "Junta o jogo favorito com o brinquedo que nunca envelhece. Sucesso garantido.", "praquem": "Fã de Minecraft de 7+ anos.", "amz": "https://www.amazon.com.br/dp/B0GS932Q5M?tag=1painerd-20", "cat": "presentes", "sub": "montar", "emoji": "🧱", "preco": 130, "casa": false}, {"img": "https://m.media-amazon.com/images/I/61lvsNL1LWL._AC_UL320_.jpg", "nome": "Gift Card Robux (Roblox)", "faixa": "R$ 50+", "porque": "O presente que NUNCA erra com quem joga Roblox — a criança escolhe o que quiser.", "praquem": "Qualquer fã de Roblox (e os pais que não sabem o que dar).", "amz": "https://www.amazon.com.br/dp/374750437X?tag=1painerd-20", "cat": "presentes", "sub": "digital", "emoji": "🎮", "preco": 50, "casa": false}, {"img": "https://m.media-amazon.com/images/I/71yRIgepE-L._AC_UL320_.jpg", "nome": "Uno Clássico", "faixa": "R$ 20–40", "porque": "O jogo que faz a família largar o celular por uma hora. Imbatível pelo preço.", "praquem": "Todo mundo a partir de 7 anos.", "amz": "https://www.amazon.com.br/dp/B0F7LV66YJ?tag=1painerd-20", "cat": "presentes", "sub": "mesa", "emoji": "🃏", "preco": 20, "casa": false}, {"img": "https://m.media-amazon.com/images/I/511r2jqT0RL._AC_UL320_.jpg", "nome": "Hot Wheels kit com 5 carrinhos", "faixa": "R$ 50–80", "porque": "O brinquedo mais vendido do Brasil ano após ano — colecionável e indestrutível.", "praquem": "3+ anos (e muito adulto colecionador).", "amz": "https://www.amazon.com.br/dp/B07M8NXRGT?tag=1painerd-20", "cat": "presentes", "sub": "colecionavel", "emoji": "🚗", "preco": 50, "casa": false}, {"img": "https://m.media-amazon.com/images/I/61X3jgNR4iL._AC_UL320_.jpg", "nome": "Kit Laboratório 42 Experimentos (Estrela)", "faixa": "R$ 150–210", "porque": "Ciência de verdade em casa: vulcão, slime e reações — diversão que ensina.", "praquem": "Curiosos de 8+ anos.", "amz": "https://www.amazon.com.br/dp/B077P982B6?tag=1painerd-20", "cat": "presentes", "sub": "criativo", "emoji": "🔬", "preco": 150, "casa": false}, {"img": "https://m.media-amazon.com/images/I/71cepauGVkL._AC_UL320_.jpg", "nome": "Play-Doh Fábrica de Diversão", "faixa": "R$ 60–100", "porque": "Criatividade sem tela, bagunça controlada e horas de silêncio abençoado.", "praquem": "3–7 anos.", "amz": "https://www.amazon.com.br/dp/B0CQTNQ58F?tag=1painerd-20", "cat": "presentes", "sub": "criativo", "emoji": "🎨", "preco": 60, "casa": false}, {"img": "https://m.media-amazon.com/images/I/81vuoMiXF9L._AC_UL320_.jpg", "nome": "Figura de ação Marvel/Minecraft", "faixa": "R$ 60–110", "porque": "Boneco articulado dos heróis do momento — presente certeiro de aniversário.", "praquem": "4+ anos, fãs de herói ou do jogo.", "amz": "https://www.amazon.com.br/dp/B0D9R799QH?tag=1painerd-20", "cat": "presentes", "sub": "colecionavel", "emoji": "🦸", "preco": 60, "casa": false}, {"img": "https://m.media-amazon.com/images/I/61LJizifVPL._AC_UL320_.jpg", "nome": "Dobble (jogo de cartas)", "faixa": "R$ 70–100", "porque": "Partidas de 5 minutos, gargalhada garantida, cabe no bolso — o melhor party game familiar.", "praquem": "Famílias com crianças 6+ anos.", "amz": "https://www.amazon.com.br/dp/B0GP32N2VQ?tag=1painerd-20", "cat": "presentes", "sub": "mesa", "emoji": "🃏", "preco": 70, "casa": false}, {"img": "https://m.media-amazon.com/images/I/81OThJ9KS1L._AC_UL320_.jpg", "nome": "Pelúcia de personagem (Creeper, axolote...)", "faixa": "R$ 60–120", "porque": "O abraço no personagem favorito — funciona de 3 a 99 anos.", "praquem": "Fãs de Minecraft/games que curtem fofura.", "amz": "https://www.amazon.com.br/dp/B0C1HS7JWK?tag=1painerd-20", "cat": "presentes", "sub": "colecionavel", "emoji": "🧸", "preco": 60, "casa": false}, {"img": "https://m.media-amazon.com/images/I/51NSQ6YYaSL._AC_UL320_.jpg", "nome": "Teclado mecânico Redragon Kumara (K552)", "faixa": "R$ 180–260", "porque": "O mecânico barato mais aprovado do Brasil: switches que aguentam anos de uso e RGB sem frescura.", "praquem": "Quem quer sair do teclado de escritório sem gastar R$ 500.", "amz": "https://www.amazon.com.br/dp/B0GVQ73KH9?tag=1painerd-20", "cat": "setup", "sub": "perifericos", "emoji": "⌨️", "preco": 180, "casa": false}, {"img": "https://m.media-amazon.com/images/I/61oE1NouXuL._AC_UL320_.jpg", "nome": "Mouse Logitech G203 Lightsync", "faixa": "R$ 85–140", "porque": "Sensor preciso de marca grande pelo preço de mouse genérico. Simplesmente não tem defeito nessa faixa.", "praquem": "Qualquer jogo, qualquer mão — o primeiro mouse gamer certo.", "amz": "https://www.amazon.com.br/dp/B087CT8PWY?tag=1painerd-20", "cat": "setup", "sub": "perifericos", "emoji": "🖱️", "preco": 85, "casa": false}, {"img": "https://m.media-amazon.com/images/I/61HhDfm-+EL._AC_UL320_.jpg", "nome": "Headset Havit H2002D", "faixa": "R$ 160–190", "porque": "Hastes de metal, confortável e som limpo — o queridinho do custo-benefício.", "praquem": "Jogar e fazer call sem parecer robô.", "amz": "https://www.amazon.com.br/dp/B0D6NJCK5G?tag=1painerd-20", "cat": "setup", "sub": "perifericos", "emoji": "🎧", "preco": 160, "casa": false}, {"img": "https://m.media-amazon.com/images/I/81nLaAZKKrL._AC_UL320_.jpg", "nome": "Microfone Fifine AmpliGame A6/K669", "faixa": "R$ 150–250", "porque": "Som de streamer sem preço de streamer: USB, plugou funcionou.", "praquem": "Quem grava vídeo, faz live ou quer call decente.", "amz": "https://www.amazon.com.br/dp/B0B8SNVK5K?tag=1painerd-20", "cat": "setup", "sub": "audiovideo", "emoji": "🎙️", "preco": 150, "casa": false}, {"img": "https://m.media-amazon.com/images/I/61PrRrCu7lL._AC_UL320_.jpg", "nome": "Monitor Acer Nitro KG241Y (100Hz+)", "faixa": "R$ 600–700", "porque": "Full HD acima de 100Hz por preço de monitor comum — a diferença no jogo é visível.", "praquem": "Primeiro upgrade sério de quem joga no PC.", "amz": "https://www.amazon.com.br/dp/B0GP93BGJM?tag=1painerd-20", "cat": "setup", "sub": "tela", "emoji": "🖥️", "preco": 600, "casa": false}, {"img": "https://m.media-amazon.com/images/I/61-6uAf8soL._AC_UL320_.jpg", "nome": "Webcam Logitech C920s", "faixa": "R$ 280–400", "porque": "A webcam padrão do mercado há anos: imagem que nenhuma câmera de notebook alcança.", "praquem": "Reunião, live e vídeo com a família.", "amz": "https://www.amazon.com.br/dp/B07K986YLL?tag=1painerd-20", "cat": "setup", "sub": "audiovideo", "emoji": "📷", "preco": 280, "casa": false}, {"img": "https://m.media-amazon.com/images/I/51jlC3sL0BL._AC_UL320_.jpg", "nome": "Mousepad XL (90×40cm)", "faixa": "R$ 50–100", "porque": "Cobre a mesa inteira, mouse desliza igual em todo canto e ainda protege a madeira.", "praquem": "Todo setup — é a melhoria mais barata que existe.", "amz": "https://www.amazon.com.br/dp/B0BHMN52LY?tag=1painerd-20", "cat": "setup", "sub": "perifericos", "emoji": "🟪", "preco": 50, "casa": false}, {"img": "https://m.media-amazon.com/images/I/61-TzEg09KL._AC_UL320_.jpg", "nome": "Suporte articulado de monitor", "faixa": "R$ 120–200", "porque": "Libera a mesa, alinha a altura dos olhos e o setup ganha cara de profissional na hora.", "praquem": "Quem passa horas sentado e sente o pescoço.", "amz": "https://www.amazon.com.br/dp/B0765KZ264?tag=1painerd-20", "cat": "setup", "sub": "ergonomia", "emoji": "🦾", "preco": 120, "casa": false}, {"img": "", "nome": "Suporte ergonômico de notebook", "faixa": "R$ 40–90", "porque": "Notebook na altura certa esfria melhor e acaba com a corcunda de gamer.", "praquem": "Quem trabalha ou joga no notebook.", "amz": "https://www.amazon.com.br/s?k=suporte+notebook+ergonomico+mesa&tag=1painerd-20", "cat": "setup", "sub": "ergonomia", "emoji": "💻", "preco": 40, "casa": false}, {"img": "https://m.media-amazon.com/images/I/61IWpsaMFJL._AC_UL320_.jpg", "nome": "Luminária de mesa com braço articulado", "faixa": "R$ 80–160", "porque": "Luz certa pra jogar, gravar e trabalhar sem cansar a vista — e valoriza qualquer vídeo.", "praquem": "Setup de quem cria conteúdo ou estuda à noite.", "amz": "https://www.amazon.com.br/dp/B0H6VHLQJM?tag=1painerd-20", "cat": "setup", "sub": "ergonomia", "emoji": "💡", "preco": 80, "casa": false}];
+const CATS = {presentes:{nome:'Presentes geek',emoji:'🎁',subs:{montar:'Montar',mesa:'Jogos de mesa',colecionavel:'Colecionáveis',criativo:'Criativos',digital:'Digital'}},
+              setup:{nome:'Setup & periféricos',emoji:'🖥️',subs:{perifericos:'Periféricos',audiovideo:'Áudio & vídeo',tela:'Tela',ergonomia:'Ergonomia'}}};
+let st={cat:'',sub:'',preco:'',q:'',ord:'rec',view:'grid'};
+
+const norm=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+function match(p,ignore){
+  if(st.cat&&ignore!=='cat'&&p.cat!==st.cat)return false;
+  if(st.sub&&ignore!=='sub'&&p.sub!==st.sub)return false;
+  if(st.preco&&ignore!=='preco'){const[a,b]=st.preco.split('-').map(Number);if(p.preco<a||p.preco>=b)return false}
+  if(st.q){const t=norm(p.nome+' '+p.porque+' '+p.praquem);if(!norm(st.q).split(/\s+/).every(w=>t.includes(w)))return false}
+  return true;
+}
+function countCat(c){return P.filter(p=>p.cat===c&&match(p,'cat')&&(!st.sub||p.sub===st.sub||st.cat!==c)).length}
+function countSub(s){return P.filter(p=>p.sub===s&&match(p,'sub')).length}
+
+function renderCats(){
+  const cr=document.getElementById('catrow');
+  let h=`<button class="chip ${!st.cat?'on':''}" data-cat="">✨ Tudo <span class="n">${P.filter(p=>match(p,'cat')&&!st.sub).length}</span></button>`;
+  for(const[k,v]of Object.entries(CATS)){
+    const n=P.filter(p=>p.cat===k&&match({...p,cat:k},'cat')).length;
+    h+=`<button class="chip ${st.cat===k?'on':''}" data-cat="${k}">${v.emoji} ${v.nome} <span class="n">${n}</span></button>`;
+  }
+  cr.innerHTML=h;
+  cr.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{st.cat=b.dataset.cat;st.sub='';draw()});
+  const sr=document.getElementById('subrow');
+  if(!st.cat){sr.className='subrow hide';sr.innerHTML='';return}
+  let s=`<button class="chip sm ${!st.sub?'on':''}" data-sub="">Todos</button>`;
+  for(const[k,v]of Object.entries(CATS[st.cat].subs)){
+    const n=P.filter(p=>p.sub===k&&match(p,'sub')).length; if(!n)continue;
+    s+=`<button class="chip sm ${st.sub===k?'on':''}" data-sub="${k}">${v} <span class="n">${n}</span></button>`;
+  }
+  sr.className='subrow';sr.innerHTML=s;
+  sr.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{st.sub=b.dataset.sub;draw()});
+}
+function renderActive(n){
+  const a=document.getElementById('active');let h='';
+  if(st.cat)h+=`<button class="tag" data-k="cat">${CATS[st.cat].nome}<span class="x">✕</span></button>`;
+  if(st.sub)h+=`<button class="tag" data-k="sub">${CATS[st.cat].subs[st.sub]}<span class="x">✕</span></button>`;
+  if(st.preco){const l=document.querySelector('#preco option[value="'+st.preco+'"]').textContent;
+    h+=`<button class="tag" data-k="preco">${l}<span class="x">✕</span></button>`}
+  if(st.q)h+=`<button class="tag" data-k="q">"${st.q}"<span class="x">✕</span></button>`;
+  if(h)h+='<button class="clearall" id="ca">limpar tudo</button>';
+  h+=`<span class="count">${n} ${n===1?'item':'itens'}</span>`;
+  a.innerHTML=h;
+  a.querySelectorAll('.tag').forEach(b=>b.onclick=()=>{const k=b.dataset.k;st[k]='';if(k==='cat')st.sub='';
+    if(k==='preco')document.getElementById('preco').value='';if(k==='q')document.getElementById('q').value='';draw()});
+  const ca=document.getElementById('ca');
+  if(ca)ca.onclick=()=>{st={...st,cat:'',sub:'',preco:'',q:''};document.getElementById('preco').value='';document.getElementById('q').value='';draw()};
+}
+function card(p){
+  const tile=p.img?`<img src="${p.img}" loading="lazy" alt="">`:`<span class="ph">${p.emoji}</span>`;
+  const badge=p.casa?'<span class="badge">🏠 Aprovado em casa</span>':'';
+  const L=[];
+  if(p.amz)L.push(`<a class="pbtn go" href="${p.amz}" target="_blank" rel="noopener sponsored">Ver na Amazon →</a>`);
+  if(p.shopee)L.push(`<a class="pbtn" href="${p.shopee}" target="_blank" rel="noopener sponsored">Shopee</a>`);
+  if(p.ml)L.push(`<a class="pbtn" href="${p.ml}" target="_blank" rel="noopener sponsored">Mercado Livre</a>`);
+  const lojas=L.join('');
+  return `<article class="pcard">
+   <div class="ptile">${tile}${badge}</div>
+   <div class="pinfo">
+     <h3>${p.nome}</h3>
+     <p class="pfaixa">${p.faixa}<span class="sel2">🔎 garimpado com critério</span></p>
+     <p class="d"><b>Por que este:</b> ${p.porque}</p>
+     <p class="d"><b>Pra quem é:</b> ${p.praquem}</p>
+     <div class="plinks">${lojas}</div>
+   </div></article>`;
+}
+function draw(){
+  let r=P.filter(p=>match(p));
+  if(st.ord==='asc')r.sort((a,b)=>a.preco-b.preco);
+  if(st.ord==='desc')r.sort((a,b)=>b.preco-a.preco);
+  if(st.ord==='az')r.sort((a,b)=>a.nome.localeCompare(b.nome,'pt'));
+  renderCats();renderActive(r.length);
+  const g=document.getElementById('grid');
+  g.className='pgrid'+(st.view==='list'?' list':'');
+  g.innerHTML=r.length?r.map(card).join(''):
+   `<div class="empty"><span class="e">🔍</span><b>Nada por aqui com esses filtros.</b><br>Tente afrouxar a busca ou o preço.</div>`;
+}
+document.getElementById('q').addEventListener('input',e=>{st.q=e.target.value.trim();draw()});
+document.getElementById('preco').addEventListener('change',e=>{st.preco=e.target.value;draw()});
+document.getElementById('ord').addEventListener('change',e=>{st.ord=e.target.value;draw()});
+document.getElementById('bg').onclick=()=>{st.view='grid';document.getElementById('bg').classList.add('on');document.getElementById('bl').classList.remove('on');draw()};
+document.getElementById('bl').onclick=()=>{st.view='list';document.getElementById('bl').classList.add('on');document.getElementById('bg').classList.remove('on');draw()};
+document.getElementById('fab').onclick=()=>{document.querySelector('.catbar').scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>document.getElementById('q').focus(),450)};
+draw();
 </script>
 <script>
-/* GA4-ready: cole aqui o snippet do Google Analytics (gtag.js) com seu ID G-XXXXXXX.
-   Os eventos abaixo passam a funcionar sozinhos assim que o gtag existir. */
-document.addEventListener('click',function(e){
-  var a=e.target.closest('a'); if(!a||typeof gtag!=='function') return;
-  var h=a.href||'';
-  if(h.indexOf('tag=1painerd-20')>-1) gtag('event','clique_afiliado',{loja:'amazon',item:(a.innerText||'').slice(0,80)});
-  else if(a.classList.contains('lb')) gtag('event','clique_linkbio',{destino:(a.innerText||'').slice(0,40),origem:new URLSearchParams(location.search).get('de')||'direta'});
-  else if(h.indexOf('mailto:')===0||h.indexOf('wa.me')>-1) gtag('event','contato_servico');
-});
+/* aplica o tema escolhido na home (claro/sol = claro · neon/escuro = escuro) */
+(function(){var t='claro';try{t=localStorage.getItem('1pn-tema')||'claro'}catch(e){}
+document.documentElement.setAttribute('data-tema',t);})();
 </script>
 </body>
 </html>
