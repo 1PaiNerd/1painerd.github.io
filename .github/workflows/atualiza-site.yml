@@ -57,7 +57,7 @@ jobs:
           git config user.name  "1painerd-bot"
           git config user.email "actions@github.com"
           rm -f novo_refresh.txt
-          git add -A videos.json precos.json ml_mais_vendidos.json alertas.json alerta_titulo.txt 2>/dev/null || true
+          git add -A videos.json precos.json ml_mais_vendidos.json historico_ml.json alertas.json alerta_titulo.txt 2>/dev/null || true
           git diff --staged --quiet || git commit -m "site: atualização de $(date +%F)"
           git push
 
