@@ -339,7 +339,9 @@ const DE_PARA_ML={MLB1132:'brinquedos',MLB1648:'informatica',MLB1000:'eletronico
 P.forEach(p=>{p.loja='amazon'});
 let HIST={};      /* id -> [{d:'2026-08-10',p:47.9}, ...] */
 let AFIL={};      /* id -> link de afiliado curtinho */
-let st={cat:'',preco:'',q:'',ord:'rank',view:'grid',loja:'tudo'};
+let MLPRONTO=false;   /* vira true quando o arquivo do robo chega */
+/* abre no Mercado Livre: é a loja que mais vende no Brasil */
+let st={cat:'',preco:'',q:'',ord:'rank',view:'grid',loja:'ml'};
 const BRL=v=>v?v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'}):'ver preço';
 const norm=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
 function match(p,ig){
@@ -430,10 +432,13 @@ function draw(){
   renderLojas();renderCats();renderActive(r.length);
   const g=document.getElementById('grid');
   g.className='pgrid'+(st.view==='list'?' list':'');
-  const vazio = st.loja==='shopee'
-    ? `<div class="empty"><span class="e">🛍️</span><b>A Shopee entra em breve.</b><br>
-       Estou montando a lista de mais vendidos dela — assim que estiver pronta aparece aqui.</div>`
-    : `<div class="empty"><span class="e">🔍</span><b>Nada com esses filtros.</b><br>Tente afrouxar a busca ou o preço.</div>`;
+  let vazio = `<div class="empty"><span class="e">🔍</span><b>Nada com esses filtros.</b><br>Tente afrouxar a busca ou o preço.</div>`;
+  if(st.loja==='shopee')
+    vazio = `<div class="empty"><span class="e">🛍️</span><b>A Shopee entra em breve.</b><br>
+       Estou montando a lista de mais vendidos dela — assim que estiver pronta aparece aqui.</div>`;
+  else if(st.loja==='ml'&&!MLPRONTO)
+    vazio = `<div class="empty"><span class="e">⏳</span><b>Buscando os mais vendidos do Mercado Livre...</b><br>
+       Um instante.</div>`;
   g.innerHTML=r.length?r.map(card).join(''):vazio;
 }
 /* ---- carrega o que o robo atualiza sozinho todo dia ---- */
@@ -457,8 +462,11 @@ async function carregarML(){
                 preco:it.preco||0,precoTxt:it.preco?BRL(it.preco):'ver preço',url:it.url});
       }
     }
+    MLPRONTO=true;
     const s=document.getElementById('sub1');
     if(s)s.textContent=`rankings oficiais das lojas · Mercado Livre atualizado em ${d.gerado_em.split('-').reverse().join('/')}`;
+  }else if(st.loja==='ml'){
+    st.loja='tudo';   /* se o arquivo nao veio, nao deixa a pagina vazia */
   }
   draw();
 }
