@@ -102,9 +102,11 @@ ROTINA = [
     ("MLB5364",   "Babá eletrônica",          "Crianças", "babá eletrônica"),
     ("MLB271854", "Massinhas de modelar",     "Crianças", "massinha e slime"),
 
-    ("MLB264715", "Escovas elétricas",        "Cuidado",  "escova secadora"),
-    # MLB180327 saiu daqui: o ML classifica como "Elétricos" dentro de
-    # eletroportáteis, e o #1 dela vinha sendo um espremedor Mondial.
+    # Duas categorias saíram daqui porque não são de cuidado pessoal de verdade —
+    # as duas viviam empurrando um espremedor Mondial pro topo da aba:
+    #   MLB180327 "Elétricos"        (é eletroportátil de cozinha)
+    #   MLB264715 "Escovas elétricas" (mistura escova secadora com espremedor)
+    # A escova secadora continua aparecendo na aba ampla "Beleza e Cuidado Pessoal".
     # ---- rodada 2 (11/08/2026): categorias descobertas mirando mulheres 35-64,
     # que são 64% da base do canal. Todas confirmadas com ranking pelo
     # descobridor — nenhuma foi chutada.
