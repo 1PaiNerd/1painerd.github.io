@@ -159,12 +159,61 @@ box-shadow:0 4px 16px rgba(255,138,61,.22)}
   border-radius:var(--r);padding:14px 16px;margin:0 0 16px;font-size:.92rem;line-height:1.55;color:var(--sub)}
 .nota b{color:var(--ink)}
 .nota a{color:var(--acc);font-weight:700}
+/* ---------- botão partido: link principal + setinha das outras lojas ---------- */
+.pbtn.go.partido{border-top-right-radius:0;border-bottom-right-radius:0}
+.seta{flex:none;width:40px;border:none;cursor:pointer;border-radius:0 9px 9px 0;
+  font:700 .85rem 'Inter',sans-serif;line-height:1;transition:.18s}
+.seta[data-l="ml"]{background:#ffd400;color:#1c1c1c}
+.seta[data-l="amazon"]{background:#f08804;color:#1a1000}
+.seta[data-l="shopee"]{background:#d8401f;color:#fff}
+.seta:hover{filter:brightness(1.08)}
+.gaveta{display:none;width:100%;gap:6px;margin-top:7px;flex-wrap:wrap}
+.gaveta.aberta{display:flex}
+.gaveta .loja{flex:1;min-width:84px}
+/* ---------- aba da curadoria: tem que parecer especial ---------- */
+.chip[data-cat="selecionados"]{border-color:var(--acc);color:var(--acc);font-weight:700}
+.chip[data-cat="selecionados"].on{background:linear-gradient(135deg,var(--acc),#ff6d2e);
+  border-color:transparent;color:#160a02}
+.faixasel{display:flex;align-items:center;gap:10px;background:var(--card);
+  border:1px solid rgba(255,138,61,.4);border-left:3px solid var(--acc);border-radius:10px;
+  padding:9px 12px;margin:0 0 12px;font-size:.84rem;line-height:1.4;color:var(--sub)}
+.faixasel b{color:var(--ink)}
+.faixasel button{margin-left:auto;background:none;border:none;color:var(--sub);
+  font-size:1rem;cursor:pointer;padding:2px 4px;line-height:1}
+[data-tema="claro"] .faixasel,[data-tema="sol"] .faixasel{background:#fff}
 .empty{text-align:center;padding:60px 20px;color:var(--sub)}
 .empty .e{font-size:3rem;display:block;margin-bottom:12px}
 footer{border-top:1px solid var(--line);margin-top:40px;padding:34px 0 60px;color:var(--sub);font-size:.86rem}
 footer a{color:var(--sub)}
 /* botão flutuante mobile */
 .fab{display:none}
+/* ================= CELULAR: o produto é a primeira coisa =================
+   Medido em tela de 390x844. Antes: 473px de enfeite antes do 1o produto
+   (56% da tela) e card de 528px — cabiam 2. Agora: 243px e card de ~250px,
+   cabem 4. O que cortou foi a foto de 180px, o "ou compre em" e a barra de
+   filtros, que fazia o mesmo que o botão flutuante. ======================= */
+@media(max-width:760px){
+  .toolbar{display:none}                 /* está tudo no botão "Filtrar e ordenar" */
+  #active:not(.tem){display:none}        /* não mostra filtro que a pessoa não pôs */
+  .catbar{padding:8px 0 6px}
+  .chip{padding:7px 12px;font-size:.82rem}
+  .lchip{padding:6px 10px}
+  .ptile{height:104px;padding:7px}
+  .pinfo{padding:9px 10px 10px;gap:3px}
+  .pinfo h3{font-size:.86rem;line-height:1.22;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .pfaixa{font-size:.95rem}
+  .pinfo p.d{font-size:.76rem;line-height:1.38;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .pinfo p.d ~ p.d{display:none}         /* "Pra quem é" fica na visão Lista */
+  .plinks{padding-top:7px}
+  .pbtn{font-size:.74rem;padding:7px 6px}
+  .seta{width:36px}
+  .badge,.medalha{font-size:.6rem;padding:3px 7px;top:7px}
+  .pgrid{gap:9px}
+  .pgrid.list .pinfo p.d{-webkit-line-clamp:unset}
+  .pgrid.list .pinfo p.d ~ p.d{display:-webkit-box}
+}
 @media(max-width:760px){
  .fab{display:flex;position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:70;
  background:linear-gradient(135deg,var(--acc),#ff6d2e);color:#160a02;border:none;
@@ -441,19 +490,23 @@ function card(p){
     const k=disp[0];
     bloco=`<div class="plinks"><a class="pbtn go" data-l="${k}" href="${p.lojas[k]}" target="_blank" rel="noopener sponsored"><span class="marca"><span class="mk">${NOME[k]}</span> →</span></a></div>`;
   }else if(disp.length>1){
+    // botão partido: o principal leva direto; a setinha abre as outras lojas.
+    // Só existe quando HÁ outra loja — setinha que abre vazia ensina a ignorar.
     const k=disp[0];
-    bloco=`<div class="plinks"><a class="pbtn go" data-l="${k}" href="${p.lojas[k]}" target="_blank" rel="noopener sponsored"><span class="marca"><span class="mk">${NOME[k]}</span> →</span></a></div>
-      <div class="ondecomprar">ou compre em</div>
-      <div class="lojas">${disp.slice(1).map(x=>
-        `<a class="loja" data-l="${x}" href="${p.lojas[x]}" target="_blank" rel="noopener sponsored"><span class="pt"></span>${NOME[x]}</a>`).join('')}</div>`;
+    bloco=`<div class="plinks">
+      <a class="pbtn go partido" data-l="${k}" href="${p.lojas[k]}" target="_blank" rel="noopener sponsored"><span class="marca"><span class="mk">${NOME[k]}</span> →</span></a>
+      <button class="seta" data-l="${k}" aria-expanded="false" aria-label="ver outras lojas">▾</button>
+      <div class="gaveta">${disp.slice(1).map(x=>
+        `<a class="loja" data-l="${x}" href="${p.lojas[x]}" target="_blank" rel="noopener sponsored"><span class="pt"></span>${NOME[x]}</a>`).join('')}</div></div>`;
   }
-  // produto do ranking não tem texto meu — então ele não finge que tem.
-  // Diz de onde veio e pronto: quem escreve "por que este" sou eu.
-  const texto = p.fonte==='ml'
-    ? `<p class="d"><b>${p.rank}º mais vendido</b> em ${p.deonde} no Mercado Livre.</p>`
+  // Produto do ranking não tem texto meu — e não finge que tem.
+  // A medalha e o selo abaixo do preço já dizem de onde ele veio; repetir
+  // isso em frase era a mesma informação três vezes. Quem escreve "por que
+  // este" sou eu, e isso só existe nos Selecionados.
+  const texto = p.fonte==='ml' ? ''
     : `<p class="d"><b>Por que este:</b> ${p.porque}</p>
        <p class="d"><b>Pra quem é:</b> ${p.praquem}</p>`;
-  const selo = p.fonte==='ml' ? 'ranking oficial do Mercado Livre' : '🔎 garimpado com critério';
+  const selo = p.fonte==='ml' ? `${p.rank}º em ${p.deonde}` : '🔎 testei em casa';
   return `<article class="pcard">
    <div class="ptile">${tile}${badge}</div>
    <div class="pinfo">
@@ -498,7 +551,23 @@ function avisoLoja(n){
    precisa ir pra outra página pra ver o que o Brasil está comprando.
    A curadoria do Patrick continua na frente e com selo próprio.
    ===================================================================== */
-P.forEach(p=>{p.fonte='casa'});
+/* Os garimpados do Patrick viram UMA aba só — "Selecionados do 1PaiNerd".
+   As duas categorias antigas (Presentes geek / Setup) descem um nível e
+   viram sub-abas dela. Assim a pessoa cai nos mais vendidos e acha a
+   curadoria num clique, em vez de ela ficar diluída entre 189 produtos. */
+P.forEach(p=>{
+  p.fonte='casa';
+  p.sub = (p.cat==='presentes') ? 'presentes' : 'setup';
+  p.cat = 'selecionados';
+});
+(function(){
+  const resto={...CATS};
+  delete resto.presentes; delete resto.setup;
+  Object.keys(CATS).forEach(k=>delete CATS[k]);
+  CATS.selecionados={nome:'Selecionados do 1PaiNerd',emoji:'⭐',
+    subs:{presentes:'🎁 Presentes geek', setup:'🖥️ Setup & periféricos'}};
+  Object.assign(CATS,resto);
+})();
 // achadinhos que também são produto de catálogo do ML: guardo o id pra
 // o mesmo item não aparecer duas vezes quando ele estiver no ranking
 const IDS_CASA=["MLB22621537","MLB44895132","MLB22845313","MLB43344829",
@@ -541,6 +610,42 @@ async function carregarMaisVendidos(){
                      +(d.gerado_em?` · atualizado em ${d.gerado_em}`:'');
   draw();
 }
+
+/* --- categoria vinda do ML não tem sub-abas: não deixa um "Todos" sozinho.
+       E o recado da curadoria só aparece dentro da aba dela, uma linha só,
+       com ✕ que a pessoa fecha e não vê mais. --- */
+const _renderCats = renderCats;
+renderCats = function(){
+  _renderCats();
+  const sr=document.getElementById('subrow');
+  if(st.cat && !Object.keys(CATS[st.cat].subs||{}).length){sr.className='subrow hide';sr.innerHTML=''}
+
+  let f=document.getElementById('faixasel');
+  if(!f){f=document.createElement('div');f.id='faixasel';document.getElementById('grid').before(f)}
+  let fechado=false;
+  try{ fechado = localStorage.getItem('1pn-sel-ok')==='1' }catch(e){}
+  f.innerHTML = (st.cat==='selecionados' && !fechado)
+    ? `<div class="faixasel"><span><b>Estes eu testei em casa</b> — não é ranking de loja.</span>
+       <button id="fechasel" aria-label="fechar">✕</button></div>` : '';
+  const b=document.getElementById('fechasel');
+  if(b)b.onclick=()=>{try{localStorage.setItem('1pn-sel-ok','1')}catch(e){}; f.innerHTML=''};
+
+  // No celular a linha de "filtros ativos" só ganha espaço se contar algo NOVO.
+  // Categoria e loja já aparecem com a aba acesa — repetir come 41px à toa.
+  // Busca e faixa de preço não aparecem em lugar nenhum: essas ficam.
+  const a=document.getElementById('active');
+  a.classList.toggle('tem', !!(st.preco||st.q));
+};
+
+/* a setinha do botão partido abre/fecha as outras lojas */
+document.getElementById('grid').addEventListener('click',e=>{
+  const s=e.target.closest('.seta'); if(!s)return;
+  e.preventDefault();
+  const g=s.parentElement.querySelector('.gaveta');
+  const abriu=g.classList.toggle('aberta');
+  s.textContent = abriu?'▴':'▾';
+  s.setAttribute('aria-expanded', abriu?'true':'false');
+});
 
 document.getElementById('q').addEventListener('input',e=>{st.q=e.target.value.trim();draw()});
 document.getElementById('preco').addEventListener('change',e=>{st.preco=e.target.value;draw()});
