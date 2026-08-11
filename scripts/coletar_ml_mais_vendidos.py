@@ -32,6 +32,8 @@ import json, os, sys, datetime, urllib.request, urllib.parse, urllib.error
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ARQ = os.path.join(RAIZ, "ml_mais_vendidos.json")
 HIST = os.path.join(RAIZ, "historico_ml.json")
+LINKS = os.path.join(RAIZ, "links_afiliados.json")   # o robô SÓ LÊ este arquivo
+SEM_LINK = os.path.join(RAIZ, "sem_link_ml.txt")     # lista pronta pro Gerador
 DIAS_HISTORICO = 60      # guarda 2 meses por produto — o resto vira ruído
 NOVO_REFRESH = os.path.join(RAIZ, "novo_refresh.txt")
 HOJE = datetime.date.today().isoformat()
@@ -173,7 +175,10 @@ def detalhes_itens(ids, token):
                 "nome": b.get("title", ""),
                 "preco": b.get("price"),
                 "img": https(b.get("thumbnail")),
-                "url": b.get("permalink", ""),
+                # sem permalink o produto vira link morto no site e não dá pra
+                # gerar link de afiliado — /MLB-<numero> é rota válida do ML
+                "url": b.get("permalink") or
+                       "https://produto.mercadolivre.com.br/MLB-" + b["id"][3:],
             })
     return saida
 
@@ -231,6 +236,42 @@ def coletar_folha(cid, token, quantos):
             it["rank"] = pos
             saida.append(it)
     return saida
+
+
+def conferir_links(saida):
+    """O robô nunca escreve em links_afiliados.json — quem gera link é o painel
+    de afiliados, na mão. O que ele faz é vigiar: todo produto que entrou hoje
+    e ainda não tem link está rendendo ZERO de comissão. Ele lista esses,
+    já em blocos de 10 (que é o tanto que o Gerador do ML aguenta por vez)."""
+    try:
+        with open(LINKS, encoding="utf-8") as f:
+            links = json.load(f)
+    except Exception as e:
+        print(f"  ! não consegui ler {os.path.basename(LINKS)}: {e}")
+        print("    (nenhum link foi perdido — o robô não escreve nesse arquivo)")
+        links = {}
+
+    vistos, faltando = set(), []
+    for c in saida["categorias"]:
+        for it in c["itens"]:
+            if it["id"] in vistos:
+                continue
+            vistos.add(it["id"])
+            if not links.get(it["id"]) and it.get("url"):
+                faltando.append(it)
+
+    com = len(vistos) - len(faltando)
+    print(f"\nlinks de afiliado: {com} de {len(vistos)} produtos rendem comissão")
+
+    if faltando:
+        with open(SEM_LINK, "w", encoding="utf-8") as f:
+            f.write("\n".join(i["url"] for i in faltando) + "\n")
+        print(f"  → {len(faltando)} sem link. Lista salva em "
+              f"{os.path.basename(SEM_LINK)}")
+    elif os.path.exists(SEM_LINK):
+        os.remove(SEM_LINK)
+
+    return com, faltando
 
 
 def montar_rotina(token):
@@ -376,6 +417,8 @@ def main():
         json.dump(historico, f, ensure_ascii=False, separators=(",", ":"))
     print(f"histórico: {novos} preços novos, {len(historico)} produtos acompanhados")
 
+    com_link, faltando = conferir_links(saida)
+
     resumo = os.environ.get("GITHUB_STEP_SUMMARY")
     if resumo:
         with open(resumo, "a", encoding="utf-8") as f:
@@ -383,6 +426,23 @@ def main():
             for c in saida["categorias"]:
                 topo = c["itens"][0]["nome"][:60] if c["itens"] else "—"
                 f.write(f"- **{c['nome']}**: {len(c['itens'])} itens · #1: {topo}\n")
+
+            n = len(faltando)
+            f.write(f"\n### Comissão\n\n{com_link} de {com_link + n} produtos "
+                    f"têm link de afiliado.\n")
+            if not n:
+                f.write("\n**Tudo rendendo comissão hoje.** Nada a fazer.\n")
+            else:
+                f.write(f"\n**{n} produto(s) sem link — hoje eles dão R$0.**\n\n"
+                        "Cola cada bloco no Gerador de links da Central de "
+                        "Afiliados (ele aceita 10 por vez):\n")
+                for i in range(0, n, 10):
+                    f.write(f"\n**Bloco {i // 10 + 1}**\n\n```\n")
+                    f.write("\n".join(x["url"] for x in faltando[i:i + 10]))
+                    f.write("\n```\n")
+                f.write("\nDepois é só somar os links em `links_afiliados.json` "
+                        "— o robô nunca mexe nesse arquivo, então nada do que "
+                        "já está lá se perde.\n")
     return 0
 
 
