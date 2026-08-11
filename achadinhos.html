@@ -114,6 +114,12 @@ box-shadow:0 0 28px rgba(63,214,255,.1),0 18px 40px rgba(0,0,0,.45)}
 .ptile .ph{font-size:3rem;filter:grayscale(.1)}
 .badge{position:absolute;top:10px;left:10px;background:rgba(8,12,22,.86);color:var(--acc2);
 font:700 .68rem 'Inter',sans-serif;padding:4px 9px;border-radius:999px;letter-spacing:.02em;backdrop-filter:blur(4px)}
+/* selo do que ELE escolheu — é o que diferencia a curadoria do ranking cru */
+.badge.meu{background:linear-gradient(135deg,var(--acc),#ff6d2e);color:#160a02}
+/* medalha de mais vendido, no canto oposto */
+.medalha{position:absolute;top:10px;right:10px;background:rgba(8,12,22,.86);color:var(--cy);
+font:700 .68rem 'Inter',sans-serif;padding:4px 9px;border-radius:999px;backdrop-filter:blur(4px)}
+[data-tema="claro"] .medalha,[data-tema="sol"] .medalha{background:#0d1526}
 .pinfo{padding:16px 16px 14px;display:flex;flex-direction:column;gap:7px;flex:1}
 .pinfo h3{font-size:1.02rem}
 .pfaixa{font:700 1.05rem 'Space Grotesk',sans-serif;color:var(--acc)}
@@ -288,7 +294,7 @@ text-transform:uppercase;margin-top:10px}
   <div class="topline">
     <div>
       <h1>Achadinhos Nerd</h1>
-      <p class="sub1">20 itens testados em casa · preços conferidos em ago/2026</p>
+      <p class="sub1" id="sub1">os mais vendidos do Mercado Livre + o que eu testei em casa</p>
     </div>
     <a class="how" href="#como">como eu escolho ↓</a>
   </div>
@@ -423,7 +429,10 @@ function renderActive(n){
 }
 function card(p){
   const tile=p.img?`<img src="${p.img}" loading="lazy" alt="">`:`<span class="ph">${p.emoji}</span>`;
-  const badge=p.casa?'<span class="badge">🏠 Aprovado em casa</span>':'';
+  const badge=p.fonte==='ml'
+    ? (p.rank<=3?`<span class="medalha">${['🥇','🥈','🥉'][p.rank-1]} #${p.rank}</span>`
+                :`<span class="medalha">#${p.rank}</span>`)
+    : '<span class="badge meu">✋ escolha do 1PaiNerd</span>';
   const NOME={amazon:'Amazon',ml:'Mercado Livre',shopee:'Shopee'};
   const PREP={amazon:'na',ml:'no',shopee:'na'};
   const disp=ORDEM.filter(k=>p.lojas&&p.lojas[k]);
@@ -438,13 +447,19 @@ function card(p){
       <div class="lojas">${disp.slice(1).map(x=>
         `<a class="loja" data-l="${x}" href="${p.lojas[x]}" target="_blank" rel="noopener sponsored"><span class="pt"></span>${NOME[x]}</a>`).join('')}</div>`;
   }
+  // produto do ranking não tem texto meu — então ele não finge que tem.
+  // Diz de onde veio e pronto: quem escreve "por que este" sou eu.
+  const texto = p.fonte==='ml'
+    ? `<p class="d"><b>${p.rank}º mais vendido</b> em ${p.deonde} no Mercado Livre.</p>`
+    : `<p class="d"><b>Por que este:</b> ${p.porque}</p>
+       <p class="d"><b>Pra quem é:</b> ${p.praquem}</p>`;
+  const selo = p.fonte==='ml' ? 'ranking oficial do Mercado Livre' : '🔎 garimpado com critério';
   return `<article class="pcard">
    <div class="ptile">${tile}${badge}</div>
    <div class="pinfo">
      <h3>${p.nome}</h3>
-     <p class="pfaixa">${p.faixa}<span class="sel2">🔎 garimpado com critério</span></p>
-     <p class="d"><b>Por que este:</b> ${p.porque}</p>
-     <p class="d"><b>Pra quem é:</b> ${p.praquem}</p>
+     <p class="pfaixa">${p.faixa}<span class="sel2">${selo}</span></p>
+     ${texto}
      ${bloco}
    </div></article>`;
 }
@@ -476,6 +491,57 @@ function avisoLoja(n){
     isso fica em <a href="mais-vendidos.html">Mais Vendidos</a> — lá são centenas de produtos,
     atualizados todo dia de manhã.</div>`;
 }
+/* =====================================================================
+   OS MAIS VENDIDOS DO MERCADO LIVRE, AQUI DENTRO
+   O robô atualiza ml_mais_vendidos.json toda manhã. Esta página lê o
+   arquivo e junta tudo no mesmo balaio dos achadinhos — a pessoa não
+   precisa ir pra outra página pra ver o que o Brasil está comprando.
+   A curadoria do Patrick continua na frente e com selo próprio.
+   ===================================================================== */
+P.forEach(p=>{p.fonte='casa'});
+// achadinhos que também são produto de catálogo do ML: guardo o id pra
+// o mesmo item não aparecer duas vezes quando ele estiver no ranking
+const IDS_CASA=["MLB22621537","MLB44895132","MLB22845313","MLB43344829",
+ "MLB2063589721","MLB38097410","MLB31997551","MLB26604880","MLB35479466",
+ "MLB16211422","MLB15345937","MLB34246227","MLB43583645","MLB18351904",
+ "MLB58371600","MLB60187199","MLB27275936","MLB53601993"];
+const brl=n=>'R$ '+n.toFixed(2).replace('.',',');
+const chave=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+                .toLowerCase().replace(/[^a-z0-9]+/g,'');
+
+async function carregarMaisVendidos(){
+  let d,links;
+  try{
+    [d,links]=await Promise.all([
+      fetch('ml_mais_vendidos.json?v='+Date.now()).then(r=>r.json()),
+      fetch('links_afiliados.json?v='+Date.now()).then(r=>r.json()).catch(()=>({}))
+    ]);
+  }catch(e){ return }               // sem internet ou arquivo fora: a página segue com a curadoria
+  if(!d||!d.categorias)return;
+
+  const jaTem=new Set(IDS_CASA);
+  let novos=0;
+  for(const c of d.categorias){
+    const cat='ml'+chave(c.nome);
+    if(!CATS[cat])CATS[cat]={nome:c.nome,emoji:c.emoji||'🛒',subs:{}};
+    for(const it of c.itens){
+      if(jaTem.has(it.id)||!it.preco)continue;
+      jaTem.add(it.id);
+      P.push({
+        img:it.img||'', nome:it.nome, faixa:brl(it.preco), preco:it.preco,
+        emoji:c.emoji||'🛒', cat, sub:'', casa:false,
+        fonte:'ml', rank:it.rank||99, deonde:it.de||c.nome,
+        lojas:{ amazon:'', shopee:'', ml: links[it.id] || it.url }
+      });
+      novos++;
+    }
+  }
+  const s=document.getElementById('sub1');
+  if(s)s.textContent=`${novos} mais vendidos do Mercado Livre + ${P.length-novos} que eu testei em casa`
+                     +(d.gerado_em?` · atualizado em ${d.gerado_em}`:'');
+  draw();
+}
+
 document.getElementById('q').addEventListener('input',e=>{st.q=e.target.value.trim();draw()});
 document.getElementById('preco').addEventListener('change',e=>{st.preco=e.target.value;draw()});
 document.getElementById('ord').addEventListener('change',e=>{st.ord=e.target.value;draw()});
@@ -483,6 +549,7 @@ document.getElementById('bg').onclick=()=>{st.view='grid';document.getElementByI
 document.getElementById('bl').onclick=()=>{st.view='list';document.getElementById('bl').classList.add('on');document.getElementById('bg').classList.remove('on');draw()};
 document.getElementById('fab').onclick=()=>{document.querySelector('.catbar').scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>document.getElementById('q').focus(),450)};
 draw();
+carregarMaisVendidos();
 </script>
 <script>
 /* aplica o tema escolhido na home (claro/sol = claro · neon/escuro = escuro) */
