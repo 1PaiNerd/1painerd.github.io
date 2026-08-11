@@ -1,47 +1,63 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Descobridor de categorias do Mercado Livre.
-
-Roda sob demanda (botão Run workflow). Não altera nada no site — só imprime
-a árvore de categorias pra gente descobrir o ID exato de cada nicho.
+Descobridor de categorias do Mercado Livre — pelos 30 candidatos do briefing.
 
 POR QUE ISSO EXISTE:
   A busca da API do ML (/sites/MLB/search) é fechada — devolve 403.
-  O que funciona com token é o ranking por categoria:
+  O que funciona é o ranking POR CATEGORIA:
       /highlights/MLB/category/<id>
-  Então, pra achar os mais vendidos de "airfryer", a gente não busca a palavra
-  "airfryer": a gente acha a CATEGORIA "Fritadeiras" e pega o ranking dela.
-  Este script existe pra descobrir esses ids.
+  Então, pra achar os mais vendidos de "airfryer", a gente precisa do id da
+  categoria "Fritadeiras". Este script descobre esse id.
 
-Uso no workflow: python scripts/descobrir_categorias.py
+COMO ELE DESCOBRE:
+  Usa o /sites/MLB/domain_discovery/search — o mesmo motor que o ML usa pra
+  adivinhar a categoria quando um vendedor digita o título do anúncio.
+  Uma chamada por produto, em vez de varrer a árvore toda.
+
+Uso: python scripts/descobrir_categorias.py
 """
 import json, os, sys, urllib.request, urllib.parse
 
 API = "https://api.mercadolibre.com"
 UA = {"User-Agent": "1painerd-site/1.0 (+https://1painerd.github.io)"}
-PROFUNDIDADE = 3          # quantos níveis descer
 
-# de onde começar a descer — as raízes que interessam pro público do canal
-RAIZES = [
-    ("MLB5726", "Eletrodomésticos"),
-    ("MLB1574", "Casa, Móveis e Decoração"),
-    ("MLB1384", "Bebês"),
-    ("MLB1246", "Beleza e Cuidado Pessoal"),
-    ("MLB1132", "Brinquedos e Hobbies"),
-    ("MLB1276", "Esportes e Fitness"),
-]
+# Os 30 candidatos do briefing de audiência (ago/2026).
+# (grupo, nome que o Patrick usou, termo de busca do jeito que um vendedor escreveria)
+CANDIDATOS = [
+    ("Cozinha", "Airfryer 4-5L",                    "airfryer fritadeira eletrica sem oleo 5 litros"),
+    ("Cozinha", "Cortador/fatiador de legumes",     "cortador fatiador de legumes multifuncional"),
+    ("Cozinha", "Mini processador elétrico",        "mini processador de alimentos eletrico portatil"),
+    ("Cozinha", "Sanduicheira-grill",               "sanduicheira grill eletrica"),
+    ("Cozinha", "Panela elétrica de arroz",         "panela eletrica de arroz"),
+    ("Cozinha", "Kit potes herméticos",             "kit potes hermeticos empilhaveis mantimentos"),
+    ("Cozinha", "Organizador de geladeira",         "organizador de geladeira transparente"),
+    ("Cozinha", "Kit utensílios de silicone",       "kit utensilios de silicone com suporte"),
+    ("Cozinha", "Tábua com escorredor",             "tabua de corte com escorredor"),
+    ("Cozinha", "Abridor de potes automático",      "abridor de latas e potes automatico eletrico"),
+    ("Cozinha", "Balança digital de cozinha",       "balanca digital de cozinha"),
+    ("Cozinha", "Garrafa térmica com display",      "garrafa termica digital display temperatura"),
 
-# palavras que interessam: o script marca com ⭐ toda categoria que casa
-ALVOS = [
-    "fritadeira", "air fry", "processador", "liquidificador", "sanduicheira",
-    "grill", "panela", "arroz", "pote", "hermétic", "organizador", "geladeira",
-    "utensílio", "silicone", "tábua", "corte", "abridor", "balança", "térmic",
-    "garrafa", "mop", "esfregão", "aspirador", "vertical", "tempero", "sapateira",
-    "luminária", "led", "sensor", "difusor", "aroma", "manta", "microfibra",
-    "cobertor", "pano", "varal", "projetor", "estrela", "copo", "canudo",
-    "tapete", "eva", "atividade", "babá", "câmera", "massinha", "slime",
-    "escova", "secador", "massageador", "cabeceira", "abajur",
+    ("Casa",    "Mop giratório",                    "mop giratorio balde esfregao"),
+    ("Casa",    "Aspirador vertical sem fio",       "aspirador de po vertical sem fio portatil"),
+    ("Casa",    "Organizador de temperos",          "organizador giratorio de temperos armario"),
+    ("Casa",    "Sapateira / organizador de porta", "organizador de porta sapateira multiuso"),
+    ("Casa",    "Luminária LED com sensor",         "luminaria led com sensor de movimento"),
+    ("Casa",    "Difusor de aromas",                "difusor de aromas ultrassonico umidificador"),
+    ("Casa",    "Manta de microfibra",              "manta cobertor microfibra casal fofinha"),
+    ("Casa",    "Kit panos de microfibra",          "kit panos de microfibra multiuso limpeza"),
+    ("Casa",    "Varal retrátil de parede",         "varal retratil de parede"),
+
+    ("Crianças","Projetor de estrelas",             "projetor de estrelas quarto infantil galaxia"),
+    ("Crianças","Copo infantil com canudo",         "copo infantil com canudo antivazamento"),
+    ("Crianças","Tapete de atividades EVA",         "tapete de atividades eva infantil"),
+    ("Crianças","Livro de atividades",              "livro de atividades infantil 300 atividades"),
+    ("Crianças","Luminária de cabeceira touch",     "luminaria abajur de cabeceira touch"),
+    ("Crianças","Babá eletrônica",                  "baba eletronica camera wifi bebe"),
+    ("Crianças","Kit massinha / slime",             "kit massinha de modelar slime educativo"),
+
+    ("Cuidado", "Escova secadora elétrica",         "escova secadora eletrica alisadora"),
+    ("Cuidado", "Massageador portátil",             "massageador portatil recarregavel muscular"),
 ]
 
 
@@ -64,28 +80,30 @@ def renovar_token():
                  "Accept": "application/json"})
     with urllib.request.urlopen(req, timeout=25) as r:
         d = json.loads(r.read().decode("utf-8"))
-    # ATENÇÃO: este script NÃO grava o refresh novo. Ele é de uso manual e
-    # roda sozinho; quem cuida do rodízio é o coletor principal.
     return d["access_token"], d.get("refresh_token")
 
 
-def interessa(nome):
-    n = nome.lower()
-    return any(a in n for a in ALVOS)
+def adivinhar(termo, token):
+    """Pergunta pro ML: 'se eu fosse anunciar isso, em que categoria cairia?'"""
+    url = f"{API}/sites/MLB/domain_discovery/search?limit=1&q={urllib.parse.quote(termo)}"
+    r = get(url, token)
+    if not r:
+        return None
+    p = r[0]
+    return {
+        "categoria_id": p.get("category_id"),
+        "categoria": p.get("category_name"),
+        "dominio": p.get("domain_name"),
+    }
 
 
-def descer(cid, nome, token, nivel, linhas):
-    marca = " ⭐" if interessa(nome) else ""
-    linhas.append(f"{'    '*nivel}{cid}  {nome}{marca}")
-    if nivel >= PROFUNDIDADE:
-        return
+def tem_ranking(cid, token):
+    """Confere se essa categoria realmente devolve ranking de mais vendidos."""
     try:
-        c = get(f"{API}/categories/{cid}", token)
-    except Exception as e:
-        linhas.append(f"{'    '*(nivel+1)}! não consegui abrir ({e})")
-        return
-    for f in (c.get("children_categories") or []):
-        descer(f["id"], f["name"], token, nivel + 1, linhas)
+        hl = get(f"{API}/highlights/MLB/category/{cid}", token)
+        return len(hl.get("content") or [])
+    except Exception:
+        return 0
 
 
 def main():
@@ -98,31 +116,48 @@ def main():
     token, novo = renovar_token()
     print("✓ token renovado")
     if novo:
-        # o refresh é de uso único: devolve o novo pro workflow guardar
         with open("novo_refresh.txt", "w", encoding="utf-8") as f:
             f.write(novo)
 
-    linhas = []
-    for cid, nome in RAIZES:
-        linhas.append("")
-        linhas.append(f"=== {nome} ===")
-        descer(cid, nome, token, 0, linhas)
+    achados, perdidos = [], []
+    for grupo, nome, termo in CANDIDATOS:
+        try:
+            r = adivinhar(termo, token)
+        except Exception as e:
+            print(f"  ! {nome}: {e}")
+            perdidos.append((grupo, nome, str(e)))
+            continue
+        if not r or not r.get("categoria_id"):
+            print(f"  ? {nome}: o ML não soube dizer")
+            perdidos.append((grupo, nome, "sem palpite"))
+            continue
+        n = tem_ranking(r["categoria_id"], token)
+        marca = "✓" if n else "✗ sem ranking"
+        print(f"  {marca} {nome} -> {r['categoria_id']}  {r['categoria']}  ({n} no ranking)")
+        achados.append((grupo, nome, r["categoria_id"], r["categoria"], n))
 
-    texto = "\n".join(linhas)
-    print(texto)
+    print(f"\n{len(achados)} de {len(CANDIDATOS)} com categoria")
+    com_ranking = [a for a in achados if a[4]]
+    print(f"{len(com_ranking)} têm ranking de mais vendidos (é com esses que dá pra trabalhar)")
 
-    estrelas = [l.strip() for l in linhas if l.endswith("⭐")]
-    print(f"\n\n>>> {len(estrelas)} categorias casaram com os alvos:")
-    for e in estrelas:
-        print("  " + e)
+    # bloco pronto pra colar no coletor
+    print("\n--- pra colar no coletor ---")
+    for grupo, nome, cid, cat, n in com_ranking:
+        print(f'    ("{cid}", "{cat}", "{grupo}"),   # {nome} — {n} no ranking')
 
     resumo = os.environ.get("GITHUB_STEP_SUMMARY")
     if resumo:
         with open(resumo, "a", encoding="utf-8") as f:
-            f.write("\n## Categorias que casaram com os alvos\n\n```\n")
-            f.write("\n".join(estrelas) + "\n```\n")
-            f.write("\n<details><summary>árvore completa</summary>\n\n```\n")
-            f.write(texto + "\n```\n</details>\n")
+            f.write("\n## Categoria de cada candidato\n\n")
+            f.write("| Produto | Categoria do ML | ID | No ranking |\n|---|---|---|---|\n")
+            for grupo, nome, cid, cat, n in achados:
+                f.write(f"| {nome} | {cat} | `{cid}` | {n or '—'} |\n")
+            if perdidos:
+                f.write("\n**Não achou:** " + ", ".join(p[1] for p in perdidos) + "\n")
+            f.write("\n### Pronto pra colar no coletor\n\n```python\n")
+            for grupo, nome, cid, cat, n in com_ranking:
+                f.write(f'    ("{cid}", "{cat}", "{grupo}"),   # {nome}\n')
+            f.write("```\n")
     return 0
 
 
