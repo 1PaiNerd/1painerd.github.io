@@ -70,7 +70,7 @@ POR_CATEGORIA = 10
 #
 # REGRAS QUE O PATRICK DEFINIU E QUE ESTÃO NO CÓDIGO ABAIXO:
 #   · preço-impulso: R$20 a R$150
-#   · no máximo 3 âncoras acima disso (as caras, que servem de vitrine)
+#   · no máximo 4 âncoras acima disso (as caras, que servem de vitrine)
 #   · nada que dependa de tamanho/numeração — troca mata conversão
 # ---------------------------------------------------------------------------
 ROTINA = [
@@ -103,12 +103,49 @@ ROTINA = [
     ("MLB271854", "Massinhas de modelar",     "Crianças", "massinha e slime"),
 
     ("MLB264715", "Escovas elétricas",        "Cuidado",  "escova secadora"),
-    ("MLB180327", "Massageadores elétricos",  "Cuidado",  "massageador portátil"),
+    # MLB180327 saiu daqui: o ML classifica como "Elétricos" dentro de
+    # eletroportáteis, e o #1 dela vinha sendo um espremedor Mondial.
+    # ---- rodada 2 (11/08/2026): categorias descobertas mirando mulheres 35-64,
+    # que são 64% da base do canal. Todas confirmadas com ranking pelo
+    # descobridor — nenhuma foi chutada.
+    ("MLB48666",  "Panelas elétricas",         "Cozinha",  "panela de pressão elétrica"),
+    ("MLB263570", "Mixers",                    "Cozinha",  "mixer de mão"),
+    ("MLB9188",   "Cafeteiras",                "Cozinha",  "cafeteira"),
+    ("MLB456055", "Moedores de café",          "Cozinha",  "moedor elétrico"),
+    ("MLB439179", "Copos térmicos",            "Cozinha",  "copo térmico inox"),
+    ("MLB436796", "Formas",                    "Cozinha",  "formas de silicone"),
+    ("MLB194034", "Escorredores de louça",     "Cozinha",  "escorredor de pia"),
+    ("MLB418005", "Descascadores",             "Cozinha",  "descascador e ralador"),
+    ("MLB180387", "Filtros de água",           "Cozinha",  "jarra filtrante"),
+    ("MLB277404", "Embaladoras a vácuo",       "Cozinha",  "seladora de sacos"),
+
+    ("MLB432230", "Removedores de bolinhas",   "Casa",     "tira-bolinhas elétrico"),
+    ("MLB73062",  "Vaporizadores de roupa",    "Casa",     "vaporizador portátil"),
+    ("MLB31689",  "Ferros de passar",          "Casa",     "ferro a vapor"),
+    ("MLB99946",  "Aspiradores de mão",        "Casa",     "mini aspirador"),
+    ("MLB264060", "Escovas de limpeza",        "Casa",     "escova elétrica multiuso"),
+    ("MLB186657", "Rodos",                     "Casa",     "rodo mágico"),
+    ("MLB186365", "Cabides",                   "Casa",     "cabides de veludo"),
+    ("MLB277563", "Organizadores de gaveta",   "Casa",     "colmeia divisória"),
+    ("MLB120425", "Umidificadores",            "Casa",     "umidificador de ambiente"),
+    ("MLB269769", "Antiderrapantes de banho",  "Casa",     "tapete de banheiro"),
+    ("MLB118039", "Caixas organizadoras",      "Casa",     "porta-joias"),
+
+    ("MLB272178", "Massageadores de pescoço",  "Cuidado",  "massageador cervical"),
+    ("MLB5412",   "Secadores de cabelo",       "Cuidado",  "secador"),
+    ("MLB44085",  "Pranchas de cabelo",        "Cuidado",  "chapinha"),
+    ("MLB44076",  "Modeladores de cachos",     "Cuidado",  "babyliss"),
+    ("MLB32137",  "Depiladores",               "Cuidado",  "depilador elétrico"),
+    ("MLB70608",  "Kit manicure",              "Cuidado",  "lixa elétrica de unha"),
+    ("MLB447211", "Escovas de dente elétricas","Cuidado",  "escova de dente recarregável"),
+    ("MLB11617",  "Balanças corporais",        "Cuidado",  "balança de bioimpedância"),
+    ("MLB431591", "Espelhos de maquiagem",     "Cuidado",  "espelho com LED"),
+    ("MLB432586", "Bolsas de gel",             "Cuidado",  "bolsa térmica"),
 ]
 PRECO_MIN, PRECO_MAX = 20, 150
-MAX_ANCORAS = 3          # quantos itens caros entram como vitrine
+MAX_ANCORAS = 4          # quantos itens caros entram como vitrine
 POR_FOLHA = 6            # quantos olhar em cada categoria-folha
-POR_GRUPO = 12           # quantos sobrevivem em cada aba
+POR_GRUPO = 24           # quantos sobrevivem em cada aba
 
 
 def nome_oficial(cid, token, palpite):
