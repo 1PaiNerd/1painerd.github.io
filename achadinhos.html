@@ -120,6 +120,9 @@ font:700 .68rem 'Inter',sans-serif;padding:4px 9px;border-radius:999px;letter-sp
 .medalha{position:absolute;top:10px;right:10px;background:rgba(8,12,22,.86);color:var(--cy);
 font:700 .68rem 'Inter',sans-serif;padding:4px 9px;border-radius:999px;backdrop-filter:blur(4px)}
 [data-tema="claro"] .medalha,[data-tema="sol"] .medalha{background:#0d1526}
+.medalha.sh{color:#ff7a56}
+.chip[data-cat="shopee"]{border-color:#ee4d2d;color:#ee4d2d;font-weight:700}
+.chip[data-cat="shopee"].on{background:#ee4d2d;border-color:transparent;color:#fff}
 .pinfo{padding:16px 16px 14px;display:flex;flex-direction:column;gap:7px;flex:1}
 .pinfo h3{font-size:1.02rem}
 .pfaixa{font:700 1.05rem 'Space Grotesk',sans-serif;color:var(--acc)}
@@ -481,6 +484,8 @@ function card(p){
   const badge=p.fonte==='ml'
     ? (p.rank<=3?`<span class="medalha">${['🥇','🥈','🥉'][p.rank-1]} #${p.rank}</span>`
                 :`<span class="medalha">#${p.rank}</span>`)
+    : p.fonte==='shopee'
+    ? `<span class="medalha sh">${p.vendas} vendidos</span>`
     : '<span class="badge meu">✋ escolha do 1PaiNerd</span>';
   const NOME={amazon:'Amazon',ml:'Mercado Livre',shopee:'Shopee'};
   const PREP={amazon:'na',ml:'no',shopee:'na'};
@@ -503,10 +508,13 @@ function card(p){
   // A medalha e o selo abaixo do preço já dizem de onde ele veio; repetir
   // isso em frase era a mesma informação três vezes. Quem escreve "por que
   // este" sou eu, e isso só existe nos Selecionados.
-  const texto = p.fonte==='ml' ? ''
+  // texto SÓ onde existe texto meu. Ranking do ML e da Shopee não têm.
+  const texto = p.fonte!=='casa' ? ''
     : `<p class="d"><b>Por que este:</b> ${p.porque}</p>
        <p class="d"><b>Pra quem é:</b> ${p.praquem}</p>`;
-  const selo = p.fonte==='ml' ? `${p.rank}º em ${p.deonde}` : '🔎 testei em casa';
+  const selo = p.fonte==='ml' ? `${p.rank}º em ${p.deonde}`
+    : p.fonte==='shopee' ? 'campeão de vendas na Shopee'
+    : '🔎 testei em casa';
   return `<article class="pcard">
    <div class="ptile">${tile}${badge}</div>
    <div class="pinfo">
@@ -578,6 +586,24 @@ const brl=n=>'R$ '+n.toFixed(2).replace('.',',');
 const chave=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'')
                 .toLowerCase().replace(/[^a-z0-9]+/g,'');
 
+/* A Shopee não tem API pública de mais vendidos, então shopee.json é uma
+   colheita do painel de afiliados: produto, preço, nº de vendas e a comissão
+   real de cada um. Comissão média 13,5% — o dobro do que o ML paga. */
+async function carregarShopee(){
+  let d;
+  try{ d=await fetch('shopee.json?v='+Date.now()).then(r=>r.json()) }catch(e){ return 0 }
+  if(!d||!d.itens)return 0;
+  const cat='shopee';
+  CATS[cat]={nome:'Achados da Shopee',emoji:'🧡',subs:{}};
+  d.itens.forEach((it,i)=>P.push({
+    img:it.img, nome:it.nome, faixa:brl(it.preco), preco:it.preco,
+    emoji:'🧡', cat, sub:'', casa:false,
+    fonte:'shopee', rank:i+1, deonde:'Shopee', vendas:it.vendas, comissao:it.comissao,
+    lojas:{ amazon:'', ml:'', shopee: it.url }
+  }));
+  return d.itens.length;
+}
+
 async function carregarMaisVendidos(){
   let d,links;
   try{
@@ -605,9 +631,13 @@ async function carregarMaisVendidos(){
       novos++;
     }
   }
+  await carregarShopee();
+
   const s=document.getElementById('sub1');
-  if(s)s.textContent=`${novos} mais vendidos do Mercado Livre + ${P.length-novos} que eu testei em casa`
-                     +(d.gerado_em?` · atualizado em ${d.gerado_em}`:'');
+  const nCasa=P.filter(p=>p.fonte==='casa').length, nSh=P.filter(p=>p.fonte==='shopee').length;
+  if(s)s.textContent=`${novos} mais vendidos do Mercado Livre · ${nSh} achados da Shopee · `
+                    +`${nCasa} que eu testei em casa`
+                    +(d.gerado_em?` · atualizado em ${d.gerado_em.split('-').reverse().join('/')}`:'');
   draw();
 }
 
