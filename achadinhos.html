@@ -148,6 +148,11 @@ box-shadow:0 4px 16px rgba(255,138,61,.22)}
 }
 #grid{padding-bottom:24px}
 @media(max-width:760px){#grid{padding-bottom:92px}}
+/* recado que aparece quando a loja escolhida tem pouca coisa aqui */
+.nota{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--acc);
+  border-radius:var(--r);padding:14px 16px;margin:0 0 16px;font-size:.92rem;line-height:1.55;color:var(--sub)}
+.nota b{color:var(--ink)}
+.nota a{color:var(--acc);font-weight:700}
 .empty{text-align:center;padding:60px 20px;color:var(--sub)}
 .empty .e{font-size:3rem;display:block;margin-bottom:12px}
 footer{border-top:1px solid var(--line);margin-top:40px;padding:34px 0 60px;color:var(--sub);font-size:.86rem}
@@ -224,6 +229,7 @@ border-radius:999px;padding:7px 14px;white-space:nowrap}
 [data-tema="claro"] select.sel,[data-tema="sol"] select.sel,
 [data-tema="claro"] button.sel,[data-tema="sol"] button.sel{background:#fff;border-color:var(--line)}
 [data-tema="claro"] .pbtn:not(.go),[data-tema="sol"] .pbtn:not(.go){background:#f4f7fd;border-color:var(--line)}
+[data-tema="claro"] .nota,[data-tema="sol"] .nota{background:#fff}
 [data-tema="claro"] .tip,[data-tema="sol"] .tip{background:#fff;color:var(--ink)}
 [data-tema="claro"] .ptile,[data-tema="sol"] .ptile{background:#fff;border-bottom:1px solid var(--line)}
 
@@ -319,6 +325,7 @@ text-transform:uppercase;margin-top:10px}
   </div>
   <div class="catrow" id="lojarow" style="padding:2px 0 10px"></div>
   <div class="active" id="active"></div>
+  <div id="avisoloja"></div>
   <div class="pgrid" id="grid"></div>
 </div>
 
@@ -349,6 +356,7 @@ let st={cat:'',sub:'',preco:'',q:'',ord:'rec',view:'grid',loja:''};
 // ordem de preferencia: quem tem mais gente comprando no Brasil vem primeiro
 const ORDEM=['ml','amazon','shopee'];
 const LOJAS={amazon:'Amazon',ml:'Mercado Livre',shopee:'Shopee'};
+const PREP={amazon:'na',ml:'no',shopee:'na'};   // "na Amazon", "no Mercado Livre"
 function temLoja(k){return P.some(p=>p.lojas&&p.lojas[k])}
 
 const norm=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
@@ -449,6 +457,23 @@ function draw(){
   g.className='pgrid'+(st.view==='list'?' list':'');
   g.innerHTML=r.length?r.map(card).join(''):
    `<div class="empty"><span class="e">🔍</span><b>Nada por aqui com esses filtros.</b><br>Tente afrouxar a busca ou o preço.</div>`;
+  avisoLoja(r.length);
+}
+/* Achadinhos é curadoria: nem todo item tem link de toda loja.
+   Quando a pessoa escolhe uma loja com pouca coisa, a gente explica —
+   em vez de deixar a tela parecendo quebrada. */
+function avisoLoja(n){
+  const alvo=document.getElementById('avisoloja');
+  if(!alvo)return;
+  if(!st.loja||n>4){alvo.innerHTML='';return}
+  const nome=LOJAS[st.loja]||'essa loja';
+  alvo.innerHTML=`<div class="nota">
+    <b>${n===1?'Só 1 achadinho está':`Só ${n} achadinhos estão`} ${PREP[st.loja]||'na'} ${nome} por enquanto.</b>
+    Os achadinhos são a minha curadoria — o que eu testei em casa — e cada um está
+    na loja onde eu comprei. Estou aos poucos achando os mesmos itens nas outras.
+    <br>Se você quer é ver <b>o que mais vende ${PREP[st.loja]||'na'} ${nome} hoje</b>,
+    isso fica em <a href="mais-vendidos.html">Mais Vendidos</a> — lá são centenas de produtos,
+    atualizados todo dia de manhã.</div>`;
 }
 document.getElementById('q').addEventListener('input',e=>{st.q=e.target.value.trim();draw()});
 document.getElementById('preco').addEventListener('change',e=>{st.preco=e.target.value;draw()});
