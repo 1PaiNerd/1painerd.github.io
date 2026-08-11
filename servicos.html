@@ -74,6 +74,38 @@ text-decoration:none;color:var(--ink);transition:transform .25s,box-shadow .25s,
 .mcard h3{font-size:1.15rem;margin-bottom:4px}
 .mcard p{color:var(--sub);font-size:.94rem}
 /* rows */
+/* ---- cartões de serviço: preço à vista, decisão em 3 segundos ---- */
+.cards{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-bottom:10px}
+.svc{display:flex;flex-direction:column;gap:9px;text-decoration:none;color:var(--ink);
+  border:1px solid var(--line);border-radius:16px;padding:20px 20px 18px;background:var(--card);
+  transition:transform .18s,border-color .18s,box-shadow .18s}
+.svc:hover,.svc:active{transform:translateY(-3px);border-color:rgba(63,214,255,.55);
+  box-shadow:0 10px 30px rgba(20,40,80,.10)}
+.svc.destaque{border-color:var(--acc);box-shadow:0 0 0 1px rgba(255,138,61,.25)}
+.svc .topo{display:flex;align-items:center;gap:12px}
+.svc .topo img{width:44px;height:44px;object-fit:contain;flex:none}
+.svc h3{font-size:1.08rem;line-height:1.2}
+.svc .preco{font:700 1.5rem 'Space Grotesk',sans-serif;color:var(--acc);line-height:1.1}
+.svc .preco small{display:block;font:600 .72rem 'Inter',sans-serif;color:var(--sub);
+  letter-spacing:.02em;margin-top:2px}
+.svc .oq{color:var(--sub);font-size:.9rem;flex:1}
+.svc .cta{margin-top:4px;font:700 .88rem 'Inter',sans-serif;color:#160a02;text-align:center;
+  background:linear-gradient(135deg,var(--acc),#ff6d2e);padding:11px;border-radius:10px}
+.svc.simples .cta{background:var(--card);color:var(--cy);border:1.5px solid var(--line)}
+.selo{display:inline-block;font:700 .66rem 'Inter',sans-serif;padding:3px 9px;border-radius:999px;
+  background:rgba(63,214,255,.14);color:var(--cy);margin-bottom:2px}
+.selo.pres{background:rgba(255,138,61,.14);color:var(--acc)}
+/* no celular o serviço tem que aparecer antes da rolagem */
+@media(max-width:720px){
+  section{padding:34px 0}
+  section[style*="padding-bottom:36px"]{padding:22px 0 14px!important}
+  .kicker{margin-bottom:10px}
+  h1{margin-bottom:10px}
+  .lead{font-size:1rem}
+  .svc{padding:16px 16px 15px;gap:7px}
+  .svc .preco{font-size:1.32rem}
+  .cards{gap:11px}
+}
 .rows{display:flex;flex-direction:column}
 .row{display:flex;gap:20px;align-items:baseline;padding:26px 4px;border-bottom:1px solid var(--line);
 text-decoration:none;color:var(--ink);flex-wrap:wrap;transition:background .2s}
@@ -184,15 +216,39 @@ footer{background:var(--bg2);border-color:var(--line)}
 <section style="padding-bottom:36px">
   <p class="kicker rv">Serviços de Tecnologia</p>
   <h1 class="rv" style="font-size:clamp(1.9rem,4.5vw,2.7rem)">Tecnologia com capricho de pai</h1>
-  <p class="lead rv">Atendo Mauá e região do ABC presencialmente — e, no digital, o Brasil inteiro. O mesmo capricho que coloco nos jogos, no seu projeto.</p>
+  <p class="lead rv">Site pronto <b>antes</b> de você pagar. Mauá e ABC presencialmente, o Brasil inteiro no digital.</p>
 </section>
 
 <section style="padding-top:0">
-  <div class="rows">
-    <a class="row rv" href="mailto:wfactory.design@gmail.com"><img class="rico" src="assets/icons/web.png" alt=""><h3>Sites profissionais</h3><p>Para negócios locais — restaurantes, clínicas, buffets e serviços. Você vê o site pronto antes de pagar qualquer coisa.</p><span>Prévia grátis →</span></a>
-    <a class="row rv" href="mailto:wfactory.design@gmail.com"><img class="rico" src="assets/icons/app.png" alt=""><h3>Aplicativos & sistemas</h3><p>Apps sob medida para tirar a sua ideia ou o seu processo do papel.</p><span>Contar a ideia →</span></a>
-    <a class="row rv" href="#" data-todo="link-whatsapp-pnr"><img class="rico" src="assets/icons/pc.png" alt=""><h3>PCs gamer sob medida</h3><p>Peça por peça, no seu orçamento, sem pagar por marketing — e com upgrade planejado.</p><span>Pedir orçamento →</span></a>
-    <a class="row rv" href="#" data-todo="link-whatsapp-pnr"><img class="rico" src="assets/icons/repair.png" alt=""><h3>Conserto & manutenção</h3><p>Eletrônicos, videogames e computadores que "pararam do nada". Diagnóstico honesto.</p><span>Chamar agora →</span></a>
+  <!-- Três cartões, preço à vista. A ordem é de negócio: o que dá mais
+       dinheiro sem sair de casa vem primeiro. -->
+  <div class="cards">
+    <a class="svc destaque rv" href="mailto:wfactory.design@gmail.com?subject=Quero%20uma%20pr%C3%A9via%20do%20meu%20site">
+      <span class="selo">remoto · Brasil todo</span>
+      <div class="topo"><img src="assets/icons/web.png" alt=""><h3>Site profissional</h3></div>
+      <div class="preco">a partir de R$ 350<small>PRÉVIA GRÁTIS ANTES DE PAGAR</small></div>
+      <p class="oq">Para negócios locais — restaurante, clínica, buffet, salão. Eu monto o site
+      de verdade com os seus dados e te mando o link. Só paga se gostar.</p>
+      <span class="cta">Pedir minha prévia grátis →</span>
+    </a>
+
+    <a class="svc rv" href="mailto:wfactory.design@gmail.com?subject=Tenho%20uma%20ideia%20de%20sistema">
+      <span class="selo">remoto · Brasil todo</span>
+      <div class="topo"><img src="assets/icons/app.png" alt=""><h3>App ou sistema</h3></div>
+      <div class="preco">sob medida<small>ORÇAMENTO DEPOIS DE ENTENDER A IDEIA</small></div>
+      <p class="oq">Automação, painel, aplicativo. Tirar da sua cabeça um processo que hoje
+      você faz na mão — e deixar rodando sozinho.</p>
+      <span class="cta">Contar minha ideia →</span>
+    </a>
+
+    <a class="svc simples rv" href="mailto:wfactory.design@gmail.com?subject=PC%20ou%20conserto">
+      <span class="selo pres">presencial · Mauá e ABC</span>
+      <div class="topo"><img src="assets/icons/pc.png" alt=""><h3>PC gamer e conserto</h3></div>
+      <div class="preco">orçamento na hora<small>MONTAGEM, UPGRADE E CONSERTO</small></div>
+      <p class="oq">Montagem peça por peça no seu orçamento, sem pagar por marca.
+      E conserto de eletrônico, videogame e computador que "parou do nada".</p>
+      <span class="cta">Pedir orçamento →</span>
+    </a>
   </div>
 </section>
 
@@ -205,7 +261,7 @@ footer{background:var(--bg2);border-color:var(--line)}
   </div>
   <div class="ctas rv" style="margin-top:30px">
     <a class="btn p" href="mailto:wfactory.design@gmail.com">Pedir minha prévia grátis</a>
-    <a class="btn s" href="#" data-todo="link-whatsapp-pnr">Chamar no WhatsApp</a>
+    <a class="btn s" href="https://www.instagram.com/1painerd" target="_blank" rel="noopener">Chamar no Instagram</a>
   </div>
 </section>
 </div>
