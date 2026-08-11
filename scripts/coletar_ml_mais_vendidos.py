@@ -60,6 +60,54 @@ CATEGORIAS = [
 ]
 POR_CATEGORIA = 10
 
+# ---------------------------------------------------------------------------
+# "PRA SUA ROTINA" — a seleção feita pro público real do canal
+# (85% mulheres, 83% com 35+, núcleo 35-64: mães e avós — dados do Instagram
+#  Insights de ago/2026). Cada linha é a categoria-folha EXATA do Mercado Livre,
+#  descoberta pelo próprio motor de classificação deles (domain_discovery).
+#
+# REGRAS QUE O PATRICK DEFINIU E QUE ESTÃO NO CÓDIGO ABAIXO:
+#   · preço-impulso: R$20 a R$150
+#   · no máximo 3 âncoras acima disso (as caras, que servem de vitrine)
+#   · nada que dependa de tamanho/numeração — troca mata conversão
+# ---------------------------------------------------------------------------
+ROTINA = [
+    # (categoria-folha do ML, nome da folha, grupo, o que a gente procura ali)
+    ("MLB456045", "Fritadeiras de ar",        "Cozinha",  "airfryer"),
+    ("MLB193813", "Cortadores e trituradores","Cozinha",  "cortador de legumes"),
+    ("MLB31674",  "Processadores",            "Cozinha",  "mini processador"),
+    ("MLB31683",  "Sanduicheiras",            "Cozinha",  "sanduicheira"),
+    ("MLB120373", "Panelas de arroz",         "Cozinha",  "panela de arroz"),
+    ("MLB244658", "Potes para alimentos",     "Cozinha",  "potes herméticos"),
+    ("MLB277460", "Organizadores de armário", "Cozinha",  "organizador de geladeira"),
+    ("MLB277448", "Utensílios",               "Cozinha",  "kit de silicone"),
+    ("MLB193618", "Tábuas de corte",          "Cozinha",  "tábua com escorredor"),
+    ("MLB30220",  "Balanças de cozinha",      "Cozinha",  "balança digital"),
+    ("MLB33388",  "Garrafas térmicas",        "Cozinha",  "garrafa com display"),
+
+    ("MLB186655", "Mop",                      "Casa",     "mop giratório"),
+    ("MLB4337",   "Aspiradores",              "Casa",     "aspirador vertical"),
+    ("MLB186268", "Sapateiras",               "Casa",     "organizador de porta"),
+    ("MLB189195", "Luminárias",               "Casa",     "luminária com sensor"),
+    ("MLB268503", "Difusores de aroma",       "Casa",     "difusor ultrassônico"),
+    ("MLB186334", "Mantas e cobertores",      "Casa",     "manta fofinha"),
+    ("MLB269712", "Panos de limpeza",         "Casa",     "kit microfibra"),
+    ("MLB73072",  "Varais",                   "Casa",     "varal retrátil"),
+
+    ("MLB1586",   "Luminárias de mesa",       "Crianças", "abajur / projetor de estrelas"),
+    ("MLB260545", "Copos de treinamento",     "Crianças", "copo com canudo"),
+    ("MLB1393",   "Tapetes de atividades",    "Crianças", "tapete EVA"),
+    ("MLB5364",   "Babá eletrônica",          "Crianças", "babá eletrônica"),
+    ("MLB271854", "Massinhas de modelar",     "Crianças", "massinha e slime"),
+
+    ("MLB264715", "Escovas elétricas",        "Cuidado",  "escova secadora"),
+    ("MLB180327", "Massageadores elétricos",  "Cuidado",  "massageador portátil"),
+]
+PRECO_MIN, PRECO_MAX = 20, 150
+MAX_ANCORAS = 3          # quantos itens caros entram como vitrine
+POR_FOLHA = 6            # quantos olhar em cada categoria-folha
+POR_GRUPO = 12           # quantos sobrevivem em cada aba
+
 
 def nome_oficial(cid, token, palpite):
     """Pergunta pro ML como a categoria se chama de verdade."""
@@ -167,6 +215,65 @@ def detalhes_produtos(ids, token):
     return saida
 
 
+def coletar_folha(cid, token, quantos):
+    """Pega os campeões de venda de uma categoria-folha."""
+    hl = get(f"{API}/highlights/MLB/category/{cid}", token)
+    topo = (hl.get("content") or [])[:quantos]
+    ids_item = [c["id"] for c in topo if c.get("type") == "ITEM" and c.get("id")]
+    ids_prod = [c["id"] for c in topo if c.get("type") == "PRODUCT" and c.get("id")]
+    achados = {}
+    for it in detalhes_itens(ids_item, token) + detalhes_produtos(ids_prod, token):
+        achados[it["id"]] = it
+    saida = []
+    for pos, c in enumerate(topo, 1):
+        it = achados.get(c.get("id"))
+        if it:
+            it["rank"] = pos
+            saida.append(it)
+    return saida
+
+
+def montar_rotina(token):
+    """Monta as abas 'pra sua rotina' aplicando os filtros do Patrick."""
+    grupos, emojis = {}, {"Cozinha": "🍳", "Casa": "🏠", "Crianças": "🧒", "Cuidado": "💆"}
+    for cid, folha, grupo, procurando in ROTINA:
+        try:
+            itens = coletar_folha(cid, token, POR_FOLHA)
+        except Exception as e:
+            print(f"    ! {folha} ({procurando}): {e}")
+            continue
+        for it in itens:
+            it["de"] = folha          # de qual prateleira veio
+        grupos.setdefault(grupo, []).extend(itens)
+        print(f"    ✓ {grupo}/{folha}: {len(itens)}")
+
+    saida = []
+    for grupo, itens in grupos.items():
+        # tira repetido (o mesmo produto pode aparecer em duas folhas)
+        vistos, unicos = set(), []
+        for it in itens:
+            if it["id"] not in vistos:
+                vistos.add(it["id"])
+                unicos.append(it)
+
+        # a regra do preço-impulso: o miolo é R$20-150
+        impulso = [i for i in unicos if i.get("preco") and PRECO_MIN <= i["preco"] <= PRECO_MAX]
+        caros   = [i for i in unicos if i.get("preco") and i["preco"] > PRECO_MAX]
+        impulso.sort(key=lambda i: i["rank"])
+        caros.sort(key=lambda i: i["rank"])
+
+        # âncoras: as caras entram no fim, no máximo 3, só pra dar régua de valor
+        escolhidos = impulso[:POR_GRUPO - MAX_ANCORAS] + caros[:MAX_ANCORAS]
+        for pos, it in enumerate(escolhidos, 1):
+            it["rank"] = pos
+
+        saida.append({"id": "ROTINA_" + grupo, "nome": grupo,
+                      "emoji": emojis.get(grupo, "🛒"), "itens": escolhidos})
+        print(f"  ✓ {grupo}: {len(escolhidos)} escolhidos "
+              f"(de {len(unicos)} vistos · {len(impulso)} no preço-impulso)")
+    return saida
+
+
 def main():
     faltando = [k for k in ("ML_CLIENT_ID", "ML_CLIENT_SECRET", "ML_REFRESH_TOKEN")
                 if not os.environ.get(k)]
@@ -224,6 +331,14 @@ def main():
             print(f"  ✓ {nome}: {len(itens)} itens ({com_preco} com preço)")
         except Exception as e:
             print(f"  ! {nome}: {e}")
+
+    print("\n--- Pra sua rotina (seleção do público do canal) ---")
+    try:
+        rotina = montar_rotina(token)
+        saida["categorias"].extend(rotina)
+        total += sum(len(c["itens"]) for c in rotina)
+    except Exception as e:
+        print(f"  ! a seleção da rotina falhou inteira: {e}")
 
     if not total:
         print("Nenhum item coletado — mantendo o arquivo anterior.")
