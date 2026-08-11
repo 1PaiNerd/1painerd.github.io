@@ -45,6 +45,18 @@ transition:.18s;display:flex;align-items:center;gap:7px;font-family:'Inter',sans
 .chip.on{background:linear-gradient(135deg,var(--acc),#ff6d2e);border-color:transparent;color:#160a02;
 box-shadow:0 0 20px rgba(255,138,61,.32)}
 .chip .n{font-size:.76rem;opacity:.7;font-weight:700}
+/* foto do canal, redonda */
+.chead{align-items:center}
+.cav{width:60px;height:60px;border-radius:50%;flex:none;object-fit:cover;
+  border:2px solid var(--line);background:#0c1424}
+.cid{display:flex;align-items:center;gap:13px;min-width:0}
+.cbtns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.tt{display:inline-flex;align-items:center;gap:6px;text-decoration:none;
+  font:700 .8rem 'Inter',sans-serif;padding:8px 13px;border-radius:999px;
+  background:#111;color:#fff;border:1px solid rgba(255,255,255,.18);white-space:nowrap}
+.tt:hover{border-color:#25f4ee;box-shadow:0 0 14px rgba(37,244,238,.28)}
+[data-tema="claro"] .cav,[data-tema="sol"] .cav{background:#fff}
+@media(max-width:560px){.cav{width:48px;height:48px}.tt{padding:7px 11px;font-size:.76rem}}
 /* bloco de canal */
 .canal{padding:24px 0 6px}
 .chead{display:flex;align-items:center;gap:14px;margin-bottom:14px;flex-wrap:wrap}
@@ -159,10 +171,22 @@ function bloco(c){
       </div>
       <div class="vinfo"><h3>${v.t}</h3><div class="meta">${DT(v.d)}</div></div>
     </a>`).join('');
+  const foto = c.avatar
+    ? `<img class="cav" src="${c.avatar}" loading="lazy" alt="foto do canal ${c.nome}">`
+    : `<div class="cav" style="display:grid;place-items:center;font-size:1.4rem">▶</div>`;
+  // TikTok entra como botao de marca, nao com a foto de perfil:
+  // a foto de la e' a familia de verdade, e o site nao usa foto real.
+  const tik = c.tiktok
+    ? `<a class="tt" href="${c.tiktok}" target="_blank" rel="noopener">♪ TikTok</a>` : '';
   return `<section class="canal">
     <div class="chead">
-      <div><h2>${c.nome}</h2><div class="hd">${c.handle} · ${c.desc}</div></div>
-      <a class="insc" href="${c.url}?sub_confirmation=1" target="_blank" rel="noopener">▶ Inscrever-se</a>
+      <div class="cid">${foto}
+        <div><h2>${c.nome}</h2><div class="hd">${c.handle} · ${c.desc}</div></div>
+      </div>
+      <div class="cbtns">
+        <a class="insc" href="${c.url}?sub_confirmation=1" target="_blank" rel="noopener">▶ Inscrever-se</a>
+        ${tik}
+      </div>
     </div>
     <div class="vgrid">${vids}</div>
   </section>`;
