@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Transcritor — ferramenta interna 1PaiNerd</title>
+<!-- Ferramenta interna da Fábrica de Sites: transcreve áudio DE CLIENTE no
+     próprio navegador (Whisper via transformers.js). Nada é enviado a servidor
+     nenhum: o modelo baixa uma vez e o áudio é processado localmente. -->
+<style>
+body{background:#080c16;color:#edf1fb;font-family:system-ui,sans-serif;max-width:760px;
+margin:0 auto;padding:28px 16px;line-height:1.6}
+h1{font-size:1.3rem}
+small{color:#8d99b5}
+#zona{border:2px dashed rgba(120,160,255,.3);border-radius:14px;padding:22px;margin:18px 0;text-align:center}
+button{background:linear-gradient(135deg,#ff8a3d,#ff6d2e);color:#160a02;border:none;font-weight:700;
+padding:12px 22px;border-radius:10px;cursor:pointer;font-size:1rem}
+button:disabled{opacity:.4;cursor:wait}
+#st{color:#3fd6ff;font-size:.9rem;min-height:1.4em;margin:10px 0}
+pre{background:rgba(255,255,255,.05);border:1px solid rgba(120,160,255,.16);border-radius:10px;
+padding:16px;white-space:pre-wrap;word-break:break-word;font-size:.92rem}
+</style>
+</head>
+<body>
+<h1>🎙️ Transcritor local</h1>
+<small>Whisper rodando no SEU navegador. O áudio não sai do computador.</small>
+<div id="zona">
+  <input type="file" id="f" multiple accept="audio/*,video/*">
+  <p><button id="go">Transcrever</button></p>
+  <div id="st">Escolha os arquivos e clique.</div>
+</div>
+<pre id="out"></pre>
+
+<script type="module">
+const st=document.getElementById('st'), out=document.getElementById('out');
+let asr=null;
+window.__pronto=false; window.__fim=false; window.__erro='';
+
+async function carregar(){
+  if(asr) return asr;
+  st.textContent='Baixando o modelo (uma vez só, ~80MB)…';
+  const {pipeline,env} = await import('https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.7.6');
+  asr = await pipeline('automatic-speech-recognition','onnx-community/whisper-base',{
+    dtype:'q8',
+    progress_callback:p=>{ if(p.status==='progress'&&p.file&&p.file.endsWith('.onnx'))
+      st.textContent=`Baixando modelo: ${Math.round(p.progress||0)}%` }
+  });
+  window.__pronto=true;
+  return asr;
+}
+
+async function decodificar(file){
+  const buf=await file.arrayBuffer();
+  const ctx=new (window.AudioContext||window.webkitAudioContext)({sampleRate:16000});
+  const audio=await ctx.decodeAudioData(buf);
+  const mono=audio.getChannelData(0);
+  ctx.close();
+  return mono;
+}
+
+document.getElementById('go').onclick=async()=>{
+  const files=[...document.getElementById('f').files];
+  if(!files.length){st.textContent='Nenhum arquivo escolhido.';return}
+  document.getElementById('go').disabled=true;
+  try{
+    const modelo=await carregar();
+    for(const f of files){
+      st.textContent='Transcrevendo '+f.name+'…';
+      const t0=performance.now();
+      const pcm=await decodificar(f);
+      const r=await modelo(pcm,{language:'portuguese',task:'transcribe',
+        chunk_length_s:30,stride_length_s:5});
+      const seg=((performance.now()-t0)/1000).toFixed(0);
+      out.textContent+='===== '+f.name+' ('+seg+'s) =====\n'+(r.text||'').trim()+'\n\n';
+    }
+    st.textContent='Pronto ✔';
+    window.__fim=true;
+  }catch(e){
+    window.__erro=String(e);
+    st.textContent='Erro: '+String(e).slice(0,160);
+  }
+  document.getElementById('go').disabled=false;
+};
+</script>
+</body>
+</html>
