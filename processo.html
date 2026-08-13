@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Árvore de Design — como a gente constrói o seu site | WFactory</title>
+<meta name="description" content="Seu site não é um desenho, é um sistema: veja a Árvore de Design da WFactory crescer — da sua fala ao site no ar, cada peça pensada como um objeto vivo.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://1painerd.com.br/processo.html">
+<meta property="og:title" content="Árvore de Design — como a gente constrói o seu site">
+<meta property="og:description" content="Da sua fala ao site no ar: role a página e veja o processo da WFactory crescer como uma árvore.">
+<meta property="og:image" content="https://1painerd.com.br/assets/perfil-og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080c16;--card:rgba(255,255,255,.045);--ink:#edf1fb;--sub:#8d99b5;--mut:#5d6883;
+--acc:#ff8a3d;--cy:#3fd6ff;--vd:#6ee7a0;--rx:#c792ea;--line:rgba(120,160,255,.16);--r:14px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;font-size:16px;line-height:1.65;
+-webkit-font-smoothing:antialiased;overflow-x:hidden;padding-bottom:70px}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif;font-weight:600;letter-spacing:-.02em;line-height:1.2}
+.gridbg{position:fixed;inset:0;z-index:-2;pointer-events:none;
+background-image:linear-gradient(rgba(120,160,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(120,160,255,.05) 1px,transparent 1px);
+background-size:44px 44px;mask-image:radial-gradient(ellipse 85% 60% at 50% 12%,#000 30%,transparent 78%)}
+.wrap{max-width:860px;margin:0 auto;padding:0 20px}
+header{padding:40px 0 6px;text-align:center;min-height:46vh;display:flex;flex-direction:column;justify-content:center}
+header .marca{font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+header h1{font-size:clamp(1.6rem,5vw,2.3rem);margin-top:6px}
+header h1 em{font-style:normal;color:var(--acc)}
+header p{color:var(--sub);font-size:.98rem;max-width:540px;margin:10px auto 0}
+.rolinha{margin-top:26px;color:var(--cy);font-size:.85rem;font-weight:600}
+.rolinha span{display:inline-block;animation:sobe 1.6s ease-in-out infinite}
+@keyframes sobe{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+/* ===== trilho que cresce com o scroll ===== */
+.trilho{position:relative;margin-top:10px}
+.trilho .veia{position:absolute;left:26px;top:0;bottom:0;width:2px;background:rgba(120,160,255,.12)}
+.trilho .seiva{position:absolute;left:26px;top:0;width:2px;height:0;
+background:linear-gradient(180deg,var(--acc),var(--cy) 45%,var(--rx) 70%,var(--vd));
+box-shadow:0 0 12px rgba(255,138,61,.35)}
+.folha{position:absolute;left:26px;top:0;width:26px;height:26px;margin-left:-12px;margin-top:-13px;
+display:grid;place-items:center;font-size:15px;filter:drop-shadow(0 0 6px rgba(110,231,160,.6));z-index:2}
+/* ===== nós ===== */
+.no{position:relative;padding:0 0 30px 68px;min-height:120px}
+.no .pin{position:absolute;left:9px;top:2px;width:36px;height:36px;border-radius:50%;
+display:grid;place-items:center;font-size:17px;background:#0c1424;border:2px solid var(--line);z-index:1;
+transition:border-color .5s,box-shadow .5s,transform .5s}
+.no.vivo .pin{transform:scale(1.08)}
+.no.n1.vivo .pin{border-color:var(--acc);box-shadow:0 0 18px rgba(255,138,61,.45)}
+.no.n2.vivo .pin{border-color:var(--cy);box-shadow:0 0 18px rgba(63,214,255,.4)}
+.no.n3.vivo .pin{border-color:var(--rx);box-shadow:0 0 18px rgba(199,146,234,.4)}
+.no.n4.vivo .pin{border-color:var(--vd);box-shadow:0 0 18px rgba(110,231,160,.4)}
+.no.n5.vivo .pin{border-color:var(--acc);box-shadow:0 0 18px rgba(255,138,61,.45)}
+.no h2{font-size:1.1rem;margin-bottom:2px}
+.no .quem{font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+.no .desc{color:var(--sub);font-size:.92rem;margin-top:4px;max-width:640px}
+/* conteúdo revela em cascata */
+.rev{opacity:0;translate:0 16px;transition:opacity .55s ease-out,translate .55s ease-out}
+.no.vivo .rev{opacity:1;translate:0 0}
+.no.vivo .rev.d1{transition-delay:.1s}.no.vivo .rev.d2{transition-delay:.22s}
+.no.vivo .rev.d3{transition-delay:.34s}.no.vivo .rev.d4{transition-delay:.46s}
+.no.vivo .rev.d5{transition-delay:.58s}
+/* ramificações vetoriais */
+.ramo{position:absolute;left:27px;top:20px;width:40px;height:70px;pointer-events:none}
+.ramo path{fill:none;stroke:var(--line);stroke-width:2;stroke-dasharray:110;stroke-dashoffset:110;
+transition:stroke-dashoffset .9s ease-out .15s,stroke .5s}
+.no.vivo .ramo path{stroke-dashoffset:0}
+.no.n1.vivo .ramo path{stroke:rgba(255,138,61,.5)}
+.no.n2.vivo .ramo path{stroke:rgba(63,214,255,.45)}
+.no.n3.vivo .ramo path{stroke:rgba(199,146,234,.45)}
+.no.n4.vivo .ramo path{stroke:rgba(110,231,160,.45)}
+.no.n5.vivo .ramo path{stroke:rgba(255,138,61,.5)}
+.cards{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.mini{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:10px 13px;
+font-size:.84rem;color:var(--sub);flex:1 1 150px;min-width:150px}
+.mini b{color:var(--ink);display:block;font-size:.86rem}
+.mini.acc{border-color:rgba(255,138,61,.4)} .mini.cy{border-color:rgba(63,214,255,.35)}
+.mini.rx{border-color:rgba(199,146,234,.35)} .mini.vd{border-color:rgba(110,231,160,.35)}
+/* BOX */
+.box{background:linear-gradient(160deg,rgba(199,146,234,.08),rgba(63,214,255,.05));
+border:1.5px dashed rgba(199,146,234,.45);border-radius:var(--r);padding:16px;margin-top:12px;max-width:640px}
+.box h3{font-size:.95rem;color:var(--rx);margin-bottom:8px}
+.perg{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}
+.perg>div{background:rgba(8,12,22,.55);border:1px solid var(--line);border-radius:9px;padding:9px 11px;font-size:.82rem;color:var(--sub)}
+.perg b{color:var(--ink);font-size:.83rem;display:block}
+.dupla{grid-column:1/-1;display:flex;align-items:center;gap:10px;justify-content:center;
+background:rgba(8,12,22,.55);border:1px solid rgba(255,138,61,.35);border-radius:9px;padding:9px}
+.dupla span{font-weight:700;font-size:.86rem}
+.dupla .seta{color:var(--acc);font-size:1.1rem;font-weight:800}
+.no.vivo .dupla .seta{animation:vaivem 1.8s ease-in-out infinite .8s}
+@keyframes vaivem{0%,100%{transform:translateX(-3px)}50%{transform:translateX(3px)}}
+.ciclo{background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+padding:14px 16px;margin-top:12px;max-width:640px;font-size:.88rem;color:var(--sub)}
+.ciclo b{color:var(--vd)}
+.volta{color:var(--acc);font-weight:700}
+/* CTA final */
+.fim{text-align:center;padding:34px 0 8px}
+.fim h2{font-size:1.25rem}
+.fim p{color:var(--sub);font-size:.92rem;max-width:480px;margin:8px auto 16px}
+.fim .bts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.fim a{display:inline-block;text-decoration:none;font-weight:700;padding:13px 22px;border-radius:12px;
+transition:transform .15s ease-out}
+.fim a:active{transform:scale(.97)}
+.fim a.p{background:linear-gradient(135deg,var(--acc),#ff6d2e);color:#160a02}
+.fim a.s{border:1.5px solid var(--line);color:var(--ink)}
+footer{margin-top:34px;text-align:center;color:var(--mut);font-size:.8rem;padding:0 20px}
+@media(max-width:560px){.no{padding-left:56px}.no .pin{left:4px}
+.trilho .veia,.trilho .seiva,.folha{left:21px}.ramo{left:22px}}
+@media (prefers-reduced-motion:reduce){
+.rev{opacity:1;translate:0 0}
+.ramo path{stroke-dashoffset:0}
+.trilho .seiva{height:100%!important}
+.folha{display:none}
+.rolinha span,.dupla .seta{animation:none}}
+</style>
+</head>
+<body>
+<div class="gridbg" aria-hidden="true"></div>
+
+<header class="wrap">
+  <div class="marca">WFactory · 1PaiNerd Studios</div>
+  <h1>🌳 A Árvore de <em>Design</em></h1>
+  <p>Seu site não é um desenho — é um <b>sistema vivo</b>. Role a página e veja como a gente constrói: da sua fala até o site no ar.</p>
+  <div class="rolinha"><span>⬇</span> role pra árvore crescer</div>
+</header>
+
+<main class="wrap trilho" id="trilho">
+  <div class="veia" aria-hidden="true"></div>
+  <div class="seiva" id="seiva" aria-hidden="true"></div>
+  <div class="folha" id="folha" aria-hidden="true">🍃</div>
+
+  <section class="no n1">
+    <span class="pin">🎙️</span>
+    <svg class="ramo" viewBox="0 0 40 70" aria-hidden="true"><path d="M1 4 C 22 10, 30 30, 34 66"/></svg>
+    <div class="rev"><span class="quem">Raiz · sua fala</span>
+    <h2>Tudo nasce do seu jeito de falar</h2>
+    <p class="desc">A gente escuta você de verdade — áudio, conversa, referência. Dessa fala sai o <b>material</b> de que o site inteiro será feito:</p></div>
+    <div class="cards">
+      <div class="mini acc rev d1"><b>🎨 Paleta</b> as cores da sua marca</div>
+      <div class="mini acc rev d2"><b>✍️ Tipografia</b> título com alma, texto legível</div>
+      <div class="mini acc rev d3"><b>🔷 Forma</b> cantos, divisores, textura</div>
+      <div class="mini acc rev d4"><b>💬 Voz</b> as SUAS palavras, não jargão</div>
+    </div>
+  </section>
+
+  <section class="no n2">
+    <span class="pin">🗺️</span>
+    <svg class="ramo" viewBox="0 0 40 70" aria-hidden="true"><path d="M1 4 C 22 10, 30 30, 34 66"/></svg>
+    <div class="rev"><span class="quem">Tronco · as 4 camadas</span>
+    <h2>O caminho do olho de quem chega</h2>
+    <p class="desc">Toda página se decide nessas camadas, nessa ordem:</p></div>
+    <div class="cards">
+      <div class="mini cy rev d1"><b>🖼️ Imagem &amp; Forma</b> o que se vê primeiro</div>
+      <div class="mini cy rev d2"><b>💡 Luz &amp; Ambiente</b> fundo, profundidade, clima</div>
+      <div class="mini cy rev d3"><b>🧭 Navegação</b> pra onde dá pra ir</div>
+      <div class="mini cy rev d4"><b>📝 Palavra</b> o texto que conversa e converte</div>
+    </div>
+  </section>
+
+  <section class="no n3">
+    <span class="pin">📦</span>
+    <svg class="ramo" viewBox="0 0 40 70" aria-hidden="true"><path d="M1 4 C 22 10, 30 30, 34 66"/></svg>
+    <div class="rev"><span class="quem">Galhos · cada peça é um objeto</span>
+    <h2>Nada entra na página por acaso</h2>
+    <p class="desc">Botão, card, menu, formulário: cada peça é um <b>objeto</b> que só entra depois de responder 6 perguntas:</p></div>
+    <div class="box rev d1">
+      <h3>Anatomia de um objeto</h3>
+      <div class="perg">
+        <div><b>1 · O que é?</b> tipo e papel na página</div>
+        <div><b>2 · De quê é feito?</b> do material da SUA marca</div>
+        <div><b>3 · Como se compõe?</b> partes internas, encaixe</div>
+        <div><b>4 · Como entra e sai?</b> a animação de chegada</div>
+        <div class="dupla"><span>5 · Aparência</span><span class="seta">⇄</span><span>6 · Função</span></div>
+      </div>
+    </div>
+    <div class="cards">
+      <div class="mini rx rev d2"><b>🧬 Herança</b> mudou a marca, o site inteiro muda junto</div>
+      <div class="mini rx rev d3"><b>🎛️ Estados</b> tudo responde ao toque — nada é parado</div>
+    </div>
+  </section>
+
+  <section class="no n4">
+    <span class="pin">💎</span>
+    <svg class="ramo" viewBox="0 0 40 70" aria-hidden="true"><path d="M1 4 C 22 10, 30 30, 34 66"/></svg>
+    <div class="rev"><span class="quem">Lapidação · cristalização</span>
+    <h2>O acabamento que faz parecer caro</h2>
+    <p class="desc">Com os objetos prontos, a gente lapida: profundidade no fundo, entrada em escada, micro-interações, materiais coerentes. <b>Uma assinatura por página</b> — o resto disciplinado. É isso que separa um site comum de uma experiência.</p></div>
+  </section>
+
+  <section class="no n5">
+    <span class="pin">🚀</span>
+    <div class="rev"><span class="quem">Fruto · no ar, medido</span>
+    <h2>Testar → Publicar → Conferir → Medir</h2></div>
+    <div class="ciclo rev d1">
+      <b>E o ciclo não termina:</b> testamos no celular antes de publicar, conferimos no ar depois, e <b>medimos</b> o que funciona (cliques, mensagens que chegam). <span class="volta">↩ O que a medição ensina volta pra raiz</span> — e a sua árvore cresce de novo.
+    </div>
+  </section>
+</main>
+
+<section class="wrap fim">
+  <h2>Quer ver a SUA árvore crescer?</h2>
+  <p>A gente monta uma <b>prévia de verdade do seu site, de graça</b> — você vê pronto antes de pagar qualquer coisa. Sites profissionais a partir de R$ 350.</p>
+  <div class="bts">
+    <a class="p" href="mailto:wfactory.design@gmail.com?subject=Quero%20ver%20a%20pr%C3%A9via%20do%20meu%20site&body=Oi!%20Vi%20a%20%C3%81rvore%20de%20Design%20e%20quero%20uma%20pr%C3%A9via%20gr%C3%A1tis.">Quero minha prévia grátis</a>
+    <a class="s" href="https://www.instagram.com/1painerd" target="_blank" rel="noopener">Chamar no Instagram</a>
+  </div>
+</section>
+
+<footer>WFactory · 1PaiNerd Studios — Mauá/SP · medir antes de opinar, testar antes de publicar, conferir no ar depois.</footer>
+
+<script>
+(function(){
+  var reduz=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // nós ganham vida ao entrar na tela
+  var nos=document.querySelectorAll('.no');
+  if('IntersectionObserver' in window && !reduz){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('vivo'); io.unobserve(e.target);} });
+    },{threshold:0.25,rootMargin:'0px 0px -8% 0px'});
+    nos.forEach(function(n){io.observe(n)});
+  }else{
+    nos.forEach(function(n){n.classList.add('vivo')});
+  }
+  // seiva: o tronco cresce com a rolagem, a folhinha acompanha
+  var trilho=document.getElementById('trilho'),seiva=document.getElementById('seiva'),folha=document.getElementById('folha');
+  function pinta(){
+    var r=trilho.getBoundingClientRect();
+    var alvo=window.innerHeight*0.62;                 // ponto de leitura
+    var h=Math.min(Math.max(alvo-r.top,0),r.height);
+    seiva.style.height=h+'px';
+    folha.style.top=h+'px';
+    folha.style.opacity=(h>4&&h<r.height-4)?1:0;
+  }
+  if(reduz){ seiva.style.height='100%'; }
+  else{
+    var tick=false;
+    window.addEventListener('scroll',function(){
+      if(!tick){ requestAnimationFrame(function(){pinta();tick=false}); tick=true; }
+    },{passive:true});
+    window.addEventListener('resize',pinta);
+    pinta();
+  }
+})();
+</script>
+</body>
+</html>
