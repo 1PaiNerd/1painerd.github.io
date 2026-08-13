@@ -694,6 +694,15 @@ document.getElementById('ord').addEventListener('change',e=>{st.ord=e.target.val
 document.getElementById('bg').onclick=()=>{st.view='grid';document.getElementById('bg').classList.add('on');document.getElementById('bl').classList.remove('on');draw()};
 document.getElementById('bl').onclick=()=>{st.view='list';document.getElementById('bl').classList.add('on');document.getElementById('bg').classList.remove('on');draw()};
 document.getElementById('fab').onclick=()=>{document.querySelector('.catbar').scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>document.getElementById('q').focus(),450)};
+/* link direto pra divulgação: achadinhos.html#selecionados abre a aba ⭐
+   (e #selecionados-familia abre direto nos Aprovados em casa) */
+(function(){
+  const h=(location.hash||'').replace('#','');
+  if(h.startsWith('selecionados')){
+    st.cat='selecionados'; st.loja='';
+    const s=h.split('-')[1]; if(s) st.sub=s;
+  }
+})();
 draw();
 carregarMaisVendidos();
 </script>
