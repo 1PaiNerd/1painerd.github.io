@@ -1,0 +1,76 @@
+{
+  "_leiame": "Mapa de reconciliacao de nomes da Camara de Itabira. O cadastro de PARLAMENTAR e o campo AUTORIA usam grafias diferentes para a MESMA pessoa. Sem este mapa, o site mostraria 0 projetos para vereador que trabalhou - o que seria injusto e mentiroso. REGRA DA CASA: nada aqui entra por chute do robo. Cada linha precisa ser conferida por humano na fonte oficial (itabira.cam.mg.gov.br) antes de virar 'confirmado': true. Enquanto estiver false, o site NAO publica numero desse vereador.",
+  "_fonte_de_conferencia": "https://www.itabira.cam.mg.gov.br/materias/tipo/vereadores/103",
+  "_atualizado_em": "2026-08-16",
+
+  "confirmados": {},
+
+  "a_conferir": [
+    {
+      "cadastro": "Heraldo Noronha",
+      "autoria_encontrada": "HERALDO",
+      "ocorrencias": 19,
+      "confirmado": false,
+      "nota": "Provavel mesma pessoa (primeiro nome). Conferir na pagina oficial."
+    },
+    {
+      "cadastro": "Marcelino Guedes",
+      "autoria_encontrada": "MARCELINO FREITAS",
+      "ocorrencias": 40,
+      "confirmado": false,
+      "nota": "Sobrenome DIFERENTE. Pode ser a mesma pessoa com nome civil vs nome de urna, ou pode ser outra pessoa. NAO assumir."
+    },
+    {
+      "cadastro": "Marquinhos da Saude",
+      "autoria_encontrada": "MARCOS ANTONIO FERREIRA DA SILVA",
+      "ocorrencias": 23,
+      "confirmado": false,
+      "nota": "Provavel nome civil do nome de urna. Conferir."
+    },
+    {
+      "cadastro": "Carlos Henrique",
+      "autoria_encontrada": "CARLOS HENRIQUE SILVA FILHO",
+      "ocorrencias": 6,
+      "confirmado": false,
+      "nota": "Provavel nome completo do mesmo vereador."
+    },
+    {
+      "cadastro": "(nao localizado no cadastro)",
+      "autoria_encontrada": "DULCE CITI",
+      "ocorrencias": 73,
+      "confirmado": false,
+      "nota": "Aparece como autora com volume alto mas nao bateu com nenhum registro de parlamentar. Investigar: suplente? grafia do cadastro?"
+    },
+    {
+      "cadastro": "(nao localizado no cadastro)",
+      "autoria_encontrada": "JUBER MADEIRA",
+      "ocorrencias": 35,
+      "confirmado": false,
+      "nota": "Idem."
+    },
+    {
+      "cadastro": "(nao localizado no cadastro)",
+      "autoria_encontrada": "CIDNEI CAMILO RABELO",
+      "ocorrencias": 20,
+      "confirmado": false,
+      "nota": "Idem."
+    }
+  ],
+
+  "nao_sao_vereadores": [
+    "PREFEITO MUNICIPAL DE ITABIRA",
+    "PREFEITO MUNICIPAL",
+    "PREFEITO MARCO ANTONIO LAGE",
+    "MESA DIRETORA",
+    "COMISSAO"
+  ],
+
+  "sufixos_a_remover": [" E OUTROS", " E OUTRO"],
+
+  "registros_defeituosos_do_cadastro": [
+    {
+      "valor": "nao",
+      "nota": "Registro lixo dentro da API da propria camara (um 'parlamentar' chamado 'nao'). Ignorar."
+    }
+  ]
+}
