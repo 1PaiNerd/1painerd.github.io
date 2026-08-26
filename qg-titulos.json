@@ -1,0 +1,39 @@
+{
+  "_leiame": "Banco de titulos da live do 1PaiNerd. Edita a vontade - o script sorteia um da categoria atual da Twitch. {guilda} vira o nome da comunidade quando ela se batizar. Chaves = nome da categoria na Twitch (minusculo, sem acento). '_papo' e o modo bate-papo, '_generico' e o plano B quando o jogo nao tem lista.",
+
+  "marvel rivals": [
+    "Pai de 3 carregando o time nas costas (e um bebe no colo) 🦸",
+    "Rivals ate a esposa chamar pro almoco",
+    "Analisando o arquetipo do seu main enquanto ele te mata",
+    "Um pai contra o mundo (e contra o matchmaking)",
+    "Jogando serio ate a Sofia invadir a call 🎮"
+  ],
+
+  "roblox": [
+    "Testando obby que EU fiz (e morrendo no que eu mesmo criei)",
+    "BirdTower: o dev jogando o proprio jogo ao vivo 🐦",
+    "Roblox com a plateia mais sincera do mundo: meus filhos",
+    "Construindo mundo novo — pode dar palpite que eu boto no jogo"
+  ],
+
+  "just chatting": [
+    "Papo de QG: filhos, jogos e teorias que ninguem pediu ☕",
+    "Bate-papo enquanto o bebe dorme (falem baixo) 🤫",
+    "Julgando achadinho ao vivo com a comunidade",
+    "Pai nerd responde: manda pergunta que eu me comprometo",
+    "A live que comeca papo e termina terapia em grupo"
+  ],
+
+  "_papo": [
+    "Papo reto do QG — chega mais ☕",
+    "Conselho de guilda aberto: pauta quem chegar",
+    "Hoje e conversa: traz cafe e opiniao"
+  ],
+
+  "_generico": [
+    "Live do QG: jogo novo na mesa, opiniao sincera na boca",
+    "Um pai nerd, um controle e zero paciencia pra tutorial",
+    "Testando {jogo} ao vivo — a guilda decide se fica",
+    "{jogo} na analise do QG: vale seu tempo?"
+  ]
+}

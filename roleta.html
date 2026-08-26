@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>🎰 Roleta de Títulos — QG 1PaiNerd</title>
+<!-- Ferramenta interna do QG: sorteia título de live. Lê /qg-titulos.json
+     (mesma base do qg_titulo.py do PC). Editar o JSON atualiza a roleta. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080c16;--card:rgba(255,255,255,.045);--ink:#edf1fb;--sub:#8d99b5;
+--acc:#ff8a3d;--tw:#9146FF;--line:rgba(120,160,255,.16);--r:14px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;
+min-height:100vh;display:flex;flex-direction:column;align-items:center;
+justify-content:center;padding:24px 16px;text-align:center;overflow-x:hidden}
+h1{font-family:'Space Grotesk',sans-serif;font-size:1.4rem;margin-bottom:4px}
+.sub{color:var(--sub);font-size:.9rem;margin-bottom:22px}
+.chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:22px}
+.chip{background:var(--card);border:1.5px solid var(--line);color:var(--sub);
+font:600 .85rem 'Inter',sans-serif;padding:9px 16px;border-radius:999px;cursor:pointer;transition:.18s}
+.chip.on{background:linear-gradient(135deg,var(--tw),#772CE8);border-color:transparent;color:#fff}
+.palco{position:relative;width:min(560px,92vw);height:120px;overflow:hidden;
+border:1.5px solid rgba(145,70,255,.4);border-radius:var(--r);
+background:linear-gradient(180deg,rgba(145,70,255,.10),rgba(145,70,255,.02));margin-bottom:8px}
+.palco::before,.palco::after{content:"";position:absolute;left:0;right:0;height:34px;z-index:2;pointer-events:none}
+.palco::before{top:0;background:linear-gradient(180deg,var(--bg),transparent)}
+.palco::after{bottom:0;background:linear-gradient(0deg,var(--bg),transparent)}
+#fita{position:absolute;left:0;right:0;top:0;will-change:transform}
+#fita div{height:40px;line-height:40px;font:600 .95rem 'Inter',sans-serif;
+white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 18px;color:var(--sub)}
+.mira{position:absolute;left:8px;right:8px;top:40px;height:40px;z-index:1;
+border:1.5px dashed rgba(255,138,61,.55);border-radius:9px}
+#resultado{min-height:76px;width:min(560px,92vw);display:none;align-items:center;gap:10px;
+background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+padding:14px 16px;margin:10px 0 4px}
+#resultado p{flex:1;text-align:left;font-weight:600;line-height:1.45;font-size:.98rem}
+#resultado button{flex:none;background:var(--acc);border:none;color:#160a02;
+font:700 .85rem 'Inter',sans-serif;padding:11px 16px;border-radius:10px;cursor:pointer}
+.girar{margin-top:14px;background:linear-gradient(135deg,var(--tw),#772CE8);color:#fff;
+border:none;font:700 1.1rem 'Space Grotesk',sans-serif;padding:16px 42px;border-radius:14px;
+cursor:pointer;box-shadow:0 10px 34px rgba(145,70,255,.4);transition:transform .15s ease-out}
+.girar:active{transform:scale(.96)}
+.girar:disabled{opacity:.5;cursor:wait}
+.rodape{margin-top:26px;color:#5d6883;font-size:.78rem;max-width:46ch}
+@media (prefers-reduced-motion:reduce){#fita{transition:none!important}}
+</style>
+</head>
+<body>
+<h1>🎰 Roleta de Títulos</h1>
+<p class="sub">Gira, copia, cola na Twitch. Simples assim.</p>
+<div class="chips" id="chips"></div>
+<div class="palco"><div class="mira" aria-hidden="true"></div><div id="fita" aria-hidden="true"></div></div>
+<div id="resultado"><p id="txt"></p><button id="copiar">📋 Copiar</button></div>
+<button class="girar" id="girar">GIRAR 🎲</button>
+<p class="rodape">Os títulos moram no <code>qg-titulos.json</code> do site — editou lá, mudou aqui. Ferramenta interna do QG.</p>
+
+<script>
+let BANCO={}, filtro='todos', girando=false;
+const fita=document.getElementById('fita'), res=document.getElementById('resultado'),
+      txt=document.getElementById('txt'), btn=document.getElementById('girar');
+
+function listas(){
+  const out=[];
+  for(const [k,v] of Object.entries(BANCO)){
+    if(!Array.isArray(v)) continue;
+    if(filtro==='todos' || k===filtro) out.push(...v.map(t=>t.replace('{jogo}','o jogo de hoje').replace('{guilda}','guilda')));
+  }
+  return out.length?out:['Cadê os títulos? Confere o qg-titulos.json 😅'];
+}
+function chips(){
+  const nomes={todos:'✨ Todos','_papo':'☕ Papo','_generico':'🎲 Genéricos'};
+  const ks=['todos',...Object.keys(BANCO).filter(k=>Array.isArray(BANCO[k]))];
+  document.getElementById('chips').innerHTML=ks.map(k=>
+    `<button class="chip ${k===filtro?'on':''}" data-k="${k}">${nomes[k]||'🎮 '+k}</button>`).join('');
+  document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{filtro=c.dataset.k;chips()});
+}
+function girar(){
+  if(girando) return; girando=true; btn.disabled=true; res.style.display='none';
+  const L=listas(), alvo=Math.floor(Math.random()*L.length);
+  // fita: embaralha e repete pra dar volume, alvo fixado no fim
+  const rolo=[];
+  for(let i=0;i<28;i++) rolo.push(L[Math.floor(Math.random()*L.length)]);
+  rolo.push(L[alvo], L[(alvo+1)%L.length]);           // alvo cai na "mira" (2ª linha)
+  fita.innerHTML=rolo.map(t=>`<div>${t.replace(/</g,'&lt;')}</div>`).join('');
+  fita.style.transition='none'; fita.style.transform='translateY(0)';
+  requestAnimationFrame(()=>{requestAnimationFrame(()=>{
+    const fim=-( (rolo.length-2)*40 - 40 );            // alvo na faixa da mira
+    fita.style.transition='transform 2.8s cubic-bezier(.12,.68,.16,1)';
+    fita.style.transform='translateY('+fim+'px)';
+  })});
+  setTimeout(()=>{
+    txt.textContent=L[alvo];
+    res.style.display='flex';
+    girando=false; btn.disabled=false;
+  },2950);
+}
+document.getElementById('copiar').onclick=async()=>{
+  try{await navigator.clipboard.writeText(txt.textContent);
+    document.getElementById('copiar').textContent='✔ Copiado!';
+    setTimeout(()=>document.getElementById('copiar').textContent='📋 Copiar',1600);
+  }catch(e){ /* selecionar na mao */ }
+};
+btn.onclick=girar;
+fetch('qg-titulos.json?v='+Date.now()).then(r=>r.json()).then(j=>{
+  BANCO=Object.fromEntries(Object.entries(j).filter(([k])=>!k.startsWith('_leiame')));
+  chips();
+}).catch(()=>{ BANCO={'_generico':['Não achei o qg-titulos.json no site 😬']}; chips(); });
+</script>
+</body>
+</html>
