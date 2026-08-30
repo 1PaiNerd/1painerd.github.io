@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>💛 Pix — overlay QG</title>
+<!-- Overlay do QR Pix (Browser Source, fundo TRANSPARENTE).
+     A CHAVE É SUA: gera o "Pix copia e cola" no app do banco e passa na URL:
+       pix.html?pix=<copia-e-cola>&nome=Apoie a live
+     Tamanho sugerido no OBS: 320x420, canto da tela. -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+:root{--acc:#ff8a3d;--tw:#9146FF;--ink:#160a02}
+*{margin:0;box-sizing:border-box}
+html,body{background:transparent;overflow:hidden}
+body{font-family:'Segoe UI',system-ui,sans-serif;display:flex;justify-content:center;padding-top:10px}
+.card{background:#fff;border-radius:18px;padding:16px 16px 12px;text-align:center;
+box-shadow:0 10px 40px rgba(0,0,0,.45),0 0 0 3px var(--acc);
+animation:flutua 4s ease-in-out infinite;width:290px}
+@keyframes flutua{50%{transform:translateY(-7px)}}
+.tt{font-weight:800;color:var(--ink);font-size:1.05rem;margin-bottom:2px}
+.tt span{color:#00b686}
+.sub{color:#7a6a5f;font-size:.78rem;margin-bottom:10px}
+#qr{display:flex;justify-content:center}
+#qr img,#qr canvas{border-radius:8px}
+.aviso{background:#fff3e8;border-radius:10px;color:#8a4b12;font-size:.72rem;
+padding:8px;margin-top:10px;line-height:1.4}
+@media (prefers-reduced-motion:reduce){.card{animation:none}}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="tt">💛 <span>PIX</span> da live</div>
+  <div class="sub" id="nome"></div>
+  <div id="qr"></div>
+  <div class="aviso" id="aviso" style="display:none">
+    Falta a chave! Gera o "Pix copia e cola" no app do banco e passa na URL:
+    <b>pix.html?pix=SEU_CODIGO</b>
+  </div>
+</div>
+<script>
+const q=new URLSearchParams(location.search);
+const payload=(q.get('pix')||'').trim();
+document.getElementById('nome').textContent=q.get('nome')||'Aponta a câmera e apoia o QG';
+if(payload){
+  new QRCode(document.getElementById('qr'),{text:payload,width:220,height:220,
+    correctLevel:QRCode.CorrectLevel.M});
+}else{
+  document.getElementById('aviso').style.display='block';
+}
+</script>
+</body>
+</html>

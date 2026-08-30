@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>🎥 Moldura — QG</title>
+<!-- Moldura ANIMADA da câmera (Browser Source, fundo TRANSPARENTE).
+     Substitui o retângulo estático: fio de luz girando na borda + placa.
+     Parâmetros: ?label=PLAYER 1 · 1PAINERD  &raio=18
+     No OBS: cria o Browser Source do MESMO tamanho da câmera e posiciona
+     por cima dela (a moldura tem o miolo vazado). -->
+<style>
+:root{--acc:#ff8a3d;--cy:#3fd6ff;--tw:#9146FF}
+*{margin:0;box-sizing:border-box}
+html,body{width:100%;height:100%;background:transparent;overflow:hidden}
+.quadro{position:absolute;inset:8px;border-radius:var(--raio,18px);padding:3px;
+background:conic-gradient(from var(--ang,0deg),var(--acc),var(--cy),var(--tw),var(--acc));
+-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+-webkit-mask-composite:xor;mask-composite:exclude;
+animation:roda 6s linear infinite;
+filter:drop-shadow(0 0 14px rgba(255,138,61,.45))}
+@property --ang{syntax:'<angle>';initial-value:0deg;inherits:false}
+@keyframes roda{to{--ang:360deg}}
+.placa{position:absolute;left:22px;bottom:20px;display:flex;align-items:center;gap:8px;
+background:rgba(8,12,22,.88);border:1.5px solid rgba(255,138,61,.55);
+border-radius:999px;padding:8px 16px;color:#edf1fb;
+font:700 .95rem 'Segoe UI',system-ui,sans-serif;letter-spacing:.05em}
+.placa i{width:9px;height:9px;border-radius:50%;background:#ff0033;display:inline-block;
+animation:pisca 1.6s ease-in-out infinite}
+@keyframes pisca{50%{opacity:.25}}
+@media (prefers-reduced-motion:reduce){.quadro,.placa i{animation:none}}
+</style>
+</head>
+<body>
+<div class="quadro" id="quadro"></div>
+<div class="placa"><i></i><span id="label"></span></div>
+<script>
+const q=new URLSearchParams(location.search);
+document.getElementById('label').textContent=q.get('label')||'PLAYER 1 · 1PAINERD';
+const r=parseInt(q.get('raio')||'18');
+document.getElementById('quadro').style.setProperty('--raio',r+'px');
+</script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>⏱️ Contagem — QG 1PaiNerd</title>
+<!-- Cena "Já vamos começar" do OBS (Browser Source 1920x1080).
+     Parâmetros na URL:  ?min=5  &msg=Segura ai  &fim=E AGORA!
+     Ex.: contagem.html?min=10&msg=Preparando o hiperfoco de hoje -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080c16;--ink:#edf1fb;--sub:#8d99b5;--acc:#ff8a3d;--cy:#3fd6ff;--tw:#9146FF}
+*{margin:0;box-sizing:border-box}
+html,body{width:100%;height:100%}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;
+display:flex;flex-direction:column;align-items:center;justify-content:center;
+gap:26px;overflow:hidden;position:relative}
+.gridbg{position:absolute;inset:0;pointer-events:none;
+background-image:linear-gradient(rgba(120,160,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(120,160,255,.06) 1px,transparent 1px);
+background-size:52px 52px;mask-image:radial-gradient(ellipse 80% 70% at 50% 40%,#000 30%,transparent 80%)}
+.orb{position:absolute;width:640px;height:640px;border-radius:50%;
+border:2px dashed rgba(63,214,255,.25);animation:gira 50s linear infinite}
+@keyframes gira{to{transform:rotate(360deg)}}
+.marca{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:2.2rem;z-index:1}
+.marca em{font-style:normal;color:var(--acc)}
+.msg{color:var(--sub);font-size:1.5rem;z-index:1}
+#t{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:11rem;
+letter-spacing:.04em;line-height:1;z-index:1;font-variant-numeric:tabular-nums;
+text-shadow:0 0 60px rgba(255,138,61,.35)}
+#t.reta{color:var(--acc);animation:pulsa 1s ease-in-out infinite}
+@keyframes pulsa{50%{transform:scale(1.05)}}
+#fim{display:none;z-index:1;font-family:'Space Grotesk',sans-serif;font-weight:700;
+font-size:7rem;color:var(--tw);text-shadow:0 0 80px rgba(145,70,255,.6);
+animation:chega .5s ease-out}
+@keyframes chega{from{opacity:0;transform:scale(.7)}}
+.rodape{position:absolute;bottom:44px;color:#5d6883;font-size:1.05rem;z-index:1}
+@media (prefers-reduced-motion:reduce){.orb,#t.reta{animation:none}}
+</style>
+</head>
+<body>
+<div class="gridbg"></div><div class="orb"></div>
+<div class="marca">1<em>Pai</em>Nerd <span style="color:#9146FF">· AO VIVO JÁ JÁ</span></div>
+<div class="msg" id="msg"></div>
+<div id="t">05:00</div>
+<div id="fim"></div>
+<div class="rodape">twitch.tv/1painerd · 1painerd.com.br</div>
+<script>
+const q=new URLSearchParams(location.search);
+const min=Math.max(0.1,parseFloat((q.get('min')||'5').replace(',','.')));
+document.getElementById('msg').textContent=q.get('msg')||'Pega o café e chega mais — a guilda já vai abrir';
+const FIM=q.get('fim')||'É AGORA! 🎮';
+let resta=Math.round(min*60);
+const t=document.getElementById('t'), fim=document.getElementById('fim');
+function mostra(){
+  const m=String(Math.floor(resta/60)).padStart(2,'0'), s=String(resta%60).padStart(2,'0');
+  t.textContent=m+':'+s;
+  if(resta<=30) t.classList.add('reta');
+}
+mostra();
+const iv=setInterval(()=>{
+  resta--;
+  if(resta<=0){clearInterval(iv);t.style.display='none';
+    fim.textContent=FIM;fim.style.display='block';return}
+  mostra();
+},1000);
+</script>
+</body>
+</html>
